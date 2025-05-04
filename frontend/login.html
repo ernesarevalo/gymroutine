@@ -1,49 +1,54 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - Gym Retro App</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>Login - Gym Routine Generator</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body class="retro-theme">
-    <div class="login-container">
-      <h1>👊 LOGIN / REGISTRO</h1>
+    <div class="container">
+      <header class="header">
+        <h1>GYM ROUTINE GENERATOR</h1>
+        <h2 class="subtitle">LOGIN / REGISTER</h2>
+      </header>
 
-      <form id="login-form">
-        <h2>Iniciar Sesión</h2>
-        <input type="text" id="login-username" placeholder="Usuario" required />
-        <input
-          type="password"
-          id="login-password"
-          placeholder="Contraseña"
-          required
-        />
-        <button type="submit">Entrar</button>
-      </form>
+      <main class="login-section">
+        <form id="loginForm" class="form-box">
+          <h3>Login</h3>
+          <label for="login-username">Username</label>
+          <input type="text" id="login-username" required />
 
-      <hr />
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" required />
 
-      <form id="register-form">
-        <h2>Crear Cuenta</h2>
-        <input
-          type="text"
-          id="register-username"
-          placeholder="Usuario nuevo"
-          required
-        />
-        <input
-          type="password"
-          id="register-password"
-          placeholder="Contraseña nueva"
-          required
-        />
-        <button type="submit">Registrar</button>
-      </form>
+          <button type="submit">Login</button>
+        </form>
 
-      <p id="mensaje"></p>
+        <form id="registerForm" class="form-box">
+          <h3>Register</h3>
+          <label for="register-username">Username</label>
+          <input type="text" id="register-username" required />
+
+          <label for="register-email">Email</label>
+          <input type="email" id="register-email" required />
+
+          <label for="register-password">Password</label>
+          <input type="password" id="register-password" required />
+
+          <button type="submit">Register</button>
+        </form>
+      </main>
+
+      <footer class="footer">
+        <p>&copy; 2025 Gym Routine Generator - Retro Edition</p>
+      </footer>
     </div>
 
-    <script src="js/login.js"></script>
+    <script src="js/script.js"></script>
   </body>
 </html>

@@ -1,49 +1,39 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Generador de Rutinas KOF</title>
-    <link rel="stylesheet" href="styles/estilo.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gym Routine Generator</title>
+    <link rel="stylesheet" href="css/styles.css" />
   </head>
-  <body>
-    <h1>Generador de Rutinas KOF 🥋</h1>
-    <form id="rutinaForm">
-      <input type="number" name="edad" placeholder="Edad" required />
-      <input type="number" name="peso" placeholder="Peso (kg)" required />
-      <input type="number" name="altura" placeholder="Altura (cm)" required />
+  <body class="retro-theme">
+    <header>
+      <div class="logo">
+        <img src="img/logo.png" alt="Gym Routine Generator" />
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="create-routine.html">Generate Routine</a></li>
+        </ul>
+      </nav>
+      <div class="theme-toggle">
+        <button id="themeToggleBtn">Switch Theme</button>
+      </div>
+    </header>
 
-      <select name="objetivo">
-        <option value="bajar grasa">Bajar Grasa</option>
-        <option value="ganar masa muscular">Ganar Masa Muscular</option>
-        <option value="mantener">Mantener</option>
-        <option value="resistencia">Mejorar Resistencia</option>
-      </select>
+    <main>
+      <section class="intro">
+        <h1>Welcome to the Gym Routine Generator</h1>
+        <p>Personalized workout routines based on your preferences!</p>
+      </section>
+    </main>
 
-      <select name="experiencia">
-        <option value="principiante">Principiante</option>
-        <option value="intermedio">Intermedio</option>
-        <option value="avanzado">Avanzado</option>
-      </select>
+    <footer>
+      <p>&copy; 2025 Gym Routine Generator. All rights reserved.</p>
+    </footer>
 
-      <select name="genero">
-        <option value="masculino">Masculino</option>
-        <option value="femenino">Femenino</option>
-      </select>
-
-      <input
-        type="number"
-        name="dias"
-        placeholder="Días de entrenamiento (1-5)"
-        min="1"
-        max="5"
-        required
-      />
-
-      <button type="submit">Generar Rutina</button>
-    </form>
-
-    <div id="resultado"></div>
-
-    <script src="js/generador.js"></script>
+    <script src="js/script.js"></script>
   </body>
 </html>
