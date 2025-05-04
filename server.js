@@ -1,27 +1,28 @@
+// backend/server.js
 const express = require("express");
 const path = require("path");
-const fs = require("fs");
-
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 10000;
 
-app.use(express.json());
-
-// Servir frontend
+// Middleware para servir archivos estáticos desde frontend
 app.use(express.static(path.join(__dirname, "../frontend")));
 
-// Ruta base
+// Ruta de inicio
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
 
-// Ruta ejemplo para rutinas (extendible)
-app.post("/api/save-routine", (req, res) => {
-  const data = req.body;
-  console.log("Rutina recibida:", data);
-  res.status(200).json({ success: true });
+// Ruta de login
+app.get("/login", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/login.html"));
 });
 
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en puerto ${PORT}`);
+// Ruta de crear rutina
+app.get("/createRoutine", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/createRoutine.html"));
+});
+
+// Iniciar el servidor
+app.listen(port, () => {
+  console.log(`Servidor corriendo en puerto ${port}`);
 });

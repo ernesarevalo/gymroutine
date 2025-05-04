@@ -1,67 +1,26 @@
+<!-- frontend/index.html -->
 <!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Inicio</title>
-    <style>
-      /* Estilos generales */
-      body {
-        background-color: #000;
-        color: #0f0;
-        font-family: monospace;
-        margin: 0;
-        padding: 0;
-      }
-
-      h2 {
-        text-align: center;
-      }
-
-      /* Barra de navegación */
-      nav {
-        background-color: #333;
-        padding: 10px;
-        text-align: center;
-      }
-
-      nav a {
-        color: #0f0;
-        text-decoration: none;
-        margin: 10px;
-        font-size: 18px;
-      }
-
-      /* Responsividad */
-      @media screen and (max-width: 600px) {
-        nav a {
-          font-size: 14px;
-          margin: 5px;
-        }
-      }
-
-      /* Contenido de la página */
-      .content {
-        text-align: center;
-        margin-top: 50px;
-      }
-    </style>
+    <title>Gym Routine</title>
+    <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <nav>
-      <a href="index.html">Inicio</a>
-      <a href="login.html">Iniciar sesión</a>
-      <a href="perfil.html">Perfil</a>
-      <a href="misRutinas.html">Mis Rutinas</a>
-      <a href="crearRutina.html">Crear Rutina</a>
+    <nav id="navbar">
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/createRoutine">Crear Rutina</a></li>
+      </ul>
     </nav>
 
-    <div class="content">
-      <h2>Bienvenido a tu aplicación de rutinas de gimnasio</h2>
-      <p>
-        Comienza a crear tus rutinas personalizadas y lleva un control de tus
-        entrenamientos.
-      </p>
+    <div class="container">
+      <h1>Bienvenido a tu página de rutinas de gimnasio</h1>
+      <p>Selecciona una opción en el menú para comenzar.</p>
     </div>
+
+    <script src="js/nav.js"></script>
   </body>
 </html>

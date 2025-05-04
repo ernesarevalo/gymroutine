@@ -1,178 +1,79 @@
-/* styles.css */
-
-/* Estilos base */
+/* frontend/css/styles.css */
 body {
   background-color: #000;
   color: #0f0;
-  font-family: "Press Start 2P", monospace;
+  font-family: monospace;
   margin: 0;
   padding: 0;
-  line-height: 1.6;
 }
 
-h1,
-h2,
-h3 {
-  text-align: center;
-  color: #f00;
-  text-shadow: 2px 2px #fff;
-  margin: 20px 0;
+nav {
+  background-color: #333;
+  padding: 10px;
 }
 
-.subtitle {
-  color: #0ff;
-  font-size: 0.8rem;
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin: 0 15px;
+}
+
+nav ul li a {
+  color: #0f0;
+  text-decoration: none;
 }
 
 .container {
-  max-width: 900px;
-  margin: auto;
   padding: 20px;
-}
-
-/* Cabecera */
-.header {
-  background-color: #111;
-  border-bottom: 2px solid #f00;
-  padding: 10px;
   text-align: center;
 }
 
-/* Formulario */
-.login-section {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  margin-top: 30px;
+h1 {
+  font-size: 2rem;
 }
 
-.form-box {
-  background-color: #111;
-  border: 2px solid #0f0;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #0f0;
-}
-
-.form-box h3 {
-  color: #ff0;
-  margin-bottom: 15px;
+form {
+  margin-top: 20px;
 }
 
 label {
   display: block;
-  margin-top: 15px;
-  color: #0ff;
-  font-size: 0.75rem;
+  margin-top: 10px;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"] {
-  width: 100%;
-  padding: 10px;
-  background-color: #000;
-  border: 2px solid #0f0;
-  color: #0f0;
-  font-family: monospace;
-  font-size: 1rem;
+input,
+select {
+  padding: 8px;
   margin-top: 5px;
+  font-size: 1rem;
 }
 
 button {
-  margin-top: 20px;
-  background-color: #f00;
-  color: #fff;
-  border: none;
-  padding: 10px 15px;
-  font-family: monospace;
+  background-color: #0f0;
+  padding: 10px 20px;
+  color: #000;
   font-size: 1rem;
-  cursor: pointer;
-  text-transform: uppercase;
-  border: 2px solid #fff;
-  box-shadow: 2px 2px #0f0;
+  border: none;
+  margin-top: 10px;
 }
 
 button:hover {
-  background-color: #ff0;
-  color: #000;
-  border-color: #0f0;
+  background-color: #080;
 }
 
-/* Footer */
-.footer {
-  margin-top: 40px;
-  text-align: center;
-  font-size: 0.75rem;
-  color: #888;
-}
+/* Responsive Design */
+@media (max-width: 768px) {
+  nav ul {
+    text-align: center;
+    padding: 0;
+  }
 
-/* Estilo retro para mis-rutinas */
-.retro-body {
-  background-color: #000;
-  color: #0f0;
-  font-family: monospace;
-}
-
-header {
-  text-align: center;
-  margin-top: 20px;
-}
-
-h1 {
-  font-size: 2em;
-}
-
-.btn-back {
-  display: inline-block;
-  margin-top: 20px;
-  background-color: #444;
-  color: #0f0;
-  padding: 10px 20px;
-  text-decoration: none;
-  border-radius: 5px;
-}
-
-main {
-  margin: 20px;
-}
-
-.routine-list {
-  margin-top: 20px;
-}
-
-.routine-item {
-  margin-bottom: 20px;
-  padding: 15px;
-  background-color: #222;
-  border-radius: 5px;
-  border: 1px solid #444;
-}
-
-.routine-item h3 {
-  font-size: 1.2em;
-  margin-bottom: 10px;
-}
-
-.routine-item pre {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
-
-.deleteBtn {
-  background-color: #f00;
-  color: #fff;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.deleteBtn:hover {
-  background-color: #c00;
-}
-
-footer {
-  text-align: center;
-  margin-top: 30px;
+  nav ul li {
+    display: block;
+    margin: 10px 0;
+  }
 }
