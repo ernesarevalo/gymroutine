@@ -1,0 +1,19 @@
+{
+  "name": "rutinas-kof",
+  "version": "1.0.0",
+  "description": "Generador de rutinas retro gaming estilo King of Fighters",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "Ernesto",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "nodemailer": "^6.9.3"
+  }
+}
