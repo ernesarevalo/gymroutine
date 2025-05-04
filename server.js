@@ -23,7 +23,6 @@ app.get("/createRoutine", (req, res) => {
 });
 
 // Iniciar el servidor
-const PORT = process.env.PORT || 10000;
 app.listen(port, () => {
   console.log(`Servidor corriendo en puerto ${port}`);
 });
