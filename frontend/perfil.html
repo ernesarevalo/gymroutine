@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi Perfil</title>
+    <style>
+      /* Estilos generales */
+      body {
+        background-color: #000;
+        color: #0f0;
+        font-family: monospace;
+        margin: 0;
+        padding: 0;
+      }
+
+      h2 {
+        text-align: center;
+      }
+
+      /* Barra de navegación */
+      nav {
+        background-color: #333;
+        padding: 10px;
+        text-align: center;
+      }
+
+      nav a {
+        color: #0f0;
+        text-decoration: none;
+        margin: 10px;
+        font-size: 18px;
+      }
+
+      /* Formulario de edición */
+      form {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #222;
+        border-radius: 8px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        background-color: #333;
+        color: #0f0;
+        border: none;
+        border-radius: 5px;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        background-color: #0f0;
+        border: none;
+        border-radius: 5px;
+        color: black;
+        font-size: 16px;
+      }
+
+      /* Responsividad */
+      @media screen and (max-width: 600px) {
+        nav a {
+          font-size: 14px;
+          margin: 5px;
+        }
+
+        form {
+          width: 90%;
+          padding: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="login.html">Cerrar sesión</a>
+    </nav>
+
+    <h2>Mi Perfil</h2>
+    <p id="user-info">Cargando...</p>
+    <form id="editWeightForm">
+      <label for="peso">Peso Actual (kg):</label>
+      <input type="number" id="peso" name="peso" required />
+      <button type="submit">Actualizar Peso</button>
+    </form>
+
+    <script>
+      // Leer el usuario desde localStorage
+      function obtenerPerfil() {
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        if (user) {
+          const edad = calcularEdad(user.fecha_nacimiento);
+          document.getElementById("user-info").innerHTML = `
+          <strong>Nombre:</strong> ${user.username} <br>
+          <strong>Edad:</strong> ${edad} años <br>
+          <strong>Sexo:</strong> ${user.sexo} <br>
+          <strong>Altura:</strong> ${user.altura} cm <br>
+          <strong>Peso:</strong> ${user.peso} kg
+        `;
+          document.getElementById("peso").value = user.peso;
+        } else {
+          alert("No se encontró al usuario");
+        }
+      }
+
+      // Calcular edad a partir de la fecha de nacimiento
+      function calcularEdad(fechaNacimiento) {
+        const today = new Date();
+        const birthDate = new Date(fechaNacimiento);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+        return age;
+      }
+
+      // Actualizar peso en localStorage
+      document
+        .getElementById("editWeightForm")
+        .addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          const newWeight = document.getElementById("peso").value;
+          const user = JSON.parse(localStorage.getItem("user"));
+
+          if (user) {
+            user.peso = newWeight;
+            localStorage.setItem("user", JSON.stringify(user));
+            alert("Peso actualizado correctamente");
+            obtenerPerfil(); // Actualizar perfil con el nuevo peso
+          }
+        });
+
+      // Cargar el perfil al cargar la página
+      obtenerPerfil();
+    </script>
+  </body>
+</html>

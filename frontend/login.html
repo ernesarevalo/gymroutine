@@ -1,54 +1,130 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - Gym Routine Generator</title>
-    <link rel="stylesheet" href="css/styles.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
-      rel="stylesheet"
-    />
+    <title>Login</title>
+    <style>
+      /* Estilos generales */
+      body {
+        background-color: #000;
+        color: #0f0;
+        font-family: monospace;
+        margin: 0;
+        padding: 0;
+      }
+
+      h2 {
+        text-align: center;
+      }
+
+      /* Barra de navegación */
+      nav {
+        background-color: #333;
+        padding: 10px;
+        text-align: center;
+      }
+
+      nav a {
+        color: #0f0;
+        text-decoration: none;
+        margin: 10px;
+        font-size: 18px;
+      }
+
+      /* Formulario de login */
+      form {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #222;
+        border-radius: 8px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        background-color: #333;
+        color: #0f0;
+        border: none;
+        border-radius: 5px;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        background-color: #0f0;
+        border: none;
+        border-radius: 5px;
+        color: black;
+        font-size: 16px;
+      }
+
+      /* Responsividad */
+      @media screen and (max-width: 600px) {
+        nav a {
+          font-size: 14px;
+          margin: 5px;
+        }
+
+        form {
+          width: 90%;
+          padding: 10px;
+        }
+      }
+    </style>
   </head>
-  <body class="retro-theme">
-    <div class="container">
-      <header class="header">
-        <h1>GYM ROUTINE GENERATOR</h1>
-        <h2 class="subtitle">LOGIN / REGISTER</h2>
-      </header>
+  <body>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="perfil.html">Perfil</a>
+    </nav>
 
-      <main class="login-section">
-        <form id="loginForm" class="form-box">
-          <h3>Login</h3>
-          <label for="login-username">Username</label>
-          <input type="text" id="login-username" required />
+    <h2>Login</h2>
+    <form id="loginForm">
+      <label for="username">Usuario:</label>
+      <input type="text" id="username" required />
+      <label for="password">Contraseña:</label>
+      <input type="password" id="password" required />
+      <button type="submit">Iniciar sesión</button>
+    </form>
 
-          <label for="login-password">Password</label>
-          <input type="password" id="login-password" required />
+    <script>
+      // Usuario predeterminado para pruebas
+      const defaultUser = {
+        username: "erns",
+        email: "ernestoarevalo@gmail.com",
+        password: "erns",
+        fecha_nacimiento: "1986-09-21",
+        sexo: "masculino",
+        altura: 171,
+        peso: 112,
+      };
 
-          <button type="submit">Login</button>
-        </form>
+      // Simular login
+      document.getElementById("loginForm").addEventListener("submit", (e) => {
+        e.preventDefault();
 
-        <form id="registerForm" class="form-box">
-          <h3>Register</h3>
-          <label for="register-username">Username</label>
-          <input type="text" id="register-username" required />
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
 
-          <label for="register-email">Email</label>
-          <input type="email" id="register-email" required />
-
-          <label for="register-password">Password</label>
-          <input type="password" id="register-password" required />
-
-          <button type="submit">Register</button>
-        </form>
-      </main>
-
-      <footer class="footer">
-        <p>&copy; 2025 Gym Routine Generator - Retro Edition</p>
-      </footer>
-    </div>
-
-    <script src="js/script.js"></script>
+        if (
+          username === defaultUser.username &&
+          password === defaultUser.password
+        ) {
+          // Guardar usuario en localStorage
+          localStorage.setItem("user", JSON.stringify(defaultUser));
+          window.location.href = "perfil.html";
+        } else {
+          alert("Usuario o contraseña incorrectos");
+        }
+      });
+    </script>
   </body>
 </html>

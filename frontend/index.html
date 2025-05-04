@@ -1,39 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gym Routine Generator</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <title>Inicio</title>
+    <style>
+      /* Estilos generales */
+      body {
+        background-color: #000;
+        color: #0f0;
+        font-family: monospace;
+        margin: 0;
+        padding: 0;
+      }
+
+      h2 {
+        text-align: center;
+      }
+
+      /* Barra de navegación */
+      nav {
+        background-color: #333;
+        padding: 10px;
+        text-align: center;
+      }
+
+      nav a {
+        color: #0f0;
+        text-decoration: none;
+        margin: 10px;
+        font-size: 18px;
+      }
+
+      /* Responsividad */
+      @media screen and (max-width: 600px) {
+        nav a {
+          font-size: 14px;
+          margin: 5px;
+        }
+      }
+
+      /* Contenido de la página */
+      .content {
+        text-align: center;
+        margin-top: 50px;
+      }
+    </style>
   </head>
-  <body class="retro-theme">
-    <header>
-      <div class="logo">
-        <img src="img/logo.png" alt="Gym Routine Generator" />
-      </div>
-      <nav>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="login.html">Login</a></li>
-          <li><a href="create-routine.html">Generate Routine</a></li>
-        </ul>
-      </nav>
-      <div class="theme-toggle">
-        <button id="themeToggleBtn">Switch Theme</button>
-      </div>
-    </header>
+  <body>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="login.html">Iniciar sesión</a>
+      <a href="perfil.html">Perfil</a>
+      <a href="misRutinas.html">Mis Rutinas</a>
+      <a href="crearRutina.html">Crear Rutina</a>
+    </nav>
 
-    <main>
-      <section class="intro">
-        <h1>Welcome to the Gym Routine Generator</h1>
-        <p>Personalized workout routines based on your preferences!</p>
-      </section>
-    </main>
-
-    <footer>
-      <p>&copy; 2025 Gym Routine Generator. All rights reserved.</p>
-    </footer>
-
-    <script src="js/script.js"></script>
+    <div class="content">
+      <h2>Bienvenido a tu aplicación de rutinas de gimnasio</h2>
+      <p>
+        Comienza a crear tus rutinas personalizadas y lleva un control de tus
+        entrenamientos.
+      </p>
+    </div>
   </body>
 </html>
