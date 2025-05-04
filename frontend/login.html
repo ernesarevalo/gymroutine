@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Gym Retro App</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="retro-theme">
+    <div class="login-container">
+      <h1>👊 LOGIN / REGISTRO</h1>
+
+      <form id="login-form">
+        <h2>Iniciar Sesión</h2>
+        <input type="text" id="login-username" placeholder="Usuario" required />
+        <input
+          type="password"
+          id="login-password"
+          placeholder="Contraseña"
+          required
+        />
+        <button type="submit">Entrar</button>
+      </form>
+
+      <hr />
+
+      <form id="register-form">
+        <h2>Crear Cuenta</h2>
+        <input
+          type="text"
+          id="register-username"
+          placeholder="Usuario nuevo"
+          required
+        />
+        <input
+          type="password"
+          id="register-password"
+          placeholder="Contraseña nueva"
+          required
+        />
+        <button type="submit">Registrar</button>
+      </form>
+
+      <p id="mensaje"></p>
+    </div>
+
+    <script src="js/login.js"></script>
+  </body>
+</html>

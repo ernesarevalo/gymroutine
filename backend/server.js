@@ -7,6 +7,14 @@ const nodemailer = require("nodemailer");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const authRoutes = require("./routes/authRoutes");
+const recomendacionesRoutes = require("./routes/recomendacionesRoutes");
+const historialRoutes = require("./routes/historialRoutes");
+
+app.use("/api/auth", authRoutes);
+app.use("/api/recomendaciones", recomendacionesRoutes);
+app.use("/api/historial", historialRoutes);
+
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -16,7 +24,7 @@ const users = [
   {
     username: "ernes",
     password: bcrypt.hashSync("ernesadmin", 10),
-    email: "ernes@example.com",
+    email: "ernestoarevalo@gmail.com",
     nombre: "Ernesto",
     apellido: "Arevalo",
   },
