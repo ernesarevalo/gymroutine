@@ -1,0 +1,141 @@
+/* Estilos base */
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --text-color: #333;
+    --bg-color: #f8f9fa;
+    --nav-bg: #2c3e50;
+    --nav-text: #ecf0f1;
+    --card-bg: #ffffff;
+    --button-bg: #3498db;
+    --button-hover: #2980b9;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+  }
+  
+  /* Navbar styles */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: var(--nav-bg);
+    color: var(--nav-text);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .logo img {
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+  }
+  
+  .nav-links a {
+    color: var(--nav-text);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  
+  .nav-links a:hover {
+    color: var(--secondary-color);
+  }
+  
+  #theme-toggle {
+    background-color: var(--button-bg);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+  }
+  
+  #theme-toggle:hover {
+    background-color: var(--button-hover);
+  }
+  
+  /* Main content styles */
+  .container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  
+  h1 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+  }
+  
+  .exercise {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .exercise h2 {
+    color: var(--primary-color);
+    margin-top: 0;
+  }
+  
+  /* Footer styles */
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: var(--nav-bg);
+    color: var(--nav-text);
+    margin-top: 2rem;
+  }
+  
+  /* Definición de los temas */
+  .pink-theme {
+    --primary-color: #e91e63;
+    --secondary-color: #ff80ab;
+    --bg-color: #fff5f7;
+    --nav-bg: #ad1457;
+    --card-bg: #ffffff;
+    --button-bg: #e91e63;
+    --button-hover: #c2185b;
+  }
+  
+  .red-theme {
+    --primary-color: #f44336;
+    --secondary-color: #ff7961;
+    --bg-color: #ffebee;
+    --nav-bg: #c62828;
+    --card-bg: #ffffff;
+    --button-bg: #f44336;
+    --button-hover: #d32f2f;
+  }
+  
+  .blue-theme {
+    --primary-color: #2196f3;
+    --secondary-color: #64b5f6;
+    --bg-color: #e3f2fd;
+    --nav-bg: #1565c0;
+    --card-bg: #ffffff;
+    --button-bg: #2196f3;
+    --button-hover: #1976d2;
+  }
