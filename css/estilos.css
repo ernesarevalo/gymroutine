@@ -1,81 +1,72 @@
 /* css/estilos.css */
 
-/* Variables de color para tema claro/oscuro */
+/* Variables de color para Tema Claro */
 :root {
-    /* Tema Claro */
-    --bg-color-light: #f4f4f4;
-    --text-color-light: #333;
-    --container-bg-light: #fff;
-    --header-color-light: #0056b3;
-    --border-color-light: #eee;
-    --exercise-bg-light: #e9f5ff;
-    --exercise-border-light: #007bff;
-    --list-item-bg-light: #dff0fa;
-    --notes-bg-light: #f9f9f9;
-    --notes-border-light: #ddd;
-    --link-bg-light: #007bff;
-    --link-hover-bg-light: #0056b3;
-    --accent-color-light: #28a745;
-    --warning-color-light: #e74c3c;
-    --input-bg-light: #fff;
-    --input-border-light: #ccc;
-    --nav-bg-light: #007bff;
-    --nav-link-color-light: white;
-
-    /* Tema Oscuro */
-    --bg-color-dark: #2c3e50; /* Azul oscuro pizarra */
-    --text-color-dark: #ecf0f1; /* Gris claro */
-    --container-bg-dark: #34495e; /* Azul más oscuro */
-    --header-color-dark: #3498db; /* Azul vibrante */
-    --border-color-dark: #4a627d;
-    --exercise-bg-dark: #3d566e; /* Un tono un poco más claro que el container */
-    --exercise-border-dark: #3498db;
-    --list-item-bg-dark: #4d6d8a;
-    --notes-bg-dark: #44607a;
-    --notes-border-dark: #5c7e9c;
-    --link-bg-dark: #3498db;
-    --link-hover-bg-dark: #2980b9;
-    --accent-color-dark: #2ecc71; /* Verde brillante */
-    --warning-color-dark: #e74c3c;
-    --input-bg-dark: #4d6d8a;
-    --input-border-dark: #5c7e9c;
-    --nav-bg-dark: #2c3e50;
-    --nav-link-color-dark: #ecf0f1;
+    --bg-color: #f4f4f4;
+    --text-color: #333;
+    --container-bg: #fff;
+    --header-color: #0056b3;
+    --border-color: #eee;
+    --exercise-bg: #e9f5ff;
+    --exercise-border: #007bff;
+    --list-item-bg: #dff0fa;
+    --notes-bg: #f9f9f9;
+    --notes-border: #ddd;
+    --link-bg: #007bff;
+    --link-hover-bg: #0056b3;
+    --accent-color: #28a745; /* Verde para acentos */
+    --warning-color: #e74c3c; /* Rojo para errores/eliminar */
+    --input-bg: #fff;
+    --input-border: #ccc;
+    --nav-bg: #007bff; /* Azul vibrante para la barra de navegación */
+    --nav-link-color: white;
+    --timer-active-color: #0056b3; /* Azul para el temporizador activo */
+    --timer-recovery-color: #28a745; /* Verde para la fase de recuperación */
 }
 
-/* Base del tema (se definirá en JS si es light o dark) */
+/* Base del tema (ahora solo claro) */
 body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 20px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     transition: background-color 0.3s, color 0.3s;
 }
 
 .container {
     max-width: 900px;
     margin: 20px auto;
+    background: var(--container-bg);
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 h1, h2 {
-    border-bottom: 2px solid;
+    color: var(--header-color);
+    border-bottom: 2px solid var(--border-color);
     padding-bottom: 10px;
     margin-top: 20px;
 }
 
 h3 {
+    color: var(--exercise-border);
     margin-top: 15px;
 }
 
 .exercise {
     margin-bottom: 20px;
     padding: 15px;
-    border-left: 5px solid;
+    background-color: var(--exercise-bg);
+    border-left: 5px solid var(--exercise-border);
     border-radius: 5px;
+}
+
+.exercise p strong {
+    color: var(--header-color);
 }
 
 .exercise ul {
@@ -84,19 +75,27 @@ h3 {
 }
 
 .exercise ul li {
+    background: var(--list-item-bg);
     margin-bottom: 5px;
     padding: 8px 10px;
     border-radius: 3px;
 }
 
 .notes, .cardio {
-    border: 1px solid;
+    background-color: var(--notes-bg);
+    border: 1px solid var(--notes-border);
     padding: 15px;
     border-radius: 5px;
     margin-top: 20px;
 }
 
+.notes h3, .cardio h3 {
+    color: var(--accent-color);
+}
+
 button {
+    background-color: var(--accent-color);
+    color: white;
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
@@ -107,11 +106,11 @@ button {
 }
 
 button:hover {
-    filter: brightness(110%); /* Un poco más brillante al pasar el mouse */
+    filter: brightness(110%);
 }
 
 button:disabled {
-    background-color: #7f8c8d !important; /* Color gris para deshabilitado */
+    background-color: #7f8c8d !important;
     cursor: not-allowed;
 }
 
@@ -123,13 +122,16 @@ input[type="number"],
 textarea {
     margin-top: 10px;
     padding: 8px;
-    border: 1px solid;
+    border: 1px solid var(--input-border);
     border-radius: 4px;
     width: calc(100% - 18px);
+    background-color: var(--input-bg);
+    color: var(--text-color);
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 input::placeholder,
 textarea::placeholder {
+    color: #999;
     transition: color 0.3s;
 }
 
@@ -139,6 +141,16 @@ textarea::placeholder {
     margin-top: 10px;
     border-radius: 5px;
     font-weight: bold;
+}
+
+.message.error {
+    background-color: var(--warning-color);
+    color: white;
+}
+
+.message.success {
+    background-color: var(--accent-color);
+    color: white;
 }
 
 /* Estilos específicos del login */
@@ -153,13 +165,14 @@ textarea::placeholder {
     margin-bottom: 15px;
 }
 
-/* NAV principal (con temporizador y tema) */
+/* NAV principal (con temporizador) */
 .main-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: var(--nav-bg);
     padding: 10px 20px;
-    border-bottom: 2px solid;
+    border-bottom: 2px solid var(--border-color);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -174,12 +187,18 @@ textarea::placeholder {
 }
 
 .main-nav .left-links a {
+    color: var(--nav-link-color);
+    background-color: var(--link-bg);
     text-decoration: none;
     padding: 8px 15px;
     border-radius: 5px;
     transition: background-color 0.3s ease, color 0.3s;
     white-space: nowrap;
     flex-shrink: 0;
+}
+
+.main-nav .left-links a:hover {
+    background-color: var(--link-hover-bg);
 }
 
 .timer-controls {
@@ -200,18 +219,15 @@ textarea::placeholder {
 .timer-display {
     font-size: 1.5em;
     font-weight: bold;
+    color: var(--timer-active-color); /* Color por defecto para el temporizador */
     min-width: 80px;
     text-align: center;
     transition: color 0.3s;
 }
-
-.theme-toggle-btn {
-    padding: 8px 12px;
-    font-size: 0.9em;
-    margin-left: 15px;
-    margin-right: 5px;
-    margin-top: 0;
+.timer-display.recovery-phase {
+    color: var(--timer-recovery-color); /* Color para la fase de recuperación */
 }
+
 
 /* Sección de historial de peso y nutrición */
 #weight-history-list, #food-log-list {
@@ -221,7 +237,8 @@ textarea::placeholder {
 }
 
 #weight-history-list li, #food-log-list .day-entry {
-    border: 1px solid;
+    background: var(--exercise-bg);
+    border: 1px solid var(--exercise-border);
     padding: 10px;
     margin-bottom: 8px;
     border-radius: 5px;
@@ -237,7 +254,12 @@ textarea::placeholder {
     background-color: var(--warning-color);
     padding: 5px 10px;
     font-size: 0.8em;
-    margin-top: 5px; /* Pequeño margen para separación */
+    margin-top: 5px;
+}
+
+#weight-history-list li button:hover,
+#food-log-list .food-item button:hover {
+    background-color: #c0392b;
 }
 
 #food-log-list .day-header {
@@ -246,7 +268,7 @@ textarea::placeholder {
     margin-top: 20px;
     margin-bottom: 10px;
     color: var(--header-color);
-    border-bottom: 1px dotted;
+    border-bottom: 1px dotted var(--border-color);
     padding-bottom: 5px;
 }
 
@@ -259,168 +281,6 @@ textarea::placeholder {
     justify-content: space-between;
     align-items: center;
     transition: background-color 0.3s;
-}
-
-/* --- Tema Oscuro (clases aplicadas por JS) --- */
-body.dark-theme {
-    background-color: var(--bg-color-dark);
-    color: var(--text-color-dark);
-}
-.dark-theme .container {
-    background: var(--container-bg-dark);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-.dark-theme h1, .dark-theme h2 {
-    color: var(--header-color-dark);
-    border-color: var(--border-color-dark);
-}
-.dark-theme h3 {
-    color: var(--exercise-border-dark);
-}
-.dark-theme .exercise {
-    background-color: var(--exercise-bg-dark);
-    border-color: var(--exercise-border-dark);
-}
-.dark-theme .exercise p strong {
-    color: var(--header-color-dark);
-}
-.dark-theme .exercise ul li {
-    background: var(--list-item-bg-dark);
-}
-.dark-theme .notes, .dark-theme .cardio {
-    background-color: var(--notes-bg-dark);
-    border-color: var(--notes-border-dark);
-}
-.dark-theme .notes h3, .dark-theme .cardio h3 {
-    color: var(--accent-color-dark);
-}
-.dark-theme button {
-    background-color: var(--accent-color-dark);
-    color: var(--nav-link-color-dark);
-}
-.dark-theme button:hover {
-    background-color: var(--link-hover-bg-dark);
-}
-.dark-theme .weight-input,
-.dark-theme input[type="text"],
-.dark-theme input[type="password"],
-.dark-theme input[type="number"],
-.dark-theme textarea {
-    background-color: var(--input-bg-dark);
-    color: var(--text-color-dark);
-    border-color: var(--input-border-dark);
-}
-.dark-theme input::placeholder,
-.dark-theme textarea::placeholder {
-    color: #999;
-}
-.dark-theme .message.error { background-color: var(--warning-color-dark); }
-.dark-theme .message.success { background-color: var(--accent-color-dark); }
-.dark-theme .main-nav {
-    background-color: var(--nav-bg-dark);
-    border-color: var(--border-color-dark);
-}
-.dark-theme .main-nav .left-links a {
-    color: var(--nav-link-color-dark);
-    background-color: var(--link-bg-dark); /* Fondo para botones de nav */
-}
-.dark-theme .main-nav .left-links a:hover {
-    background-color: var(--link-hover-bg-dark);
-}
-.dark-theme .timer-display {
-    color: var(--header-color-dark);
-}
-.dark-theme #weight-history-list li, .dark-theme #food-log-list .day-entry {
-    background: var(--exercise-bg-dark);
-    border-color: var(--exercise-border-dark);
-}
-.dark-theme #food-log-list .food-item {
-    background: var(--list-item-bg-dark);
-}
-.dark-theme #food-log-list .day-header {
-    color: var(--header-color-dark);
-    border-color: var(--border-color-dark);
-}
-
-/* --- Tema Claro (clases aplicadas por JS) --- */
-body.light-theme {
-    background-color: var(--bg-color-light);
-    color: var(--text-color-light);
-}
-.light-theme .container {
-    background: var(--container-bg-light);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-.light-theme h1, .light-theme h2 {
-    color: var(--header-color-light);
-    border-color: var(--border-color-light);
-}
-.light-theme h3 {
-    color: var(--exercise-border-light);
-}
-.light-theme .exercise {
-    background-color: var(--exercise-bg-light);
-    border-color: var(--exercise-border-light);
-}
-.light-theme .exercise p strong {
-    color: var(--header-color-light);
-}
-.light-theme .exercise ul li {
-    background: var(--list-item-bg-light);
-}
-.light-theme .notes, .light-theme .cardio {
-    background-color: var(--notes-bg-light);
-    border-color: var(--notes-border-light);
-}
-.light-theme .notes h3, .light-theme .cardio h3 {
-    color: var(--accent-color-light);
-}
-.light-theme button {
-    background-color: var(--accent-color-light);
-    color: var(--nav-link-color-light);
-}
-.light-theme button:hover {
-    background-color: var(--link-hover-bg-light);
-}
-.light-theme .weight-input,
-.light-theme input[type="text"],
-.light-theme input[type="password"],
-.light-theme input[type="number"],
-.light-theme textarea {
-    background-color: var(--input-bg-light);
-    color: var(--text-color-light);
-    border-color: var(--input-border-light);
-}
-.light-theme input::placeholder,
-.light-theme textarea::placeholder {
-    color: #555;
-}
-.light-theme .message.error { background-color: var(--warning-color-light); }
-.light-theme .message.success { background-color: var(--accent-color-light); }
-.light-theme .main-nav {
-    background-color: var(--nav-bg-light);
-    border-color: var(--border-color-light);
-}
-.light-theme .main-nav .left-links a {
-    color: var(--nav-link-color-light);
-    background-color: var(--link-bg-light);
-}
-.light-theme .main-nav .left-links a:hover {
-    background-color: var(--link-hover-bg-light);
-}
-.light-theme .timer-display {
-    color: var(--header-color-light);
-}
-.light-theme #weight-history-list li, .light-theme #food-log-list .day-entry {
-    background: var(--exercise-bg-light);
-    border-color: var(--exercise-border-light);
-}
-.light-theme #food-log-list .food-item {
-    background: var(--list-item-bg-light);
-}
-.light-theme #food-log-list .day-header {
-    color: var(--header-color-light);
-    border-color: var(--border-color-light);
 }
 
 
@@ -448,12 +308,12 @@ body.light-theme {
     }
 
     .navigation {
-        flex-direction: column; /* Apila los enlaces en columnas */
+        flex-direction: column;
         gap: 8px;
     }
 
     .navigation a {
-        width: calc(100% - 20px); /* Ocupa casi todo el ancho */
+        width: calc(100% - 20px);
         padding: 12px 15px;
     }
 
@@ -472,10 +332,10 @@ body.light-theme {
         gap: 5px;
     }
     .main-nav .left-links a {
-        width: auto; /* Permite que los enlaces se ajusten a su contenido */
+        width: auto;
         text-align: center;
-        margin: 0; /* Reiniciar márgenes */
-        flex-grow: 1; /* Para que se expandan si pueden */
+        margin: 0;
+        flex-grow: 1;
     }
 
     .timer-controls {
@@ -490,19 +350,13 @@ body.light-theme {
     .timer-display {
         margin-bottom: 10px;
     }
-    .theme-toggle-btn {
-        margin-left: 0;
-        margin-right: 0;
-        width: 100%;
-        text-align: center;
-    }
-    .main-nav button { /* Botones generales del nav */
+    .main-nav button {
         width: 100%;
         margin-top: 5px;
     }
 
     #weight-history-list li, #food-log-list .day-entry {
-        flex-direction: column; /* Apila el contenido del item */
+        flex-direction: column;
         align-items: flex-start;
     }
     #weight-history-list li span, #food-log-list .food-item span {
