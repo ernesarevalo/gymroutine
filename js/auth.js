@@ -6,32 +6,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordInput = document.getElementById('password');
     const messageDiv = document.getElementById('message');
 
-    if (loginForm) { // Asegurarse de que estamos en la página de login
+    // Solo ejecutar la lógica de login si estamos en la página del formulario de login
+    if (loginForm) {
+        // Redirigir a index.html (ahora la Home) si ya está logueado
+        if (localStorage.getItem('loggedIn') === 'true') {
+            window.location.href = 'index.html'; // Redirige a la página principal (que ahora es index.html)
+            return; // Detiene la ejecución
+        }
+
         loginForm.addEventListener('submit', (e) => {
-            e.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
+            e.preventDefault();
 
             const username = usernameInput.value;
             const password = passwordInput.value;
 
-            // Limitar el campo de usuario a solo números
             if (!/^\d+$/.test(username)) {
                 showMessage('El usuario debe contener solo números.', 'error');
                 return;
             }
 
-            // Usuarios predefinidos
             const users = {
                 '0000': 'AdminUser6454',
                 '33118884': 'ernesto!1'
             };
 
             if (users[username] && users[username] === password) {
-                // Autenticación exitosa
-                localStorage.setItem('loggedIn', 'true'); // Marca al usuario como logeado
-                localStorage.setItem('currentUser', username); // Guarda el usuario logeado
+                localStorage.setItem('loggedIn', 'true');
+                localStorage.setItem('currentUser', username);
                 showMessage('Inicio de sesión exitoso. Redirigiendo...', 'success');
                 setTimeout(() => {
-                    window.location.href = 'home.html'; // Redirige a la página principal
+                    window.location.href = 'index.html'; // Redirige a la página principal (index.html)
                 }, 1000);
             } else {
                 showMessage('Usuario o contraseña incorrectos.', 'error');
@@ -40,17 +44,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showMessage(msg, type) {
-        messageDiv.textContent = msg;
-        messageDiv.className = `message ${type}`;
-        messageDiv.style.display = 'block';
+        if (messageDiv) {
+            messageDiv.textContent = msg;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+        }
     }
 });
 
-// Función para verificar si el usuario está logeado (para usar en otras páginas)
-function checkAuth() {
+// Función para verificar si el usuario está logeado (para usar en TODAS las páginas que requieren login)
+function checkAuthAndRedirect() {
     const loggedIn = localStorage.getItem('loggedIn');
-    if (loggedIn !== 'true') {
-        window.location.href = 'index.html'; // Redirige al login si no está logeado
+    // Si no está logeado Y no es la página de login (index.html)
+    if (loggedIn !== 'true' && window.location.pathname.split('/').pop() !== 'index.html') {
+        window.location.href = 'index.html'; // Redirige al login
+    } else if (loggedIn === 'true' && window.location.pathname.split('/').pop() === 'index.html' && document.getElementById('loginForm')) {
+        // Si ya está logeado y está en la página de login, lo redirige a la home (que ahora es index.html principal)
+        // Esto previene que se quede atascado en el formulario de login si recarga la página
+        // Solo lo redirige si el formulario de login es visible, para no interferir con la vista principal de index.html
+        window.location.href = 'index.html'; 
     }
 }
 
@@ -58,5 +70,6 @@ function checkAuth() {
 function logout() {
     localStorage.removeItem('loggedIn');
     localStorage.removeItem('currentUser');
-    window.location.href = 'index.html'; // Redirige al login
+    // Limpiar localStorage específico de la app si es necesario, ej. localStorage.removeItem('weightHistory');
+    window.location.href = 'index.html'; // Redirige al login (que ahora es index.html)
 }
