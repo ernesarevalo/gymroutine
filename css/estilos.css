@@ -22,14 +22,15 @@
     --nav-link-color: white;
     --timer-active-color: #0056b3; /* Azul para el temporizador activo */
     --timer-recovery-color: #28a745; /* Verde para la fase de recuperación */
+    --hamburger-icon-color: white;
 }
 
-/* Base del tema (ahora solo claro) */
+/* Base del tema (solo claro) */
 body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
     margin: 0;
-    padding: 20px;
+    padding: 0; /* Ajustar padding para acomodar la barra de arriba */
     background-color: var(--bg-color);
     color: var(--text-color);
     transition: background-color 0.3s, color 0.3s;
@@ -165,67 +166,106 @@ textarea::placeholder {
     margin-bottom: 15px;
 }
 
-/* NAV principal (con temporizador) */
-.main-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+/* --- Top Bar (Siempre visible, con temporizador y botón de hamburguesa) --- */
+.top-bar {
     background-color: var(--nav-bg);
     padding: 10px 20px;
     border-bottom: 2px solid var(--border-color);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    flex-wrap: wrap;
-    transition: background-color 0.3s, border-color 0.3s;
-}
-
-.main-nav .left-links {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky; /* Siempre visible arriba */
+    top: 0;
+    width: 100%;
+    box-sizing: border-box; /* Incluye padding en el ancho */
+    z-index: 1000; /* Asegura que esté por encima de todo */
+    min-height: 60px; /* Altura mínima para asegurar espacio */
 }
 
-.main-nav .left-links a {
-    color: var(--nav-link-color);
-    background-color: var(--link-bg);
-    text-decoration: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, color 0.3s;
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-
-.main-nav .left-links a:hover {
-    background-color: var(--link-hover-bg);
-}
-
-.timer-controls {
+/* Controles del temporizador en la barra superior */
+.top-bar .timer-controls {
     display: flex;
     gap: 10px;
     align-items: center;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-wrap: nowrap; /* Evita que los elementos se envuelvan */
+    flex-grow: 1; /* Permite que ocupe el espacio central */
+    justify-content: center; /* Centra los controles si hay espacio */
+    padding: 0 10px; /* Pequeño padding para no pegar a los bordes */
 }
-
-.timer-controls input {
-    width: 60px;
+.top-bar .timer-controls input {
+    width: 50px; /* Un poco más pequeños en la barra superior */
     text-align: center;
     padding: 5px;
     margin-top: 0;
+    flex-shrink: 0;
+}
+.top-bar .timer-controls button {
+    padding: 5px 10px;
+    margin-top: 0;
+    font-size: 0.9em;
+    flex-shrink: 0;
+}
+.top-bar .timer-display {
+    font-size: 1.3em; /* Un poco más pequeño que el h1 */
+    font-weight: bold;
+    color: var(--timer-active-color);
+    min-width: 60px; /* Espacio mínimo */
+    text-align: center;
+    flex-shrink: 0;
 }
 
-.timer-display {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: var(--timer-active-color); /* Color por defecto para el temporizador */
-    min-width: 80px;
-    text-align: center;
-    transition: color 0.3s;
+/* Icono de Hamburguesa (visible solo en móvil) */
+.hamburger-icon {
+    display: none; /* Oculto por defecto en desktop */
+    font-size: 2em; /* Tamaño grande para ser fácil de tocar */
+    color: var(--hamburger-icon-color);
+    cursor: pointer;
+    z-index: 1001; /* Siempre encima del menú lateral */
+    padding: 5px; /* Para hacer el área de click más grande */
 }
-.timer-display.recovery-phase {
-    color: var(--timer-recovery-color); /* Color para la fase de recuperación */
+
+/* Menú de navegación lateral (visible solo en móvil y abierto por JS) */
+.side-nav {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0;
+    right: -250px; /* Inicialmente fuera de la pantalla */
+    width: 250px;
+    height: 100%;
+    background-color: #2c3e50; /* Un color oscuro para el menú lateral */
+    box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+    padding-top: 80px; /* Deja espacio para la top-bar y el icono */
+    transition: right 0.3s ease-out;
+    z-index: 999; /* Por debajo del icono de hamburguesa, pero encima del contenido */
+    display: flex; /* Usar flexbox para organizar los enlaces */
+    flex-direction: column;
+    gap: 15px; /* Espacio entre los enlaces */
+    box-sizing: border-box;
+}
+
+.side-nav.open {
+    right: 0; /* Se desliza para ser visible */
+}
+
+.side-nav a {
+    color: white;
+    text-decoration: none;
+    padding: 15px 20px;
+    display: block; /* Cada enlace ocupa su propia línea */
+    border-bottom: 1px solid rgba(255,255,255,0.1); /* Separador entre enlaces */
+    transition: background-color 0.2s;
+}
+
+.side-nav a:hover {
+    background-color: #34495e; /* Fondo al pasar el mouse */
+}
+
+.side-nav button {
+    width: calc(100% - 40px); /* Ajustar al padding */
+    margin: 20px auto; /* Centrar el botón de logout */
+    background-color: var(--warning-color);
+    color: white;
 }
 
 
@@ -284,10 +324,25 @@ textarea::placeholder {
 }
 
 
-/* --- Diseño Responsivo para Celulares --- */
+/* --- Diseño Responsivo (Desktop y Mobile) --- */
+
+/* Desktop (más ancho que 768px) */
+@media (min-width: 769px) {
+    .top-bar .hamburger-icon {
+        display: none; /* Asegura que el icono no se vea en desktop */
+    }
+    .top-bar .left-links { /* Asegura que los enlaces de navegación se vean en desktop */
+        display: flex;
+    }
+    .side-nav { /* Asegura que el menú lateral esté oculto en desktop */
+        display: none !important; /* !important para sobreescribir el display:flex del JS */
+    }
+}
+
+/* Móviles (hasta 768px) */
 @media (max-width: 768px) {
     body {
-        padding: 10px;
+        padding: 0; /* Quita el padding general para que el nav ocupe todo el ancho */
     }
 
     .container {
@@ -307,52 +362,33 @@ textarea::placeholder {
         font-size: 1.2em;
     }
 
-    .navigation {
-        flex-direction: column;
-        gap: 8px;
+    /* Ocultar enlaces de navegación en la top-bar en móvil */
+    .top-bar .left-links {
+        display: none;
     }
 
-    .navigation a {
-        width: calc(100% - 20px);
-        padding: 12px 15px;
+    /* Mostrar icono de hamburguesa en móvil */
+    .hamburger-icon {
+        display: block; /* Muestra el icono de hamburguesa */
     }
 
-    /* Ajustes para el NAV principal en móvil */
-    .main-nav {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 10px;
+    /* Ajustes para el temporizador en la top-bar en móvil */
+    .top-bar .timer-controls {
+        flex-grow: 1; /* Que ocupe el espacio restante */
+        flex-wrap: wrap; /* Permite que los elementos se envuelvan si no caben */
+        justify-content: center; /* Centra los controles si se envuelven */
+    }
+    .top-bar .timer-controls input {
+        width: 50px;
+    }
+    .top-bar .timer-controls button {
+        flex-grow: 1; /* Permite que los botones crezcan para llenar el espacio */
     }
 
-    .main-nav .left-links {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        margin-bottom: 10px;
-        gap: 5px;
-    }
-    .main-nav .left-links a {
-        width: auto;
-        text-align: center;
-        margin: 0;
-        flex-grow: 1;
-    }
-
-    .timer-controls {
-        flex-direction: column;
-        width: 100%;
-        gap: 5px;
-    }
-    .timer-controls input,
-    .timer-controls button {
-        width: calc(100% - 10px);
-    }
-    .timer-display {
-        margin-bottom: 10px;
-    }
-    .main-nav button {
+    .main-nav button { /* Botones generales del nav (incluye cerrar sesión) */
         width: 100%;
         margin-top: 5px;
+        box-sizing: border-box; /* Para que el padding no desborde */
     }
 
     #weight-history-list li, #food-log-list .day-entry {
@@ -362,7 +398,6 @@ textarea::placeholder {
     #weight-history-list li span, #food-log-list .food-item span {
         margin-bottom: 5px;
     }
-
 }
 
 @media (max-width: 480px) {
@@ -377,5 +412,9 @@ textarea::placeholder {
     }
     .container {
         padding: 10px;
+    }
+    /* Ajustar tamaño de fuente del temporizador para pantallas muy pequeñas */
+    .top-bar .timer-display {
+        font-size: 1.1em;
     }
 }
