@@ -3,31 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Rutina de Gimnasio</title>
+    <title>Login - Mi Rutina</title>
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-    <div class="container">
-        <h1>¡Bienvenido a tu Rutina de Gimnasio!</h1>
-        <p>Aquí encontrarás tu plan de entrenamiento personalizado, diseñado para ayudarte a bajar de peso, fortalecer tu cuerpo, trabajar tu diastasis abdominal y mejorar tu resistencia para el fútbol.</p>
-        <p>Recordá la importancia de la técnica y de escuchar a tu cuerpo. ¡Mucha suerte!</p>
-
-        <div class="navigation" style="margin-top: 40px;">
-            <a href="dia1.html">Día 1: Tren Superior y Core</a>
-            <a href="dia2.html">Día 2: Tren Inferior y Core</a>
-            <a href="dia3.html">Día 3: Cuerpo Completo y Cardio</a>
-            <a href="estiramientos.html">Estiramientos</a> </div>
-
-        <div class="notes" style="margin-top: 30px;">
-            <h3>Consejos Clave:</h3>
-            <ul>
-                <li><strong>Activación del Transverso Abdominal:</strong> Recordá activar este músculo clave en cada ejercicio, llevando el ombligo hacia la columna.</li>
-                <li><strong>Respiración:</strong> Inhalá por la nariz y exhalá por la boca durante el esfuerzo. Evitá pujar o aguantar la respiración.</li>
-                <li><strong>Hidratación:</strong> Bebé abundante agua durante todo el día.</li>
-                <li><strong>Calentamiento y Vuelta a la Calma:</strong> No olvides estas fases esenciales al inicio y al final de cada sesión.</li>
-                <li><strong>Escuchá tu Cuerpo:</strong> Si sentís dolor agudo o abultamiento en el abdomen, detené el ejercicio y consultá.</li>
-            </ul>
-        </div>
+    <div class="container login-container">
+        <h1>Iniciar Sesión</h1>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Usuario (solo números)" required pattern="[0-9]*" inputmode="numeric">
+            <input type="password" id="password" placeholder="Contraseña" required>
+            <button type="submit">Entrar</button>
+        </form>
+        <div id="message" class="message" style="display:none;"></div>
     </div>
+    <script src="js/auth.js"></script>
 </body>
 </html>
