@@ -1,16 +1,28 @@
 // js/app.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    // La verificación de autenticación se maneja directamente en el DOMContentLoaded de auth.js
-    // y en el script inline de cada página.
-    // Aquí, solo nos aseguramos de que no sea la página de login si vamos a ejecutar lógica que requiere login.
-    if (window.location.pathname.split('/').pop() !== 'index.html' || document.getElementById('main-content')) {
-        // Lógica para páginas de rutina, estiramientos, peso_nutricion y la parte principal de index.html
+    // Asegurarse de que el usuario está autenticado en todas las páginas que usan app.js
+    // Esta llamada es fundamental para la redirección de seguridad.
+    checkAuthAndRedirect();
+
+    // --- Lógica del Menú Hamburguesa ---
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+    const sideNav = document.getElementById('side-nav');
+    
+    if (hamburgerIcon && sideNav) {
+        hamburgerIcon.addEventListener('click', () => {
+            sideNav.classList.toggle('open');
+        });
+
+        // Opcional: Cerrar el menú si se hace clic fuera de él (solo si no es el icono)
+        document.addEventListener('click', (event) => {
+            if (sideNav.classList.contains('open') && !sideNav.contains(event.target) && event.target !== hamburgerIcon) {
+                sideNav.classList.remove('open');
+            }
+        });
     }
 
-    // --- Lógica de Temporizador (integrada en el NAV) ---
-    // ... (todo el código del temporizador, SIN CAMBIOS respecto a la última versión) ...
-
+    // --- Lógica de Temporizador (integrada en la Top Bar) ---
     const timerDisplay = document.getElementById('timer-display');
     const exerciseTimeInput = document.getElementById('exercise-time');
     const recoveryTimeInput = document.getElementById('recovery-time');
@@ -18,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const startTimerBtn = document.getElementById('start-timer-btn');
     const resetTimerBtn = document.getElementById('reset-timer-btn');
 
-    let currentTimerInterval; // Para almacenar el setInterval
+    let currentTimerInterval;
     let timeLeftInPhase;
     let currentPhase = 'pre-start'; // 'pre-start', 'exercise', 'recovery'
     let currentRound = 1;
@@ -26,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let timerState = 'stopped'; // 'stopped', 'pre-countdown', 'running'
 
     // Alarmas (ajusta las rutas a tus archivos de audio)
+    // Crea una carpeta 'audio' dentro de 'img/' y coloca los archivos .mp3 o .wav
     const startAlarm = new Audio('img/audio/start_alarm.mp3');
     const midAlarm = new Audio('img/audio/mid_alarm.mp3');
     const tenSecAlarm = new Audio('img/audio/ten_sec_alarm.mp3');
@@ -46,13 +59,13 @@ document.addEventListener('DOMContentLoaded', () => {
             timerDisplay.textContent = formatTime(timeLeftInPhase);
             if (currentPhase === 'exercise') {
                 timerDisplay.classList.remove('recovery-phase');
-                timerDisplay.style.color = 'var(--timer-active-color)'; // Color para ejercicio (azul)
+                timerDisplay.style.color = 'var(--timer-active-color)';
             } else if (currentPhase === 'recovery') {
                 timerDisplay.classList.add('recovery-phase');
-                timerDisplay.style.color = 'var(--timer-recovery-color)'; // Color para recuperación (verde)
+                timerDisplay.style.color = 'var(--timer-recovery-color)';
             } else { // pre-start o stopped
                 timerDisplay.classList.remove('recovery-phase');
-                timerDisplay.style.color = 'var(--text-color)'; // Color neutro
+                timerDisplay.style.color = 'var(--text-color)';
             }
         }
         if (startTimerBtn) startTimerBtn.disabled = (timerState === 'running' || timerState === 'pre-countdown');
@@ -61,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function playAlarm(alarm) {
         if (alarm && alarm.play) {
-            alarm.currentTime = 0; // Reinicia el audio si ya está sonando
+            alarm.currentTime = 0;
             alarm.play().catch(e => console.error("Error al reproducir audio:", e));
         }
     }
@@ -113,19 +126,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 playAlarm(tenSecAlarm);
             }
             if (timeLeftInPhase <= 0) {
-                clearInterval(currentTimerInterval); // Detener el intervalo actual
+                clearInterval(currentTimerInterval);
                 if (currentRound < parseInt(roundsInput.value)) {
                     currentPhase = 'recovery';
                     timeLeftInPhase = parseInt(recoveryTimeInput.value);
-                    if (timeLeftInPhase <= 0) { // Si no hay tiempo de recuperación, ir a la siguiente ronda
+                    if (timeLeftInPhase <= 0) {
                         currentRound++;
-                        currentPhase = 'exercise'; // Directly to next exercise
+                        currentPhase = 'exercise';
                         timeLeftInPhase = parseInt(exerciseTimeInput.value);
                         playAlarm(startAlarm);
                     } else {
-                        playAlarm(midAlarm); // Alarma de inicio de recuperación
+                        playAlarm(midAlarm);
                     }
-                    currentTimerInterval = setInterval(handleTimerTick, 1000); // Iniciar nuevo intervalo
+                    currentTimerInterval = setInterval(handleTimerTick, 1000);
                 } else {
                     finishTimer();
                     return;
@@ -137,13 +150,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 playAlarm(recoveryTenSecAlarm);
             }
             if (timeLeftInPhase <= 0) {
-                clearInterval(currentTimerInterval); // Detener el intervalo actual
+                clearInterval(currentTimerInterval);
                 currentRound++;
                 if (currentRound <= parseInt(roundsInput.value)) {
                     currentPhase = 'exercise';
                     timeLeftInPhase = parseInt(exerciseTimeInput.value);
                     playAlarm(startAlarm);
-                    currentTimerInterval = setInterval(handleTimerTick, 1000); // Iniciar nuevo intervalo
+                    currentTimerInterval = setInterval(handleTimerTick, 1000);
                 } else {
                     finishTimer();
                     return;
@@ -173,20 +186,18 @@ document.addEventListener('DOMContentLoaded', () => {
         updateTimerUI();
     }
 
-    if (startTimerBtn) { // Solo inicializar si los elementos del temporizador existen
+    if (startTimerBtn) {
         startTimerBtn.addEventListener('click', startTimerLogic);
         resetTimerBtn.addEventListener('click', resetTimer);
 
-        // Cargar valores guardados del temporizador al inicio
         exerciseTimeInput.value = localStorage.getItem('lastExerciseTime') || 60;
         recoveryTimeInput.value = localStorage.getItem('lastRecoveryTime') || 30;
         roundsInput.value = localStorage.getItem('lastRounds') || 3;
         
-        // Establecer el display inicial del temporizador
         if (timerDisplay) {
              timerDisplay.textContent = formatTime(parseInt(exerciseTimeInput.value));
         }
-        updateTimerUI(); // Actualizar el estado de los botones al cargar
+        updateTimerUI();
     }
 
 
@@ -214,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const foodDescriptionInput = document.getElementById('food-description');
     const foodLogList = document.getElementById('food-log-list');
 
-    if (weightForm) { // Solo si estamos en la página peso_nutricion.html
+    if (weightForm) {
         loadWeightHistory();
         loadFoodLog();
 
@@ -226,10 +237,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const today = new Date().toLocaleDateString('es-AR', {day: '2-digit', month: '2-digit', year: 'numeric'}); // Formato DD/MM/YYYY
+            const today = new Date().toLocaleDateString('es-AR', {day: '2-digit', month: '2-digit', year: 'numeric'});
             let history = JSON.parse(localStorage.getItem('weightHistory')) || [];
 
-            // Actualizar si ya existe una entrada para hoy, si no, agregar
             const existingEntryIndex = history.findIndex(entry => entry.date === today);
             if (existingEntryIndex !== -1) {
                 history[existingEntryIndex].weight = weight;
@@ -252,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const now = new Date();
-            const dateStr = now.toLocaleDateString('es-AR', {day: '2-digit', month: '2-digit', year: 'numeric'}); // Formato DD/MM/YYYY
+            const dateStr = now.toLocaleDateString('es-AR', {day: '2-digit', month: '2-digit', year: 'numeric'});
             const timeStr = now.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
 
             let foodLog = JSON.parse(localStorage.getItem('foodLog')) || {};
@@ -272,12 +282,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const history = JSON.parse(localStorage.getItem('weightHistory')) || [];
         weightHistoryList.innerHTML = '';
         history.sort((a, b) => {
-            // Convierte fechas "DD/MM/YYYY" a objetos Date para comparar
-            const [dayA, monthA, yearA] = a.date.split('/');
-            const [dayB, monthB, yearB] = b.date.split('/');
-            const dateA = new Date(`${yearA}-${monthA}-${dayA}`);
-            const dateB = new Date(`${yearB}-${monthB}-${dayB}`);
-            return dateB - dateA; // Ordena por fecha descendente (más reciente primero)
+            const dateA = a.date.split('/').reverse().join('-');
+            const dateB = b.date.split('/').reverse().join('-');
+            return new Date(dateB) - new Date(dateA);
         });
         
         history.forEach((entry, index) => {
@@ -295,10 +302,9 @@ document.addEventListener('DOMContentLoaded', () => {
         foodLogList.innerHTML = '';
 
         const sortedDates = Object.keys(foodLog).sort((a, b) => {
-            // Convierte fechas "DD/MM/YYYY" a formato "YYYY-MM-DD" para una comparación fiable
             const dateA = a.split('/').reverse().join('-');
             const dateB = b.split('/').reverse().join('-');
-            return new Date(dateB) - new Date(dateA); // Ordena las fechas de forma descendente (más reciente primero)
+            return new Date(dateB) - new Date(dateA);
         });
 
         sortedDates.forEach(dateStr => {
@@ -307,17 +313,15 @@ document.addEventListener('DOMContentLoaded', () => {
             dayHeader.classList.add('day-header');
             foodLogList.appendChild(dayHeader);
 
-            // Ordenar las comidas por hora dentro de cada día
             const mealsOfDay = foodLog[dateStr].sort((a, b) => {
-                // Asume formato "HH:MM"
                 const timeA = a.time.split(':').map(Number);
                 const timeB = b.time.split(':').map(Number);
-                if (timeA[0] !== timeB[0]) return timeA[0] - timeB[0]; // Compara horas
-                return timeA[1] - timeB[1]; // Compara minutos si las horas son iguales
+                if (timeA[0] !== timeB[0]) return timeA[0] - timeB[0];
+                return timeA[1] - timeB[1];
             });
 
             mealsOfDay.forEach((food, index) => {
-                const li = document.createElement('div'); // Usamos div para flexibilidad
+                const li = document.createElement('div');
                 li.classList.add('food-item');
                 li.innerHTML = `<span>${food.time} - ${food.description}</span> <button data-index="${index}" data-type="food" data-date="${dateStr}">Eliminar</button>`;
                 foodLogList.appendChild(li);
@@ -342,7 +346,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const dateToDelete = event.target.dataset.date;
             let foodLog = JSON.parse(localStorage.getItem('foodLog')) || {};
             if (foodLog[dateToDelete]) {
-                // Obtener las comidas del día y ordenarlas para encontrar el índice correcto
                 const mealsOfDay = foodLog[dateToDelete].sort((a, b) => {
                     const timeA = a.time.split(':').map(Number);
                     const timeB = b.time.split(':').map(Number);
@@ -350,12 +353,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     return timeA[1] - timeB[1];
                 });
                 
-                // Eliminar el elemento por su índice en el array ORDENADO
                 mealsOfDay.splice(indexToDelete, 1);
                 
-                // Actualizar el objeto foodLog con el array modificado
                 if (mealsOfDay.length === 0) {
-                    delete foodLog[dateToDelete]; // Elimina la fecha si no quedan comidas
+                    delete foodLog[dateToDelete];
                 } else {
                     foodLog[dateToDelete] = mealsOfDay;
                 }
