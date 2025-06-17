@@ -1,7 +1,53 @@
 // js/app.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Lógica de Temporizador ---
+    // Asegurarse de que el usuario está autenticado en todas las páginas que usan app.js
+    checkAuthAndRedirect();
+
+    // --- Lógica del Selector de Tema ---
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const body = document.body;
+
+    function loadTheme() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.className = savedTheme;
+        } else {
+            // Tema oscuro por defecto si no hay preferencia guardada
+            body.className = 'dark-theme';
+            localStorage.setItem('theme', 'dark-theme');
+        }
+        updateThemeButtonText();
+    }
+
+    function toggleTheme() {
+        if (body.classList.contains('dark-theme')) {
+            body.className = 'light-theme';
+            localStorage.setItem('theme', 'light-theme');
+        } else {
+            body.className = 'dark-theme';
+            localStorage.setItem('theme', 'dark-theme');
+        }
+        updateThemeButtonText();
+    }
+
+    function updateThemeButtonText() {
+        if (themeToggleBtn) {
+            if (body.classList.contains('dark-theme')) {
+                themeToggleBtn.textContent = 'Tema Claro';
+            } else {
+                themeToggleBtn.textContent = 'Tema Oscuro';
+            }
+        }
+    }
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', toggleTheme);
+    }
+    loadTheme(); // Cargar el tema al inicio de la página
+
+
+    // --- Lógica de Temporizador (integrada en el NAV) ---
     const timerDisplay = document.getElementById('timer-display');
     const exerciseTimeInput = document.getElementById('exercise-time');
     const recoveryTimeInput = document.getElementById('recovery-time');
@@ -9,25 +55,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const startTimerBtn = document.getElementById('start-timer-btn');
     const resetTimerBtn = document.getElementById('reset-timer-btn');
 
-    let currentTimer; // Para almacenar el setInterval
-    let timeLeft;
+    let currentTimerInterval; // Para almacenar el setInterval
+    let timeLeftInPhase;
+    let currentPhase = 'pre-start'; // 'pre-start', 'exercise', 'recovery'
     let currentRound = 1;
-    let isRecovery = false; // true si estamos en fase de recuperación, false si es ejercicio
-    let preTimerCount = 3; // Contador de 3 segundos antes de empezar
-    let timerRunning = false;
+    let preTimerCount = 3;
+    let timerState = 'stopped'; // 'stopped', 'pre-countdown', 'running'
 
     // Alarmas (ajusta las rutas a tus archivos de audio)
-    const startAlarm = new Audio('img/audio/start_alarm.mp3'); // Crea una carpeta 'audio' dentro de 'img'
+    // Crea una carpeta 'audio' dentro de 'img/' y coloca los archivos .mp3 o .wav
+    const startAlarm = new Audio('img/audio/start_alarm.mp3');
     const midAlarm = new Audio('img/audio/mid_alarm.mp3');
     const tenSecAlarm = new Audio('img/audio/ten_sec_alarm.mp3');
     const recoveryTenSecAlarm = new Audio('img/audio/recovery_ten_sec_alarm.mp3');
+    const endAlarm = new Audio('img/audio/end_alarm.mp3'); // Para el final completo
 
-    // Cargar volúmenes (opcional, ajusta si quieres que sean más bajos o altos)
-    startAlarm.volume = 0.7;
-    midAlarm.volume = 0.5;
-    tenSecAlarm.volume = 0.8;
-    recoveryTenSecAlarm.volume = 0.8;
-
+    startAlarm.volume = 0.7; midAlarm.volume = 0.5; tenSecAlarm.volume = 0.8;
+    recoveryTenSecAlarm.volume = 0.8; endAlarm.volume = 0.9;
 
     function formatTime(seconds) {
         const minutes = Math.floor(seconds / 60);
@@ -35,150 +79,153 @@ document.addEventListener('DOMContentLoaded', () => {
         return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
     }
 
-    function updateTimerDisplay() {
-        timerDisplay.textContent = formatTime(timeLeft);
+    function updateTimerUI() {
+        if (timerDisplay) {
+            timerDisplay.textContent = formatTime(timeLeftInPhase);
+            if (currentPhase === 'exercise') {
+                timerDisplay.style.color = 'var(--header-color-dark)'; // Color para ejercicio (azul)
+            } else if (currentPhase === 'recovery') {
+                timerDisplay.style.color = 'var(--accent-color-dark)'; // Color para recuperación (verde)
+            } else {
+                timerDisplay.style.color = 'var(--text-color-dark)'; // Color neutro para pre-start/stop
+            }
+        }
+        if (startTimerBtn) startTimerBtn.disabled = (timerState === 'running' || timerState === 'pre-countdown');
+        if (resetTimerBtn) resetTimerBtn.disabled = (timerState === 'stopped');
     }
 
     function playAlarm(alarm) {
-        alarm.currentTime = 0; // Reinicia el audio si ya está sonando
-        alarm.play().catch(e => console.error("Error al reproducir audio:", e));
+        if (alarm && alarm.play) {
+            alarm.currentTime = 0;
+            alarm.play().catch(e => console.error("Error al reproducir audio:", e));
+        }
     }
 
-    function startCountdown() {
-        if (timerRunning) return;
-        timerRunning = true;
-        
-        startTimerBtn.disabled = true;
-        resetTimerBtn.disabled = false;
+    function startTimerLogic() {
+        if (timerState !== 'stopped') return;
 
         let initialExerciseTime = parseInt(exerciseTimeInput.value);
         let initialRecoveryTime = parseInt(recoveryTimeInput.value);
         let totalRounds = parseInt(roundsInput.value);
 
         if (isNaN(initialExerciseTime) || initialExerciseTime <= 0) initialExerciseTime = 60;
-        if (isNaN(initialRecoveryTime) || initialRecoveryTime < 0) initialRecoveryTime = 30; // Puede ser 0
-        if (isNaN(totalRounds) || totalRounds <= 0) totalRounds = 1;
+        if (isNaN(initialRecoveryTime) || initialRecoveryTime < 0) initialRecoveryTime = 30;
+        if (isNaN(totalRounds) || totalRounds <= 0) totalRounds = 3;
 
         exerciseTimeInput.value = initialExerciseTime;
         recoveryTimeInput.value = initialRecoveryTime;
         roundsInput.value = totalRounds;
 
+        localStorage.setItem('lastExerciseTime', initialExerciseTime);
+        localStorage.setItem('lastRecoveryTime', initialRecoveryTime);
+        localStorage.setItem('lastRounds', totalRounds);
+
+        currentRound = 1;
         preTimerCount = 3;
+        currentPhase = 'pre-start';
+        timerState = 'pre-countdown';
+
         timerDisplay.textContent = `Preparate: ${preTimerCount}`;
-        
-        const preTimer = setInterval(() => {
+        currentTimerInterval = setInterval(handleTimerTick, 1000);
+        updateTimerUI();
+    }
+
+    function handleTimerTick() {
+        if (currentPhase === 'pre-start') {
             preTimerCount--;
             timerDisplay.textContent = `Preparate: ${preTimerCount}`;
             if (preTimerCount <= 0) {
-                clearInterval(preTimer);
-                startRound();
+                currentPhase = 'exercise';
+                timeLeftInPhase = parseInt(exerciseTimeInput.value);
+                playAlarm(startAlarm);
             }
-        }, 1000);
-    }
-
-    function startRound() {
-        if (currentRound > parseInt(roundsInput.value)) {
-            finishTimer();
-            return;
-        }
-
-        if (!isRecovery) { // Fase de Ejercicio
-            timeLeft = parseInt(exerciseTimeInput.value);
-            timerDisplay.style.color = var('--header-color-dark'); // Color principal del temporizador
-            updateTimerDisplay();
-            playAlarm(startAlarm); // Alarma de inicio de ejercicio
-            console.log(`Ronda ${currentRound}: Ejercicio`);
-
-            currentTimer = setInterval(() => {
-                timeLeft--;
-                updateTimerDisplay();
-
-                if (timeLeft === Math.floor(parseInt(exerciseTimeInput.value) / 2) && parseInt(exerciseTimeInput.value) > 20) {
-                    playAlarm(midAlarm); // Alarma de mitad de tiempo
+        } else if (currentPhase === 'exercise') {
+            timeLeftInPhase--;
+            if (timeLeftInPhase === Math.floor(parseInt(exerciseTimeInput.value) / 2) && parseInt(exerciseTimeInput.value) > 20) {
+                playAlarm(midAlarm);
+            }
+            if (timeLeftInPhase === 10) {
+                playAlarm(tenSecAlarm);
+            }
+            if (timeLeftInPhase <= 0) {
+                clearInterval(currentTimerInterval); // Detener el intervalo actual
+                if (currentRound < parseInt(roundsInput.value)) {
+                    currentPhase = 'recovery';
+                    timeLeftInPhase = parseInt(recoveryTimeInput.value);
+                    if (timeLeftInPhase <= 0) { // Si no hay recuperación, ir a la siguiente ronda
+                        currentRound++;
+                        currentPhase = 'exercise'; // Directly to next exercise
+                        timeLeftInPhase = parseInt(exerciseTimeInput.value);
+                        playAlarm(startAlarm);
+                    } else {
+                        playAlarm(midAlarm); // Alarma de inicio de recuperación
+                    }
+                    currentTimerInterval = setInterval(handleTimerTick, 1000); // Iniciar nuevo intervalo
+                } else {
+                    finishTimer();
+                    return;
                 }
-                if (timeLeft === 10) {
-                    playAlarm(tenSecAlarm); // Alarma de 10 segundos restantes
-                }
-
-                if (timeLeft <= 0) {
-                    clearInterval(currentTimer);
-                    isRecovery = true;
-                    startRound(); // Pasa a fase de recuperación o siguiente ronda
-                }
-            }, 1000);
-        } else { // Fase de Recuperación
-            timeLeft = parseInt(recoveryTimeInput.value);
-            if (timeLeft <= 0) { // Si no hay tiempo de recuperación
-                isRecovery = false;
+            }
+        } else if (currentPhase === 'recovery') {
+            timeLeftInPhase--;
+            if (timeLeftInPhase === 10) {
+                playAlarm(recoveryTenSecAlarm);
+            }
+            if (timeLeftInPhase <= 0) {
+                clearInterval(currentTimerInterval); // Detener el intervalo actual
                 currentRound++;
-                startRound();
-                return;
+                if (currentRound <= parseInt(roundsInput.value)) {
+                    currentPhase = 'exercise';
+                    timeLeftInPhase = parseInt(exerciseTimeInput.value);
+                    playAlarm(startAlarm);
+                    currentTimerInterval = setInterval(handleTimerTick, 1000); // Iniciar nuevo intervalo
+                } else {
+                    finishTimer();
+                    return;
+                }
             }
-            timerDisplay.style.color = var('--accent-color-dark'); // Color para recuperación
-            updateTimerDisplay();
-            playAlarm(midAlarm); // Alarma de inicio de recuperación (reutilizamos midAlarm)
-            console.log(`Ronda ${currentRound}: Recuperación`);
-
-            currentTimer = setInterval(() => {
-                timeLeft--;
-                updateTimerDisplay();
-
-                if (timeLeft === 10) {
-                    playAlarm(recoveryTenSecAlarm); // Alarma de 10 segundos restantes de recuperación
-                }
-
-                if (timeLeft <= 0) {
-                    clearInterval(currentTimer);
-                    isRecovery = false;
-                    currentRound++;
-                    startRound();
-                }
-            }, 1000);
         }
+        updateTimerUI();
     }
 
     function finishTimer() {
-        clearInterval(currentTimer);
+        clearInterval(currentTimerInterval);
         timerDisplay.textContent = "¡Terminado!";
-        timerDisplay.style.color = var(--accent-color-dark);
-        playAlarm(startAlarm); // Alarma final (reutilizamos startAlarm)
-        timerRunning = false;
-        startTimerBtn.disabled = false;
-        resetTimerBtn.disabled = false;
-        currentRound = 1;
-        isRecovery = false;
+        playAlarm(endAlarm);
+        timerState = 'stopped';
+        updateTimerUI();
     }
 
     function resetTimer() {
-        clearInterval(currentTimer);
-        timerRunning = false;
+        clearInterval(currentTimerInterval);
+        timerState = 'stopped';
+        preTimerCount = 3;
         currentRound = 1;
-        isRecovery = false;
-        timeLeft = parseInt(exerciseTimeInput.value);
-        updateTimerDisplay();
-        timerDisplay.style.color = var('--header-color-dark');
-        startTimerBtn.disabled = false;
-        resetTimerBtn.disabled = true;
+        currentPhase = 'pre-start';
+        if (timerDisplay) {
+            timerDisplay.textContent = formatTime(parseInt(exerciseTimeInput.value) || 60);
+        }
+        updateTimerUI();
     }
 
-    if (startTimerBtn) { // Solo si estamos en una página con el temporizador
-        startTimerBtn.addEventListener('click', startCountdown);
+    if (startTimerBtn) {
+        startTimerBtn.addEventListener('click', startTimerLogic);
         resetTimerBtn.addEventListener('click', resetTimer);
-        // Inicializar display al cargar la página
+
+        // Cargar valores guardados del temporizador al inicio
         exerciseTimeInput.value = localStorage.getItem('lastExerciseTime') || 60;
         recoveryTimeInput.value = localStorage.getItem('lastRecoveryTime') || 30;
         roundsInput.value = localStorage.getItem('lastRounds') || 3;
-        timeLeft = parseInt(exerciseTimeInput.value);
-        updateTimerDisplay();
-
-        // Guardar valores del temporizador cuando cambian
-        exerciseTimeInput.addEventListener('change', () => localStorage.setItem('lastExerciseTime', exerciseTimeInput.value));
-        recoveryTimeInput.addEventListener('change', () => localStorage.setItem('lastRecoveryTime', recoveryTimeInput.value));
-        roundsInput.addEventListener('change', () => localStorage.setItem('lastRounds', roundsInput.value));
+        
+        // Establecer el display inicial del temporizador
+        if (timerDisplay) {
+             timerDisplay.textContent = formatTime(parseInt(exerciseTimeInput.value));
+        }
+        updateTimerUI(); // Actualizar el estado de los botones al cargar
     }
 
 
-    // --- Lógica de Guardado de Peso (en páginas diaX.html) ---
+    // --- Lógica de Guardado de Peso (en páginas diaX.html y peso_nutricion.html) ---
     const weightInputs = document.querySelectorAll('.weight-input');
     if (weightInputs.length > 0) {
         weightInputs.forEach(input => {
@@ -200,9 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const foodForm = document.getElementById('food-form');
     const foodDescriptionInput = document.getElementById('food-description');
-    const foodCaloriesInput = document.getElementById('food-calories');
-    const foodList = document.getElementById('food-list');
-    const dailyCaloriesDisplay = document.getElementById('daily-calories-display');
+    const foodLogList = document.getElementById('food-log-list');
 
     if (weightForm) { // Solo si estamos en la página peso_nutricion.html
         loadWeightHistory();
@@ -219,7 +264,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const today = new Date().toLocaleDateString('es-AR');
             let history = JSON.parse(localStorage.getItem('weightHistory')) || [];
 
-            // Actualizar si ya existe una entrada para hoy, si no, agregar
             const existingEntryIndex = history.findIndex(entry => entry.date === today);
             if (existingEntryIndex !== -1) {
                 history[existingEntryIndex].weight = weight;
@@ -235,24 +279,25 @@ document.addEventListener('DOMContentLoaded', () => {
         foodForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const description = foodDescriptionInput.value.trim();
-            const calories = parseFloat(foodCaloriesInput.value);
 
-            if (!description || isNaN(calories) || calories <= 0) {
-                alert('Por favor, ingresa una descripción y calorías válidas.');
+            if (!description) {
+                alert('Por favor, ingresa una descripción de la comida.');
                 return;
             }
 
-            const today = new Date().toLocaleDateString('es-AR');
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('es-AR');
+            const timeStr = now.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+
             let foodLog = JSON.parse(localStorage.getItem('foodLog')) || {};
 
-            if (!foodLog[today]) {
-                foodLog[today] = [];
+            if (!foodLog[dateStr]) {
+                foodLog[dateStr] = [];
             }
-            foodLog[today].push({ description, calories });
+            foodLog[dateStr].push({ time: timeStr, description });
 
             localStorage.setItem('foodLog', JSON.stringify(foodLog));
             foodDescriptionInput.value = '';
-            foodCaloriesInput.value = '';
             loadFoodLog();
         });
     }
@@ -260,7 +305,15 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadWeightHistory() {
         const history = JSON.parse(localStorage.getItem('weightHistory')) || [];
         weightHistoryList.innerHTML = '';
-        history.sort((a, b) => new Date(b.date.split('/').reverse().join('-')) - new Date(a.date.split('/').reverse().join('-'))); // Ordena por fecha descendente
+        history.sort((a, b) => {
+            // Convertir fechas "DD/MM/YYYY" a objetos Date para comparar
+            const [dayA, monthA, yearA] = a.date.split('/');
+            const [dayB, monthB, yearB] = b.date.split('/');
+            const dateA = new Date(`${yearA}-${monthA}-${dayA}`);
+            const dateB = new Date(`${yearB}-${monthB}-${dayB}`);
+            return dateB - dateA; // Ordena por fecha descendente (más reciente primero)
+        });
+        
         history.forEach((entry, index) => {
             const li = document.createElement('li');
             li.innerHTML = `<span>${entry.date}: <strong>${entry.weight} kg</strong></span> <button data-index="${index}" data-type="weight">Eliminar</button>`;
@@ -272,22 +325,40 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadFoodLog() {
-        const today = new Date().toLocaleDateString('es-AR');
         const foodLog = JSON.parse(localStorage.getItem('foodLog')) || {};
-        const dailyFoods = foodLog[today] || [];
-        
-        foodList.innerHTML = '';
-        let totalCalories = 0;
+        foodLogList.innerHTML = '';
 
-        dailyFoods.forEach((food, index) => {
-            const li = document.createElement('li');
-            li.innerHTML = `<span>${food.description} - ${food.calories} kcal</span> <button data-index="${index}" data-type="food" data-date="${today}">Eliminar</button>`;
-            foodList.appendChild(li);
-            totalCalories += food.calories;
+        const sortedDates = Object.keys(foodLog).sort((a, b) => {
+            const [dayA, monthA, yearA] = a.split('/');
+            const [dayB, monthB, yearB] = b.split('/');
+            const dateA = new Date(`${yearA}-${monthA}-${dayA}`);
+            const dateB = new Date(`${yearB}-${monthB}-${dayB}`);
+            return dateB - dateA; // Ordena las fechas de forma descendente (más reciente primero)
         });
-        dailyCaloriesDisplay.textContent = totalCalories;
 
-        document.querySelectorAll('#food-list button').forEach(button => {
+        sortedDates.forEach(dateStr => {
+            const dayHeader = document.createElement('h4');
+            dayHeader.textContent = dateStr;
+            dayHeader.classList.add('day-header');
+            foodLogList.appendChild(dayHeader);
+
+            // Ordenar las comidas por hora dentro de cada día
+            const mealsOfDay = foodLog[dateStr].sort((a, b) => {
+                const [hourA, minuteA] = a.time.split(':').map(Number);
+                const [hourB, minuteB] = b.time.split(':').map(Number);
+                if (hourA !== hourB) return hourA - hourB;
+                return minuteA - minuteB;
+            });
+
+            mealsOfDay.forEach((food, index) => {
+                const li = document.createElement('li');
+                li.classList.add('food-item');
+                li.innerHTML = `<span>${food.time} - ${food.description}</span> <button data-index="${index}" data-type="food" data-date="${dateStr}">Eliminar</button>`;
+                foodLogList.appendChild(li);
+            });
+        });
+
+        document.querySelectorAll('#food-log-list button').forEach(button => {
             button.addEventListener('click', deleteEntry);
         });
     }
@@ -298,17 +369,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (type === 'weight') {
             let history = JSON.parse(localStorage.getItem('weightHistory')) || [];
-            history.splice(indexToDelete, 1); // Elimina 1 elemento en la posición indexToDelete
+            history.splice(indexToDelete, 1);
             localStorage.setItem('weightHistory', JSON.stringify(history));
             loadWeightHistory();
         } else if (type === 'food') {
             const dateToDelete = event.target.dataset.date;
             let foodLog = JSON.parse(localStorage.getItem('foodLog')) || {};
             if (foodLog[dateToDelete]) {
-                foodLog[dateToDelete].splice(indexToDelete, 1);
-                // Si no quedan comidas para esa fecha, eliminamos la fecha
-                if (foodLog[dateToDelete].length === 0) {
+                // Hay que re-ordenar el array para obtener el index correcto
+                const mealsOfDay = foodLog[dateToDelete].sort((a, b) => {
+                    const [hourA, minuteA] = a.time.split(':').map(Number);
+                    const [hourB, minuteB] = b.time.split(':').map(Number);
+                    if (hourA !== hourB) return hourA - hourB;
+                    return minuteA - minuteB;
+                });
+                
+                // Remover el elemento por su índice en el array ORDENADO
+                mealsOfDay.splice(indexToDelete, 1);
+                
+                // Actualizar el objeto foodLog con el array modificado
+                if (mealsOfDay.length === 0) {
                     delete foodLog[dateToDelete];
+                } else {
+                    foodLog[dateToDelete] = mealsOfDay;
                 }
                 localStorage.setItem('foodLog', JSON.stringify(foodLog));
             }
