@@ -3,11 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Mi Rutina</title>
+    <title>Mi Rutina de Gimnasio</title>
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-    <div class="container login-container">
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // Redirige al login si no está autenticado, o muestra el contenido si sí lo está
+        document.addEventListener('DOMContentLoaded', () => {
+            const loggedIn = localStorage.getItem('loggedIn');
+            const loginSection = document.getElementById('login-section');
+            const mainContent = document.getElementById('main-content');
+
+            if (loggedIn === 'true') {
+                if (loginSection) loginSection.style.display = 'none';
+                if (mainContent) mainContent.style.display = 'block';
+                // Inicializar lógica de la app para la home principal
+                // (El resto de app.js se encarga de esto)
+            } else {
+                if (loginSection) loginSection.style.display = 'block';
+                if (mainContent) mainContent.style.display = 'none';
+            }
+        });
+    </script>
+
+    <div id="login-section" class="container login-container" style="display:none;">
         <h1>Iniciar Sesión</h1>
         <form id="loginForm">
             <input type="text" id="username" placeholder="Usuario (solo números)" required pattern="[0-9]*" inputmode="numeric">
@@ -16,6 +37,53 @@
         </form>
         <div id="message" class="message" style="display:none;"></div>
     </div>
-    <script src="js/auth.js"></script>
+
+    <div id="main-content" style="display:none;">
+        <div class="main-nav">
+            <div class="left-links">
+                <a href="index.html">Inicio</a>
+                <a href="dia1.html">Día 1</a>
+                <a href="dia2.html">Día 2</a>
+                <a href="dia3.html">Día 3</a>
+                <a href="estiramientos.html">Estiramientos</a>
+                <a href="peso_nutricion.html">Peso y Nutrición</a>
+            </div>
+            <div class="timer-controls">
+                <input type="number" id="exercise-time" placeholder="Segundos Ej." value="60">
+                <input type="number" id="recovery-time" placeholder="Segundos Rec." value="30">
+                <input type="number" id="rounds" placeholder="Vueltas" value="3">
+                <span id="timer-display">00:00</span>
+                <button id="start-timer-btn">Iniciar</button>
+                <button id="reset-timer-btn" disabled>Reiniciar</button>
+            </div>
+            <div>
+                <button id="theme-toggle-btn" class="theme-toggle-btn">Cambiar Tema</button>
+                <button onclick="logout()">Cerrar Sesión</button>
+            </div>
+        </div>
+        <div class="container">
+            <h1>¡Bienvenido a tu Panel de Control de Entrenamiento!</h1>
+            <p>Desde aquí puedes acceder a tus rutinas diarias, registrar tu progreso de peso y llevar un control de tu nutrición.</p>
+            <p>Tu disciplina es clave para alcanzar tus objetivos. ¡Sigamos adelante!</p>
+
+            <div class="navigation" style="margin-top: 40px;">
+                <a href="dia1.html">Comenzar Día 1</a>
+                <a href="dia2.html">Comenzar Día 2</a>
+                <a href="dia3.html">Comenzar Día 3</a>
+                <a href="peso_nutricion.html">Registrar Peso y Comidas</a>
+            </div>
+
+            <div class="notes" style="margin-top: 30px;">
+                <h3>Consejos Clave:</h3>
+                <ul>
+                    <li><strong>Activación del Transverso Abdominal:</strong> Recordá activar este músculo clave en cada ejercicio, llevando el ombligo hacia la columna.</li>
+                    <li><strong>Respiración:</strong> Inhalá por la nariz y exhalá por la boca durante el esfuerzo. Evitá pujar o aguantar la respiración.</li>
+                    <li><strong>Hidratación:</strong> Bebé abundante agua durante todo el día.</li>
+                    <li><strong>Calentamiento y Vuelta a la Calma:</strong> No olvides estas fases esenciales al inicio y al final de cada sesión.</li>
+                    <li><strong>Escuchá tu Cuerpo:</strong> Si sentís dolor agudo o abultamiento en el abdomen, detené el ejercicio y consultá.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
