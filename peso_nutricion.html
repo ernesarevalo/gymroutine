@@ -13,27 +13,35 @@
         document.addEventListener('DOMContentLoaded', checkAuthAndRedirect);
     </script>
 
-    <div class="main-nav">
-        <div class="left-links">
+    <div class="top-bar">
+        <div class="hamburger-icon" id="hamburger-icon">&#9776;</div>
+        
+        <div class="timer-controls">
+            <input type="number" id="exercise-time" placeholder="Seg Ej." value="60">
+            <input type="number" id="recovery-time" placeholder="Seg Rec." value="30">
+            <input type="number" id="rounds" placeholder="Vueltas" value="3">
+            <span id="timer-display">00:00</span>
+            <button id="start-timer-btn">Iniciar</button>
+            <button id="reset-timer-btn" disabled>Reiniciar</button>
+        </div>
+        <div class="desktop-only-nav">
             <a href="index.html">Inicio</a>
             <a href="dia1.html">Día 1</a>
             <a href="dia2.html">Día 2</a>
             <a href="dia3.html">Día 3</a>
             <a href="estiramientos.html">Estiramientos</a>
             <a href="peso_nutricion.html">Peso y Nutrición</a>
-        </div>
-        <div class="timer-controls">
-            <input type="number" id="exercise-time" placeholder="Segundos Ej." value="60">
-            <input type="number" id="recovery-time" placeholder="Segundos Rec." value="30">
-            <input type="number" id="rounds" placeholder="Vueltas" value="3">
-            <span id="timer-display">00:00</span>
-            <button id="start-timer-btn">Iniciar</button>
-            <button id="reset-timer-btn" disabled>Reiniciar</button>
-        </div>
-        <div>
-            <button id="theme-toggle-btn" class="theme-toggle-btn">Cambiar Tema</button>
             <button onclick="logout()">Cerrar Sesión</button>
         </div>
+    </div>
+    <div class="side-nav" id="side-nav">
+        <a href="index.html">Inicio</a>
+        <a href="dia1.html">Día 1</a>
+        <a href="dia2.html">Día 2</a>
+        <a href="dia3.html">Día 3</a>
+        <a href="estiramientos.html">Estiramientos</a>
+        <a href="peso_nutricion.html">Peso y Nutrición</a>
+        <button onclick="logout()">Cerrar Sesión</button>
     </div>
     <div class="container">
         <h1>Seguimiento de Peso y Nutrición</h1>
