@@ -1,45 +1,79 @@
-/* estilos.css */
+/* css/estilos.css */
 
+/* Variables de color para tema claro/oscuro */
+:root {
+    --bg-color-light: #f4f4f4;
+    --text-color-light: #333;
+    --container-bg-light: #fff;
+    --header-color-light: #0056b3;
+    --border-color-light: #eee;
+    --exercise-bg-light: #e9f5ff;
+    --exercise-border-light: #007bff;
+    --list-item-bg-light: #dff0fa;
+    --notes-bg-light: #f9f9f9;
+    --notes-border-light: #ddd;
+    --link-bg-light: #007bff;
+    --link-hover-bg-light: #0056b3;
+    --accent-color-light: #28a745;
+
+    /* Colores del tema oscuro */
+    --bg-color-dark: #2c3e50; /* Azul oscuro pizarra */
+    --text-color-dark: #ecf0f1; /* Gris claro */
+    --container-bg-dark: #34495e; /* Azul más oscuro */
+    --header-color-dark: #3498db; /* Azul vibrante */
+    --border-color-dark: #4a627d;
+    --exercise-bg-dark: #3d566e; /* Un tono un poco más claro que el container */
+    --exercise-border-dark: #3498db;
+    --list-item-bg-dark: #4d6d8a;
+    --notes-bg-dark: #44607a;
+    --notes-border-dark: #5c7e9c;
+    --link-bg-dark: #3498db;
+    --link-hover-bg-dark: #2980b9;
+    --accent-color-dark: #2ecc71; /* Verde brillante */
+}
+
+
+/* Aplicar el tema oscuro por defecto */
 body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 20px;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: var(--bg-color-dark);
+    color: var(--text-color-dark);
 }
 
 .container {
     max-width: 900px;
     margin: 20px auto;
-    background: #fff;
+    background: var(--container-bg-dark);
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3); /* Sombra más pronunciada para contraste */
 }
 
 h1, h2 {
-    color: #0056b3;
-    border-bottom: 2px solid #eee;
+    color: var(--header-color-dark);
+    border-bottom: 2px solid var(--border-color-dark);
     padding-bottom: 10px;
     margin-top: 20px;
 }
 
 h3 {
-    color: #007bff;
+    color: var(--exercise-border-dark); /* Usamos el color de borde de ejercicio para subtítulos */
     margin-top: 15px;
 }
 
 .exercise {
     margin-bottom: 20px;
     padding: 15px;
-    background-color: #e9f5ff;
-    border-left: 5px solid #007bff;
+    background-color: var(--exercise-bg-dark);
+    border-left: 5px solid var(--exercise-border-dark);
     border-radius: 5px;
 }
 
 .exercise p strong {
-    color: #0056b3;
+    color: var(--header-color-dark);
 }
 
 .exercise ul {
@@ -48,51 +82,109 @@ h3 {
 }
 
 .exercise ul li {
-    background: #dff0fa;
+    background: var(--list-item-bg-dark);
     margin-bottom: 5px;
     padding: 8px 10px;
     border-radius: 3px;
 }
 
 .notes, .cardio {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    background-color: var(--notes-bg-dark);
+    border: 1px solid var(--notes-border-dark);
     padding: 15px;
     border-radius: 5px;
     margin-top: 20px;
 }
 
 .notes h3, .cardio h3 {
-    color: #28a745;
+    color: var(--accent-color-dark);
 }
 
 .navigation {
     text-align: center;
     margin-top: 30px;
     padding-top: 20px;
-    border-top: 2px solid #eee;
+    border-top: 2px solid var(--border-color-dark);
 }
 
 .navigation a {
     display: inline-block;
-    background-color: #007bff;
-    color: white;
+    background-color: var(--link-bg-dark);
+    color: var(--text-color-dark);
     padding: 10px 20px;
     margin: 0 10px;
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+    white-space: nowrap; /* Evita que los enlaces se rompan en varias líneas */
 }
 
 .navigation a:hover {
-    background-color: #0056b3;
+    background-color: var(--link-hover-bg-dark);
 }
 
-/* Estilos para las imágenes (si las añades manualmente) */
+/* Estilos para las imágenes */
 .exercise img {
     max-width: 100%;
     height: auto;
-    display: block; /* Para centrar si es necesario */
+    display: block;
     margin-top: 10px;
     border-radius: 4px;
+}
+
+/* Campo para el peso */
+.weight-input {
+    margin-top: 10px;
+    padding: 8px;
+    border: 1px solid var(--border-color-dark);
+    border-radius: 4px;
+    width: calc(100% - 18px); /* Ajuste para el padding */
+    background-color: var(--list-item-bg-dark);
+    color: var(--text-color-dark);
+}
+.weight-input::placeholder {
+    color: #999; /* Color del texto del placeholder */
+}
+
+
+/* --- Diseño Responsivo para Celulares --- */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        margin: 10px auto;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    h2 {
+        font-size: 1.4em;
+    }
+
+    h3 {
+        font-size: 1.2em;
+    }
+
+    .navigation a {
+        display: block; /* Cada enlace en su propia línea en celulares */
+        margin: 10px 0;
+        padding: 12px 15px; /* Más padding para facilitar el toque */
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5em;
+    }
+    h2 {
+        font-size: 1.2em;
+    }
+    h3 {
+        font-size: 1em;
+    }
 }
