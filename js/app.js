@@ -1,10 +1,16 @@
 // js/app.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Asegurarse de que el usuario está autenticado en todas las páginas que usan app.js
-    checkAuthAndRedirect();
+    // La verificación de autenticación se maneja directamente en el DOMContentLoaded de auth.js
+    // y en el script inline de cada página.
+    // Aquí, solo nos aseguramos de que no sea la página de login si vamos a ejecutar lógica que requiere login.
+    if (window.location.pathname.split('/').pop() !== 'index.html' || document.getElementById('main-content')) {
+        // Lógica para páginas de rutina, estiramientos, peso_nutricion y la parte principal de index.html
+    }
 
     // --- Lógica de Temporizador (integrada en el NAV) ---
+    // ... (todo el código del temporizador, SIN CAMBIOS respecto a la última versión) ...
+
     const timerDisplay = document.getElementById('timer-display');
     const exerciseTimeInput = document.getElementById('exercise-time');
     const recoveryTimeInput = document.getElementById('recovery-time');
@@ -20,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let timerState = 'stopped'; // 'stopped', 'pre-countdown', 'running'
 
     // Alarmas (ajusta las rutas a tus archivos de audio)
-    // Crea una carpeta 'audio' dentro de 'img/' y coloca los archivos .mp3 o .wav
     const startAlarm = new Audio('img/audio/start_alarm.mp3');
     const midAlarm = new Audio('img/audio/mid_alarm.mp3');
     const tenSecAlarm = new Audio('img/audio/ten_sec_alarm.mp3');
@@ -267,10 +272,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const history = JSON.parse(localStorage.getItem('weightHistory')) || [];
         weightHistoryList.innerHTML = '';
         history.sort((a, b) => {
-            // Convierte fechas "DD/MM/YYYY" a formato "YYYY-MM-DD" para una comparación fiable
-            const dateA = a.date.split('/').reverse().join('-');
-            const dateB = b.date.split('/').reverse().join('-');
-            return new Date(dateB) - new Date(dateA); // Ordena por fecha descendente (más reciente primero)
+            // Convierte fechas "DD/MM/YYYY" a objetos Date para comparar
+            const [dayA, monthA, yearA] = a.date.split('/');
+            const [dayB, monthB, yearB] = b.date.split('/');
+            const dateA = new Date(`${yearA}-${monthA}-${dayA}`);
+            const dateB = new Date(`${yearB}-${monthB}-${dayB}`);
+            return dateB - dateA; // Ordena por fecha descendente (más reciente primero)
         });
         
         history.forEach((entry, index) => {
