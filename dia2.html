@@ -8,10 +8,33 @@
 </head>
 <body>
     <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', checkAuth);
+        document.addEventListener('DOMContentLoaded', checkAuthAndRedirect); // Asegura que solo se acceda si logueado
     </script>
-    
+
+    <div class="main-nav">
+        <div class="left-links">
+            <a href="index.html">Inicio</a>
+            <a href="dia1.html">Día 1</a>
+            <a href="dia2.html">Día 2</a>
+            <a href="dia3.html">Día 3</a>
+            <a href="estiramientos.html">Estiramientos</a>
+            <a href="peso_nutricion.html">Peso y Nutrición</a>
+        </div>
+        <div class="timer-controls">
+            <input type="number" id="exercise-time" placeholder="Segundos Ej." value="60">
+            <input type="number" id="recovery-time" placeholder="Segundos Rec." value="30">
+            <input type="number" id="rounds" placeholder="Vueltas" value="3">
+            <span id="timer-display">00:00</span>
+            <button id="start-timer-btn">Iniciar</button>
+            <button id="reset-timer-btn" disabled>Reiniciar</button>
+        </div>
+        <div>
+            <button id="theme-toggle-btn" class="theme-toggle-btn">Cambiar Tema</button>
+            <button onclick="logout()">Cerrar Sesión</button>
+        </div>
+    </div>
     <div class="container">
         <h1>Día 2: Tren Inferior y Core (Enfoque Diastasis)</h1>
         <p><strong>Duración Estimada:</strong> 1 hora 30 minutos.</p>
@@ -116,14 +139,6 @@
             </ul>
             <p><strong>Descripción:</strong> Empezá con una inclinación suave y andá aumentándola progresivamente a medida que te sientas cómodo. El objetivo es que tu ritmo cardíaco se eleve y sientas el esfuerzo. Caminar con inclinación es excelente para quemar calorías y preparar tus piernas y resistencia para el fútbol con menos impacto que correr al principio.</p>
             </div>
-
-        <div class="navigation">
-            <a href="index.html">Inicio</a>
-            <a href="dia1.html">Ir al Día 1</a>
-            <a href="dia3.html">Ir al Día 3</a>
-            <a href="estiramientos.html">Estiramientos</a>
-        </div>
     </div>
-    <script src="js/app.js"></script>
 </body>
 </html>
