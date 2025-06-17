@@ -1,0 +1,98 @@
+/* estilos.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+h1, h2 {
+    color: #0056b3;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-top: 20px;
+}
+
+h3 {
+    color: #007bff;
+    margin-top: 15px;
+}
+
+.exercise {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #e9f5ff;
+    border-left: 5px solid #007bff;
+    border-radius: 5px;
+}
+
+.exercise p strong {
+    color: #0056b3;
+}
+
+.exercise ul {
+    list-style: none;
+    padding: 0;
+}
+
+.exercise ul li {
+    background: #dff0fa;
+    margin-bottom: 5px;
+    padding: 8px 10px;
+    border-radius: 3px;
+}
+
+.notes, .cardio {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.notes h3, .cardio h3 {
+    color: #28a745;
+}
+
+.navigation {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid #eee;
+}
+
+.navigation a {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    margin: 0 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.navigation a:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para las imágenes (si las añades manualmente) */
+.exercise img {
+    max-width: 100%;
+    height: auto;
+    display: block; /* Para centrar si es necesario */
+    margin-top: 10px;
+    border-radius: 4px;
+}
