@@ -6,42 +6,58 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordInput = document.getElementById('password');
     const messageDiv = document.getElementById('message');
 
-    // Solo ejecutar la lógica de login si estamos en la página del formulario de login
-    if (loginForm) {
-        // Redirigir a index.html (ahora la Home) si ya está logueado
-        if (localStorage.getItem('loggedIn') === 'true') {
-            window.location.href = 'index.html'; // Redirige a la página principal (que ahora es index.html)
-            return; // Detiene la ejecución
+    // Lógica para la página de login/home (index.html)
+    if (window.location.pathname.split('/').pop() === 'index.html') {
+        const loggedIn = localStorage.getItem('loggedIn');
+        const loginSection = document.getElementById('login-section');
+        const mainContent = document.getElementById('main-content');
+
+        if (loggedIn === 'true') {
+            // Si está logueado, ocultar login y mostrar contenido principal
+            if (loginSection) loginSection.style.display = 'none';
+            if (mainContent) mainContent.style.display = 'block';
+        } else {
+            // Si no está logueado, mostrar login y ocultar contenido principal
+            if (loginSection) loginSection.style.display = 'block';
+            if (mainContent) mainContent.style.display = 'none';
         }
 
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
+        // Si el formulario de login existe en la página, adjuntar el listener
+        if (loginForm) {
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
 
-            const username = usernameInput.value;
-            const password = passwordInput.value;
+                const username = usernameInput.value;
+                const password = passwordInput.value;
 
-            if (!/^\d+$/.test(username)) {
-                showMessage('El usuario debe contener solo números.', 'error');
-                return;
-            }
+                if (!/^\d+$/.test(username)) {
+                    showMessage('El usuario debe contener solo números.', 'error');
+                    return;
+                }
 
-            const users = {
-                '0000': 'AdminUser6454',
-                '33118884': 'ernesto!1'
-            };
+                const users = {
+                    '0000': 'AdminUser6454',
+                    '33118884': 'ernesto!1'
+                };
 
-            if (users[username] && users[username] === password) {
-                localStorage.setItem('loggedIn', 'true');
-                localStorage.setItem('currentUser', username);
-                showMessage('Inicio de sesión exitoso. Redirigiendo...', 'success');
-                setTimeout(() => {
-                    window.location.href = 'index.html'; // Redirige a la página principal (index.html)
-                }, 1000);
-            } else {
-                showMessage('Usuario o contraseña incorrectos.', 'error');
-            }
-        });
+                if (users[username] && users[username] === password) {
+                    localStorage.setItem('loggedIn', 'true');
+                    localStorage.setItem('currentUser', username);
+                    showMessage('Inicio de sesión exitoso. Redirigiendo...', 'success');
+                    setTimeout(() => {
+                        // Después de login exitoso, recargar la misma página para mostrar el contenido principal
+                        window.location.reload(); 
+                    }, 1000);
+                } else {
+                    showMessage('Usuario o contraseña incorrectos.', 'error');
+                }
+            });
+        }
+    } else {
+        // Lógica para TODAS LAS OTRAS PÁGINAS (diaX.html, estiramientos.html, peso_nutricion.html)
+        checkAuthAndRedirect();
     }
+
 
     function showMessage(msg, type) {
         if (messageDiv) {
@@ -52,24 +68,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Función para verificar si el usuario está logeado (para usar en TODAS las páginas que requieren login)
+// Esta función ahora solo se ejecuta en páginas que NO son index.html
 function checkAuthAndRedirect() {
     const loggedIn = localStorage.getItem('loggedIn');
-    // Si no está logeado Y no es la página de login (index.html)
-    if (loggedIn !== 'true' && window.location.pathname.split('/').pop() !== 'index.html') {
-        window.location.href = 'index.html'; // Redirige al login
-    } else if (loggedIn === 'true' && window.location.pathname.split('/').pop() === 'index.html' && document.getElementById('loginForm')) {
-        // Si ya está logeado y está en la página de login, lo redirige a la home (que ahora es index.html principal)
-        // Esto previene que se quede atascado en el formulario de login si recarga la página
-        // Solo lo redirige si el formulario de login es visible, para no interferir con la vista principal de index.html
-        window.location.href = 'index.html'; 
+    // Si no está logeado Y no es la página de login (index.html), redirige
+    if (loggedIn !== 'true') {
+        window.location.href = 'index.html';
     }
+    // Si está logueado, no hace nada, permite que la página se cargue normalmente
 }
 
-// Función para cerrar sesión
+// Función para cerrar sesión (puede ser llamada desde cualquier página)
 function logout() {
     localStorage.removeItem('loggedIn');
     localStorage.removeItem('currentUser');
-    // Limpiar localStorage específico de la app si es necesario, ej. localStorage.removeItem('weightHistory');
-    window.location.href = 'index.html'; // Redirige al login (que ahora es index.html)
+    // Puedes limpiar otros datos de localStorage aquí si es necesario
+    window.location.href = 'index.html'; // Siempre redirige al login
 }
