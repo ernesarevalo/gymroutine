@@ -4,49 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Asegurarse de que el usuario está autenticado en todas las páginas que usan app.js
     checkAuthAndRedirect();
 
-    // --- Lógica del Selector de Tema ---
-    const themeToggleBtn = document.getElementById('theme-toggle-btn');
-    const body = document.body;
-
-    function loadTheme() {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            body.className = savedTheme;
-        } else {
-            // Tema oscuro por defecto si no hay preferencia guardada
-            body.className = 'dark-theme';
-            localStorage.setItem('theme', 'dark-theme');
-        }
-        updateThemeButtonText();
-    }
-
-    function toggleTheme() {
-        if (body.classList.contains('dark-theme')) {
-            body.className = 'light-theme';
-            localStorage.setItem('theme', 'light-theme');
-        } else {
-            body.className = 'dark-theme';
-            localStorage.setItem('theme', 'dark-theme');
-        }
-        updateThemeButtonText();
-    }
-
-    function updateThemeButtonText() {
-        if (themeToggleBtn) {
-            if (body.classList.contains('dark-theme')) {
-                themeToggleBtn.textContent = 'Tema Claro';
-            } else {
-                themeToggleBtn.textContent = 'Tema Oscuro';
-            }
-        }
-    }
-
-    if (themeToggleBtn) {
-        themeToggleBtn.addEventListener('click', toggleTheme);
-    }
-    loadTheme(); // Cargar el tema al inicio de la página
-
-
     // --- Lógica de Temporizador (integrada en el NAV) ---
     const timerDisplay = document.getElementById('timer-display');
     const exerciseTimeInput = document.getElementById('exercise-time');
@@ -83,11 +40,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (timerDisplay) {
             timerDisplay.textContent = formatTime(timeLeftInPhase);
             if (currentPhase === 'exercise') {
-                timerDisplay.style.color = 'var(--header-color-dark)'; // Color para ejercicio (azul)
+                timerDisplay.classList.remove('recovery-phase');
+                timerDisplay.style.color = 'var(--timer-active-color)'; // Color para ejercicio (azul)
             } else if (currentPhase === 'recovery') {
-                timerDisplay.style.color = 'var(--accent-color-dark)'; // Color para recuperación (verde)
-            } else {
-                timerDisplay.style.color = 'var(--text-color-dark)'; // Color neutro para pre-start/stop
+                timerDisplay.classList.add('recovery-phase');
+                timerDisplay.style.color = 'var(--timer-recovery-color)'; // Color para recuperación (verde)
+            } else { // pre-start o stopped
+                timerDisplay.classList.remove('recovery-phase');
+                timerDisplay.style.color = 'var(--text-color)'; // Color neutro
             }
         }
         if (startTimerBtn) startTimerBtn.disabled = (timerState === 'running' || timerState === 'pre-countdown');
@@ -96,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function playAlarm(alarm) {
         if (alarm && alarm.play) {
-            alarm.currentTime = 0;
+            alarm.currentTime = 0; // Reinicia el audio si ya está sonando
             alarm.play().catch(e => console.error("Error al reproducir audio:", e));
         }
     }
@@ -125,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentPhase = 'pre-start';
         timerState = 'pre-countdown';
 
-        timerDisplay.textContent = `Preparate: ${preTimerCount}`;
+        if (timerDisplay) timerDisplay.textContent = `Preparate: ${preTimerCount}`;
         currentTimerInterval = setInterval(handleTimerTick, 1000);
         updateTimerUI();
     }
@@ -133,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleTimerTick() {
         if (currentPhase === 'pre-start') {
             preTimerCount--;
-            timerDisplay.textContent = `Preparate: ${preTimerCount}`;
+            if (timerDisplay) timerDisplay.textContent = `Preparate: ${preTimerCount}`;
             if (preTimerCount <= 0) {
                 currentPhase = 'exercise';
                 timeLeftInPhase = parseInt(exerciseTimeInput.value);
@@ -152,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (currentRound < parseInt(roundsInput.value)) {
                     currentPhase = 'recovery';
                     timeLeftInPhase = parseInt(recoveryTimeInput.value);
-                    if (timeLeftInPhase <= 0) { // Si no hay recuperación, ir a la siguiente ronda
+                    if (timeLeftInPhase <= 0) { // Si no hay tiempo de recuperación, ir a la siguiente ronda
                         currentRound++;
                         currentPhase = 'exercise'; // Directly to next exercise
                         timeLeftInPhase = parseInt(exerciseTimeInput.value);
@@ -190,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function finishTimer() {
         clearInterval(currentTimerInterval);
-        timerDisplay.textContent = "¡Terminado!";
+        if (timerDisplay) timerDisplay.textContent = "¡Terminado!";
         playAlarm(endAlarm);
         timerState = 'stopped';
         updateTimerUI();
@@ -203,12 +163,12 @@ document.addEventListener('DOMContentLoaded', () => {
         currentRound = 1;
         currentPhase = 'pre-start';
         if (timerDisplay) {
-            timerDisplay.textContent = formatTime(parseInt(exerciseTimeInput.value) || 60);
+             timerDisplay.textContent = formatTime(parseInt(exerciseTimeInput.value) || 60);
         }
         updateTimerUI();
     }
 
-    if (startTimerBtn) {
+    if (startTimerBtn) { // Solo inicializar si los elementos del temporizador existen
         startTimerBtn.addEventListener('click', startTimerLogic);
         resetTimerBtn.addEventListener('click', resetTimer);
 
@@ -261,9 +221,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const today = new Date().toLocaleDateString('es-AR');
+            const today = new Date().toLocaleDateString('es-AR', {day: '2-digit', month: '2-digit', year: 'numeric'}); // Formato DD/MM/YYYY
             let history = JSON.parse(localStorage.getItem('weightHistory')) || [];
 
+            // Actualizar si ya existe una entrada para hoy, si no, agregar
             const existingEntryIndex = history.findIndex(entry => entry.date === today);
             if (existingEntryIndex !== -1) {
                 history[existingEntryIndex].weight = weight;
@@ -286,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const now = new Date();
-            const dateStr = now.toLocaleDateString('es-AR');
+            const dateStr = now.toLocaleDateString('es-AR', {day: '2-digit', month: '2-digit', year: 'numeric'}); // Formato DD/MM/YYYY
             const timeStr = now.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
 
             let foodLog = JSON.parse(localStorage.getItem('foodLog')) || {};
@@ -306,12 +267,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const history = JSON.parse(localStorage.getItem('weightHistory')) || [];
         weightHistoryList.innerHTML = '';
         history.sort((a, b) => {
-            // Convertir fechas "DD/MM/YYYY" a objetos Date para comparar
-            const [dayA, monthA, yearA] = a.date.split('/');
-            const [dayB, monthB, yearB] = b.date.split('/');
-            const dateA = new Date(`${yearA}-${monthA}-${dayA}`);
-            const dateB = new Date(`${yearB}-${monthB}-${dayB}`);
-            return dateB - dateA; // Ordena por fecha descendente (más reciente primero)
+            // Convierte fechas "DD/MM/YYYY" a formato "YYYY-MM-DD" para una comparación fiable
+            const dateA = a.date.split('/').reverse().join('-');
+            const dateB = b.date.split('/').reverse().join('-');
+            return new Date(dateB) - new Date(dateA); // Ordena por fecha descendente (más reciente primero)
         });
         
         history.forEach((entry, index) => {
@@ -329,11 +288,10 @@ document.addEventListener('DOMContentLoaded', () => {
         foodLogList.innerHTML = '';
 
         const sortedDates = Object.keys(foodLog).sort((a, b) => {
-            const [dayA, monthA, yearA] = a.split('/');
-            const [dayB, monthB, yearB] = b.split('/');
-            const dateA = new Date(`${yearA}-${monthA}-${dayA}`);
-            const dateB = new Date(`${yearB}-${monthB}-${dayB}`);
-            return dateB - dateA; // Ordena las fechas de forma descendente (más reciente primero)
+            // Convierte fechas "DD/MM/YYYY" a formato "YYYY-MM-DD" para una comparación fiable
+            const dateA = a.split('/').reverse().join('-');
+            const dateB = b.split('/').reverse().join('-');
+            return new Date(dateB) - new Date(dateA); // Ordena las fechas de forma descendente (más reciente primero)
         });
 
         sortedDates.forEach(dateStr => {
@@ -344,14 +302,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Ordenar las comidas por hora dentro de cada día
             const mealsOfDay = foodLog[dateStr].sort((a, b) => {
-                const [hourA, minuteA] = a.time.split(':').map(Number);
-                const [hourB, minuteB] = b.time.split(':').map(Number);
-                if (hourA !== hourB) return hourA - hourB;
-                return minuteA - minuteB;
+                // Asume formato "HH:MM"
+                const timeA = a.time.split(':').map(Number);
+                const timeB = b.time.split(':').map(Number);
+                if (timeA[0] !== timeB[0]) return timeA[0] - timeB[0]; // Compara horas
+                return timeA[1] - timeB[1]; // Compara minutos si las horas son iguales
             });
 
             mealsOfDay.forEach((food, index) => {
-                const li = document.createElement('li');
+                const li = document.createElement('div'); // Usamos div para flexibilidad
                 li.classList.add('food-item');
                 li.innerHTML = `<span>${food.time} - ${food.description}</span> <button data-index="${index}" data-type="food" data-date="${dateStr}">Eliminar</button>`;
                 foodLogList.appendChild(li);
@@ -376,20 +335,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const dateToDelete = event.target.dataset.date;
             let foodLog = JSON.parse(localStorage.getItem('foodLog')) || {};
             if (foodLog[dateToDelete]) {
-                // Hay que re-ordenar el array para obtener el index correcto
+                // Obtener las comidas del día y ordenarlas para encontrar el índice correcto
                 const mealsOfDay = foodLog[dateToDelete].sort((a, b) => {
-                    const [hourA, minuteA] = a.time.split(':').map(Number);
-                    const [hourB, minuteB] = b.time.split(':').map(Number);
-                    if (hourA !== hourB) return hourA - hourB;
-                    return minuteA - minuteB;
+                    const timeA = a.time.split(':').map(Number);
+                    const timeB = b.time.split(':').map(Number);
+                    if (timeA[0] !== timeB[0]) return timeA[0] - timeB[0];
+                    return timeA[1] - timeB[1];
                 });
                 
-                // Remover el elemento por su índice en el array ORDENADO
+                // Eliminar el elemento por su índice en el array ORDENADO
                 mealsOfDay.splice(indexToDelete, 1);
                 
                 // Actualizar el objeto foodLog con el array modificado
                 if (mealsOfDay.length === 0) {
-                    delete foodLog[dateToDelete];
+                    delete foodLog[dateToDelete]; // Elimina la fecha si no quedan comidas
                 } else {
                     foodLog[dateToDelete] = mealsOfDay;
                 }
