@@ -1,22 +1,7 @@
 /* css/estilos.css */
 
-/* Variables de color para tema claro/oscuro */
+/* Variables de color para tema oscuro */
 :root {
-    --bg-color-light: #f4f4f4;
-    --text-color-light: #333;
-    --container-bg-light: #fff;
-    --header-color-light: #0056b3;
-    --border-color-light: #eee;
-    --exercise-bg-light: #e9f5ff;
-    --exercise-border-light: #007bff;
-    --list-item-bg-light: #dff0fa;
-    --notes-bg-light: #f9f9f9;
-    --notes-border-light: #ddd;
-    --link-bg-light: #007bff;
-    --link-hover-bg-light: #0056b3;
-    --accent-color-light: #28a745;
-
-    /* Colores del tema oscuro */
     --bg-color-dark: #2c3e50; /* Azul oscuro pizarra */
     --text-color-dark: #ecf0f1; /* Gris claro */
     --container-bg-dark: #34495e; /* Azul más oscuro */
@@ -30,10 +15,12 @@
     --link-bg-dark: #3498db;
     --link-hover-bg-dark: #2980b9;
     --accent-color-dark: #2ecc71; /* Verde brillante */
+    --warning-color: #e74c3c; /* Rojo para errores */
+    --input-bg-dark: #4d6d8a;
+    --input-border-dark: #5c7e9c;
 }
 
-
-/* Aplicar el tema oscuro por defecto */
+/* Base */
 body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
@@ -49,7 +36,7 @@ body {
     background: var(--container-bg-dark);
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3); /* Sombra más pronunciada para contraste */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
 h1, h2 {
@@ -60,10 +47,11 @@ h1, h2 {
 }
 
 h3 {
-    color: var(--exercise-border-dark); /* Usamos el color de borde de ejercicio para subtítulos */
+    color: var(--exercise-border-dark);
     margin-top: 15px;
 }
 
+/* Ejercicios */
 .exercise {
     margin-bottom: 20px;
     padding: 15px;
@@ -88,6 +76,7 @@ h3 {
     border-radius: 3px;
 }
 
+/* Notas y Cardio */
 .notes, .cardio {
     background-color: var(--notes-bg-dark);
     border: 1px solid var(--notes-border-dark);
@@ -100,11 +89,16 @@ h3 {
     color: var(--accent-color-dark);
 }
 
+/* Navegación */
 .navigation {
     text-align: center;
     margin-top: 30px;
     padding-top: 20px;
     border-top: 2px solid var(--border-color-dark);
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos salten de línea */
+    justify-content: center;
+    gap: 10px; /* Espacio entre los elementos */
 }
 
 .navigation a {
@@ -112,11 +106,11 @@ h3 {
     background-color: var(--link-bg-dark);
     color: var(--text-color-dark);
     padding: 10px 20px;
-    margin: 0 10px;
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-    white-space: nowrap; /* Evita que los enlaces se rompan en varias líneas */
+    white-space: nowrap;
+    flex-shrink: 0; /* Evita que los elementos se encojan */
 }
 
 .navigation a:hover {
@@ -132,22 +126,156 @@ h3 {
     border-radius: 4px;
 }
 
-/* Campo para el peso */
-.weight-input {
+/* Campos de entrada */
+.weight-input,
+input[type="text"],
+input[type="password"],
+input[type="number"],
+textarea {
     margin-top: 10px;
     padding: 8px;
-    border: 1px solid var(--border-color-dark);
+    border: 1px solid var(--input-border-dark);
     border-radius: 4px;
     width: calc(100% - 18px); /* Ajuste para el padding */
-    background-color: var(--list-item-bg-dark);
+    background-color: var(--input-bg-dark);
     color: var(--text-color-dark);
 }
-.weight-input::placeholder {
-    color: #999; /* Color del texto del placeholder */
+.weight-input::placeholder,
+input::placeholder,
+textarea::placeholder {
+    color: #999;
 }
 
+button {
+    background-color: var(--accent-color-dark);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
 
-/* --- Diseño Responsivo para Celulares --- */
+button:hover {
+    background-color: #27ae60;
+}
+
+button:disabled {
+    background-color: #7f8c8d;
+    cursor: not-allowed;
+}
+
+/* Mensajes de error/éxito */
+.message {
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.message.error {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.message.success {
+    background-color: #2ecc71;
+    color: white;
+}
+
+/* Estilos específicos del login */
+.login-container {
+    max-width: 400px;
+    padding: 40px;
+    margin-top: 50px;
+    text-align: center;
+}
+
+.login-container input {
+    margin-bottom: 15px;
+}
+
+/* Estilos para el NAV principal (con temporizador) */
+.main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2c3e50; /* Un tono más oscuro para la barra */
+    padding: 10px 20px;
+    border-bottom: 2px solid var(--border-color-dark);
+    position: sticky; /* Se pega arriba al hacer scroll */
+    top: 0;
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    flex-wrap: wrap; /* Permite que los elementos se ajusten en móviles */
+}
+
+.main-nav .left-links a {
+    color: var(--text-color-dark);
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.main-nav .left-links a:hover {
+    background-color: var(--link-hover-bg-dark);
+}
+
+.timer-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center; /* Centrar controles en pantallas pequeñas */
+}
+
+.timer-controls input {
+    width: 60px; /* Ancho fijo para los inputs del temporizador */
+    text-align: center;
+    padding: 5px;
+    margin-top: 0; /* Anula el margin-top del input general */
+}
+
+.timer-display {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--header-color-dark);
+    min-width: 80px; /* Espacio mínimo para el contador */
+    text-align: center;
+}
+
+/* Sección de historial de peso y nutrición */
+#weight-history-list, #food-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+#weight-history-list li, #food-list li {
+    background: var(--exercise-bg-dark);
+    border: 1px solid var(--exercise-border-dark);
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#weight-history-list li button, #food-list li button {
+    background-color: var(--warning-color);
+    padding: 5px 10px;
+    font-size: 0.8em;
+    margin-top: 0;
+}
+
+#weight-history-list li button:hover, #food-list li button:hover {
+    background-color: #c0392b;
+}
+
+/* Media Queries para Responsividad */
 @media (max-width: 768px) {
     body {
         padding: 10px;
@@ -170,10 +298,46 @@ h3 {
         font-size: 1.2em;
     }
 
+    .navigation {
+        flex-direction: column; /* Apila los enlaces en columnas */
+        gap: 8px;
+    }
+
     .navigation a {
-        display: block; /* Cada enlace en su propia línea en celulares */
-        margin: 10px 0;
-        padding: 12px 15px; /* Más padding para facilitar el toque */
+        width: calc(100% - 20px); /* Ocupa casi todo el ancho */
+        padding: 12px 15px;
+    }
+
+    /* Ajustes para el NAV principal en móvil */
+    .main-nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    .main-nav .left-links {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .main-nav .left-links a {
+        width: 100%;
+        text-align: center;
+        margin: 5px 0;
+    }
+
+    .timer-controls {
+        flex-direction: column;
+        width: 100%;
+        gap: 5px;
+    }
+    .timer-controls input,
+    .timer-controls button {
+        width: calc(100% - 10px);
+    }
+    .timer-display {
+        margin-bottom: 10px;
     }
 }
 
@@ -186,5 +350,8 @@ h3 {
     }
     h3 {
         font-size: 1em;
+    }
+    .container {
+        padding: 10px;
     }
 }
