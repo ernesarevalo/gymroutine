@@ -1,7 +1,28 @@
 /* css/estilos.css */
 
-/* Variables de color para tema oscuro */
+/* Variables de color para tema claro/oscuro */
 :root {
+    /* Tema Claro */
+    --bg-color-light: #f4f4f4;
+    --text-color-light: #333;
+    --container-bg-light: #fff;
+    --header-color-light: #0056b3;
+    --border-color-light: #eee;
+    --exercise-bg-light: #e9f5ff;
+    --exercise-border-light: #007bff;
+    --list-item-bg-light: #dff0fa;
+    --notes-bg-light: #f9f9f9;
+    --notes-border-light: #ddd;
+    --link-bg-light: #007bff;
+    --link-hover-bg-light: #0056b3;
+    --accent-color-light: #28a745;
+    --warning-color-light: #e74c3c;
+    --input-bg-light: #fff;
+    --input-border-light: #ccc;
+    --nav-bg-light: #007bff;
+    --nav-link-color-light: white;
+
+    /* Tema Oscuro */
     --bg-color-dark: #2c3e50; /* Azul oscuro pizarra */
     --text-color-dark: #ecf0f1; /* Gris claro */
     --container-bg-dark: #34495e; /* Azul más oscuro */
@@ -15,53 +36,46 @@
     --link-bg-dark: #3498db;
     --link-hover-bg-dark: #2980b9;
     --accent-color-dark: #2ecc71; /* Verde brillante */
-    --warning-color: #e74c3c; /* Rojo para errores */
+    --warning-color-dark: #e74c3c;
     --input-bg-dark: #4d6d8a;
     --input-border-dark: #5c7e9c;
+    --nav-bg-dark: #2c3e50;
+    --nav-link-color-dark: #ecf0f1;
 }
 
-/* Base */
+/* Base del tema (se definirá en JS si es light o dark) */
 body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 20px;
-    background-color: var(--bg-color-dark);
-    color: var(--text-color-dark);
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .container {
     max-width: 900px;
     margin: 20px auto;
-    background: var(--container-bg-dark);
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 h1, h2 {
-    color: var(--header-color-dark);
-    border-bottom: 2px solid var(--border-color-dark);
+    border-bottom: 2px solid;
     padding-bottom: 10px;
     margin-top: 20px;
 }
 
 h3 {
-    color: var(--exercise-border-dark);
     margin-top: 15px;
 }
 
-/* Ejercicios */
 .exercise {
     margin-bottom: 20px;
     padding: 15px;
-    background-color: var(--exercise-bg-dark);
-    border-left: 5px solid var(--exercise-border-dark);
+    border-left: 5px solid;
     border-radius: 5px;
-}
-
-.exercise p strong {
-    color: var(--header-color-dark);
 }
 
 .exercise ul {
@@ -70,60 +84,35 @@ h3 {
 }
 
 .exercise ul li {
-    background: var(--list-item-bg-dark);
     margin-bottom: 5px;
     padding: 8px 10px;
     border-radius: 3px;
 }
 
-/* Notas y Cardio */
 .notes, .cardio {
-    background-color: var(--notes-bg-dark);
-    border: 1px solid var(--notes-border-dark);
+    border: 1px solid;
     padding: 15px;
     border-radius: 5px;
     margin-top: 20px;
 }
 
-.notes h3, .cardio h3 {
-    color: var(--accent-color-dark);
-}
-
-/* Navegación */
-.navigation {
-    text-align: center;
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 2px solid var(--border-color-dark);
-    display: flex;
-    flex-wrap: wrap; /* Permite que los elementos salten de línea */
-    justify-content: center;
-    gap: 10px; /* Espacio entre los elementos */
-}
-
-.navigation a {
-    display: inline-block;
-    background-color: var(--link-bg-dark);
-    color: var(--text-color-dark);
-    padding: 10px 20px;
-    text-decoration: none;
+button {
+    padding: 10px 15px;
+    border: none;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
-    white-space: nowrap;
-    flex-shrink: 0; /* Evita que los elementos se encojan */
-}
-
-.navigation a:hover {
-    background-color: var(--link-hover-bg-dark);
-}
-
-/* Estilos para las imágenes */
-.exercise img {
-    max-width: 100%;
-    height: auto;
-    display: block;
+    cursor: pointer;
+    font-size: 1em;
     margin-top: 10px;
-    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s;
+}
+
+button:hover {
+    filter: brightness(110%); /* Un poco más brillante al pasar el mouse */
+}
+
+button:disabled {
+    background-color: #7f8c8d !important; /* Color gris para deshabilitado */
+    cursor: not-allowed;
 }
 
 /* Campos de entrada */
@@ -134,37 +123,14 @@ input[type="number"],
 textarea {
     margin-top: 10px;
     padding: 8px;
-    border: 1px solid var(--input-border-dark);
+    border: 1px solid;
     border-radius: 4px;
-    width: calc(100% - 18px); /* Ajuste para el padding */
-    background-color: var(--input-bg-dark);
-    color: var(--text-color-dark);
+    width: calc(100% - 18px);
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
-.weight-input::placeholder,
 input::placeholder,
 textarea::placeholder {
-    color: #999;
-}
-
-button {
-    background-color: var(--accent-color-dark);
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #27ae60;
-}
-
-button:disabled {
-    background-color: #7f8c8d;
-    cursor: not-allowed;
+    transition: color 0.3s;
 }
 
 /* Mensajes de error/éxito */
@@ -173,16 +139,6 @@ button:disabled {
     margin-top: 10px;
     border-radius: 5px;
     font-weight: bold;
-}
-
-.message.error {
-    background-color: #e74c3c;
-    color: white;
-}
-
-.message.success {
-    background-color: #2ecc71;
-    color: white;
 }
 
 /* Estilos específicos del login */
@@ -197,30 +153,33 @@ button:disabled {
     margin-bottom: 15px;
 }
 
-/* Estilos para el NAV principal (con temporizador) */
+/* NAV principal (con temporizador y tema) */
 .main-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #2c3e50; /* Un tono más oscuro para la barra */
     padding: 10px 20px;
-    border-bottom: 2px solid var(--border-color-dark);
-    position: sticky; /* Se pega arriba al hacer scroll */
+    border-bottom: 2px solid;
+    position: sticky;
     top: 0;
-    z-index: 1000; /* Asegura que esté por encima de otros elementos */
-    flex-wrap: wrap; /* Permite que los elementos se ajusten en móviles */
+    z-index: 1000;
+    flex-wrap: wrap;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.main-nav .left-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .main-nav .left-links a {
-    color: var(--text-color-dark);
     text-decoration: none;
     padding: 8px 15px;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.main-nav .left-links a:hover {
-    background-color: var(--link-hover-bg-dark);
+    transition: background-color 0.3s ease, color 0.3s;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .timer-controls {
@@ -228,54 +187,244 @@ button:disabled {
     gap: 10px;
     align-items: center;
     flex-wrap: wrap;
-    justify-content: center; /* Centrar controles en pantallas pequeñas */
+    justify-content: center;
 }
 
 .timer-controls input {
-    width: 60px; /* Ancho fijo para los inputs del temporizador */
+    width: 60px;
     text-align: center;
     padding: 5px;
-    margin-top: 0; /* Anula el margin-top del input general */
+    margin-top: 0;
 }
 
 .timer-display {
     font-size: 1.5em;
     font-weight: bold;
-    color: var(--header-color-dark);
-    min-width: 80px; /* Espacio mínimo para el contador */
+    min-width: 80px;
     text-align: center;
+    transition: color 0.3s;
+}
+
+.theme-toggle-btn {
+    padding: 8px 12px;
+    font-size: 0.9em;
+    margin-left: 15px;
+    margin-right: 5px;
+    margin-top: 0;
 }
 
 /* Sección de historial de peso y nutrición */
-#weight-history-list, #food-list {
+#weight-history-list, #food-log-list {
     list-style: none;
     padding: 0;
     margin-top: 20px;
 }
 
-#weight-history-list li, #food-list li {
-    background: var(--exercise-bg-dark);
-    border: 1px solid var(--exercise-border-dark);
+#weight-history-list li, #food-log-list .day-entry {
+    border: 1px solid;
     padding: 10px;
     margin-bottom: 8px;
     border-radius: 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
-#weight-history-list li button, #food-list li button {
+#weight-history-list li button,
+#food-log-list .food-item button {
     background-color: var(--warning-color);
     padding: 5px 10px;
     font-size: 0.8em;
-    margin-top: 0;
+    margin-top: 5px; /* Pequeño margen para separación */
 }
 
-#weight-history-list li button:hover, #food-list li button:hover {
-    background-color: #c0392b;
+#food-log-list .day-header {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: var(--header-color);
+    border-bottom: 1px dotted;
+    padding-bottom: 5px;
 }
 
-/* Media Queries para Responsividad */
+#food-log-list .food-item {
+    background: var(--list-item-bg);
+    padding: 8px;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+/* --- Tema Oscuro (clases aplicadas por JS) --- */
+body.dark-theme {
+    background-color: var(--bg-color-dark);
+    color: var(--text-color-dark);
+}
+.dark-theme .container {
+    background: var(--container-bg-dark);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+.dark-theme h1, .dark-theme h2 {
+    color: var(--header-color-dark);
+    border-color: var(--border-color-dark);
+}
+.dark-theme h3 {
+    color: var(--exercise-border-dark);
+}
+.dark-theme .exercise {
+    background-color: var(--exercise-bg-dark);
+    border-color: var(--exercise-border-dark);
+}
+.dark-theme .exercise p strong {
+    color: var(--header-color-dark);
+}
+.dark-theme .exercise ul li {
+    background: var(--list-item-bg-dark);
+}
+.dark-theme .notes, .dark-theme .cardio {
+    background-color: var(--notes-bg-dark);
+    border-color: var(--notes-border-dark);
+}
+.dark-theme .notes h3, .dark-theme .cardio h3 {
+    color: var(--accent-color-dark);
+}
+.dark-theme button {
+    background-color: var(--accent-color-dark);
+    color: var(--nav-link-color-dark);
+}
+.dark-theme button:hover {
+    background-color: var(--link-hover-bg-dark);
+}
+.dark-theme .weight-input,
+.dark-theme input[type="text"],
+.dark-theme input[type="password"],
+.dark-theme input[type="number"],
+.dark-theme textarea {
+    background-color: var(--input-bg-dark);
+    color: var(--text-color-dark);
+    border-color: var(--input-border-dark);
+}
+.dark-theme input::placeholder,
+.dark-theme textarea::placeholder {
+    color: #999;
+}
+.dark-theme .message.error { background-color: var(--warning-color-dark); }
+.dark-theme .message.success { background-color: var(--accent-color-dark); }
+.dark-theme .main-nav {
+    background-color: var(--nav-bg-dark);
+    border-color: var(--border-color-dark);
+}
+.dark-theme .main-nav .left-links a {
+    color: var(--nav-link-color-dark);
+    background-color: var(--link-bg-dark); /* Fondo para botones de nav */
+}
+.dark-theme .main-nav .left-links a:hover {
+    background-color: var(--link-hover-bg-dark);
+}
+.dark-theme .timer-display {
+    color: var(--header-color-dark);
+}
+.dark-theme #weight-history-list li, .dark-theme #food-log-list .day-entry {
+    background: var(--exercise-bg-dark);
+    border-color: var(--exercise-border-dark);
+}
+.dark-theme #food-log-list .food-item {
+    background: var(--list-item-bg-dark);
+}
+.dark-theme #food-log-list .day-header {
+    color: var(--header-color-dark);
+    border-color: var(--border-color-dark);
+}
+
+/* --- Tema Claro (clases aplicadas por JS) --- */
+body.light-theme {
+    background-color: var(--bg-color-light);
+    color: var(--text-color-light);
+}
+.light-theme .container {
+    background: var(--container-bg-light);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.light-theme h1, .light-theme h2 {
+    color: var(--header-color-light);
+    border-color: var(--border-color-light);
+}
+.light-theme h3 {
+    color: var(--exercise-border-light);
+}
+.light-theme .exercise {
+    background-color: var(--exercise-bg-light);
+    border-color: var(--exercise-border-light);
+}
+.light-theme .exercise p strong {
+    color: var(--header-color-light);
+}
+.light-theme .exercise ul li {
+    background: var(--list-item-bg-light);
+}
+.light-theme .notes, .light-theme .cardio {
+    background-color: var(--notes-bg-light);
+    border-color: var(--notes-border-light);
+}
+.light-theme .notes h3, .light-theme .cardio h3 {
+    color: var(--accent-color-light);
+}
+.light-theme button {
+    background-color: var(--accent-color-light);
+    color: var(--nav-link-color-light);
+}
+.light-theme button:hover {
+    background-color: var(--link-hover-bg-light);
+}
+.light-theme .weight-input,
+.light-theme input[type="text"],
+.light-theme input[type="password"],
+.light-theme input[type="number"],
+.light-theme textarea {
+    background-color: var(--input-bg-light);
+    color: var(--text-color-light);
+    border-color: var(--input-border-light);
+}
+.light-theme input::placeholder,
+.light-theme textarea::placeholder {
+    color: #555;
+}
+.light-theme .message.error { background-color: var(--warning-color-light); }
+.light-theme .message.success { background-color: var(--accent-color-light); }
+.light-theme .main-nav {
+    background-color: var(--nav-bg-light);
+    border-color: var(--border-color-light);
+}
+.light-theme .main-nav .left-links a {
+    color: var(--nav-link-color-light);
+    background-color: var(--link-bg-light);
+}
+.light-theme .main-nav .left-links a:hover {
+    background-color: var(--link-hover-bg-light);
+}
+.light-theme .timer-display {
+    color: var(--header-color-light);
+}
+.light-theme #weight-history-list li, .light-theme #food-log-list .day-entry {
+    background: var(--exercise-bg-light);
+    border-color: var(--exercise-border-light);
+}
+.light-theme #food-log-list .food-item {
+    background: var(--list-item-bg-light);
+}
+.light-theme #food-log-list .day-header {
+    color: var(--header-color-light);
+    border-color: var(--border-color-light);
+}
+
+
+/* --- Diseño Responsivo para Celulares --- */
 @media (max-width: 768px) {
     body {
         padding: 10px;
@@ -320,11 +469,13 @@ button:disabled {
         flex-direction: column;
         width: 100%;
         margin-bottom: 10px;
+        gap: 5px;
     }
     .main-nav .left-links a {
-        width: 100%;
+        width: auto; /* Permite que los enlaces se ajusten a su contenido */
         text-align: center;
-        margin: 5px 0;
+        margin: 0; /* Reiniciar márgenes */
+        flex-grow: 1; /* Para que se expandan si pueden */
     }
 
     .timer-controls {
@@ -339,6 +490,25 @@ button:disabled {
     .timer-display {
         margin-bottom: 10px;
     }
+    .theme-toggle-btn {
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+        text-align: center;
+    }
+    .main-nav button { /* Botones generales del nav */
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    #weight-history-list li, #food-log-list .day-entry {
+        flex-direction: column; /* Apila el contenido del item */
+        align-items: flex-start;
+    }
+    #weight-history-list li span, #food-log-list .food-item span {
+        margin-bottom: 5px;
+    }
+
 }
 
 @media (max-width: 480px) {
