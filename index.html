@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="daBeast — Tu app de fitness retro kawaii para entrenar, comer bien y dominar el campo." />
+  <title>daBeast ⚡ Tu Transformación Híbrida</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ══ SOUND TOGGLE ══ -->
+<button id="soundToggle" class="sound-btn" title="Activar sonidos">🔇</button>
+
+<!-- ══ NAVBAR ══ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-brand" onclick="navigateTo('home')">
+    <span class="brand-pixel">⚡</span>
+    <span class="brand-name">daBeast</span>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menú">☰</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#" class="nav-link" data-section="home">🏠 Inicio</a></li>
+    <li><a href="#" class="nav-link" data-section="routines">💪 Rutinas</a></li>
+    <li><a href="#" class="nav-link" data-section="diet">🥗 Dieta</a></li>
+    <li><a href="#" class="nav-link" data-section="progress">📈 Progreso</a></li>
+    <li><a href="#" class="nav-link" data-section="coach">🤖 IA Coach</a></li>
+    <li><a href="#" class="nav-link" data-section="cardio">⚽ Cardio</a></li>
+    <li><a href="#" class="nav-link" data-section="tools">🔧 Tools</a></li>
+    <li><button class="theme-toggle" id="themeToggle" title="Cambiar tema">🌙</button></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     🏠  HOME / LANDING
+     ═══════════════════════════════════════════ -->
+<section id="home" class="section">
+  <div class="hero-container">
+    <div class="pixel-grid-bg"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">⚡ MODO BESTIA ACTIVADO</div>
+      <h1 class="hero-title">
+        <span class="title-da">da</span><span class="title-beast">Beast</span>
+      </h1>
+      <p class="hero-subtitle">Tu transformación híbrida definitiva</p>
+      <p class="hero-quote" id="heroQuote">Cargando motivación...</p>
+      <div class="hero-buttons">
+        <button class="btn-primary" onclick="navigateTo('routines')">🔥 Empezar Rutina</button>
+        <button class="btn-secondary" onclick="navigateTo('coach')">🤖 Hablar con IA</button>
+      </div>
+    </div>
+
+    <div class="hero-character">
+      <div class="pixel-character">
+        <div class="char-aura"></div>
+        <svg viewBox="0 0 120 170" xmlns="http://www.w3.org/2000/svg" class="pixel-svg">
+          <!-- Cabello -->
+          <rect x="36" y="7" width="48" height="10" rx="4" fill="#2C1810"/>
+          <rect x="34" y="12" width="8" height="18" rx="4" fill="#2C1810"/>
+          <rect x="78" y="12" width="8" height="18" rx="4" fill="#2C1810"/>
+          <!-- Cabeza -->
+          <rect x="38" y="14" width="44" height="38" rx="6" fill="#FBBF9F"/>
+          <!-- Ojos -->
+          <rect x="44" y="22" width="10" height="10" rx="3" fill="#1a1a2e"/>
+          <rect x="66" y="22" width="10" height="10" rx="3" fill="#1a1a2e"/>
+          <rect x="46" y="24" width="4" height="4" rx="1" fill="white" opacity=".5"/>
+          <rect x="68" y="24" width="4" height="4" rx="1" fill="white" opacity=".5"/>
+          <!-- Boca -->
+          <rect x="50" y="38" width="20" height="5" rx="2.5" fill="#FF6B8A"/>
+          <!-- Cuello -->
+          <rect x="50" y="51" width="20" height="10" rx="3" fill="#FBBF9F"/>
+          <!-- Cuerpo (tank top) -->
+          <rect x="28" y="59" width="64" height="58" rx="8" fill="#A78BFA"/>
+          <!-- Franjas pecho -->
+          <rect x="36" y="59" width="16" height="30" rx="4" fill="#7C3AED"/>
+          <rect x="68" y="59" width="16" height="30" rx="4" fill="#7C3AED"/>
+          <!-- Detalle estrella -->
+          <text x="52" y="84" font-size="14" fill="#FFD700">★</text>
+          <!-- Brazos -->
+          <rect x="6"  y="60" width="24" height="50" rx="12" fill="#FBBF9F"/>
+          <rect x="90" y="60" width="24" height="50" rx="12" fill="#FBBF9F"/>
+          <!-- Venas/músculo efecto -->
+          <rect x="8"  y="72" width="18" height="4" rx="2" fill="#F59E0B" opacity=".5"/>
+          <rect x="94" y="72" width="18" height="4" rx="2" fill="#F59E0B" opacity=".5"/>
+          <!-- Manos -->
+          <ellipse cx="18" cy="112" rx="10" ry="8" fill="#FBBF9F"/>
+          <ellipse cx="102" cy="112" rx="10" ry="8" fill="#FBBF9F"/>
+          <!-- Shorts -->
+          <rect x="26" y="115" width="68" height="38" rx="6" fill="#60A5FA"/>
+          <rect x="55" y="115" width="10" height="38" rx="3" fill="#3B82F6"/>
+          <!-- Piernas -->
+          <rect x="28" y="149" width="26" height="20" rx="6" fill="#FBBF9F"/>
+          <rect x="66" y="149" width="26" height="20" rx="6" fill="#FBBF9F"/>
+          <!-- Zapatillas -->
+          <rect x="22" y="164" width="36" height="11" rx="5" fill="#1E293B"/>
+          <rect x="62" y="164" width="36" height="11" rx="5" fill="#1E293B"/>
+          <rect x="24" y="165" width="12" height="4" rx="2" fill="white" opacity=".3"/>
+          <rect x="64" y="165" width="12" height="4" rx="2" fill="white" opacity=".3"/>
+        </svg>
+        <div class="char-stars">
+          <span class="star s1">★</span>
+          <span class="star s2">✦</span>
+          <span class="star s3">★</span>
+          <span class="star s4">✦</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Barra de racha / stats -->
+  <div class="streak-bar">
+    <div class="streak-item">
+      <span class="streak-icon">🔥</span>
+      <div>
+        <div class="streak-count" id="streakCount">0</div>
+        <div class="streak-label">días de racha</div>
+      </div>
+    </div>
+    <div class="streak-divider"></div>
+    <div class="streak-item">
+      <span class="streak-icon">💪</span>
+      <div>
+        <div class="streak-count" id="totalWorkouts">0</div>
+        <div class="streak-label">entrenos totales</div>
+      </div>
+    </div>
+    <div class="streak-divider"></div>
+    <div class="streak-item">
+      <span class="streak-icon">⭐</span>
+      <div>
+        <div class="streak-count" id="userLevel">Iniciado</div>
+        <div class="streak-label">nivel actual</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     💪  RUTINAS
+     ═══════════════════════════════════════════ -->
+<section id="routines" class="section">
+  <div class="section-header">
+    <h2 class="section-title">💪 Rutinas</h2>
+    <p class="section-sub">Tus entrenamientos híbridos personalizados — Cargá progresivo.</p>
+  </div>
+
+  <div class="day-tabs">
+    <button class="day-tab active" data-day="day1">🏋️ Día 1 — Upper</button>
+    <button class="day-tab" data-day="day2">🦵 Día 2 — Lower</button>
+    <button class="day-tab" data-day="day3">⚡ Día 3 — Full Body</button>
+  </div>
+
+  <!-- DÍA 1 -->
+  <div class="day-content active" id="day1" style="display:block">
+    <div class="day-header">
+      <div class="day-header-info">
+        <h3>🏋️ Día 1: Upper Fuerza + Hombros</h3>
+        <p>Torso superior, pecho, espalda y hombros. Carga progresiva. Activá el core en todo momento.</p>
+      </div>
+      <button class="btn-complete-day" onclick="completeDay(1)">✅ Día completado</button>
+    </div>
+    <div id="exercises-day1" class="exercises-grid"></div>
+  </div>
+
+  <!-- DÍA 2 -->
+  <div class="day-content" id="day2" style="display:none">
+    <div class="day-header">
+      <div class="day-header-info">
+        <h3>🦵 Día 2: Lower + Aire</h3>
+        <p>Tren inferior, glúteos e isquios con trabajo aeróbico. Base atlética para el fútbol.</p>
+      </div>
+      <button class="btn-complete-day" onclick="completeDay(2)">✅ Día completado</button>
+    </div>
+    <div id="exercises-day2" class="exercises-grid"></div>
+  </div>
+
+  <!-- DÍA 3 -->
+  <div class="day-content" id="day3" style="display:none">
+    <div class="day-header">
+      <div class="day-header-info">
+        <h3>⚡ Día 3: Full Body + Atlético</h3>
+        <p>Potencia, explosividad y resistencia. Movimientos compuestos y funcionales.</p>
+      </div>
+      <button class="btn-complete-day" onclick="completeDay(3)">✅ Día completado</button>
+    </div>
+    <div id="exercises-day3" class="exercises-grid"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     🥗  DIETA
+     ═══════════════════════════════════════════ -->
+<section id="diet" class="section">
+  <div class="section-header">
+    <h2 class="section-title">🥗 Dieta</h2>
+    <p class="section-sub">Déficit inteligente · Alta proteína · Recetas argentinas baratas y ricas</p>
+  </div>
+
+  <div class="diet-filters">
+    <button class="filter-btn active" data-filter="all">🍽️ Todas</button>
+    <button class="filter-btn" data-filter="desayuno">🌅 Desayuno</button>
+    <button class="filter-btn" data-filter="almuerzo">☀️ Almuerzo</button>
+    <button class="filter-btn" data-filter="merienda">🫖 Merienda</button>
+    <button class="filter-btn" data-filter="cena">🌙 Cena</button>
+    <button class="filter-btn" data-filter="snack">🍎 Snacks</button>
+  </div>
+
+  <div class="tag-filters">
+    <span class="tag-filter" data-tag="barata">💰 Barata</span>
+    <span class="tag-filter" data-tag="rapida">⚡ Rápida</span>
+    <span class="tag-filter" data-tag="proteina">💪 Alta Proteína</span>
+    <span class="tag-filter" data-tag="saciante">🫃 Más Saciante</span>
+  </div>
+
+  <div id="recipesGrid" class="recipes-grid"></div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     📈  PROGRESO
+     ═══════════════════════════════════════════ -->
+<section id="progress" class="section">
+  <div class="section-header">
+    <h2 class="section-title">📈 Progreso</h2>
+    <p class="section-sub">Tu evolución semana a semana — Todo se registra automáticamente.</p>
+  </div>
+
+  <!-- Stats rápidas -->
+  <div class="progress-stats">
+    <div class="stat-card">
+      <div class="stat-icon">🔥</div>
+      <div class="stat-value" id="statStreak">0</div>
+      <div class="stat-label">Racha actual</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">💪</div>
+      <div class="stat-value" id="statTotal">0</div>
+      <div class="stat-label">Entrenos totales</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">📅</div>
+      <div class="stat-value" id="statWeek">0</div>
+      <div class="stat-label">Esta semana</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">⭐</div>
+      <div class="stat-value" id="statBest">0</div>
+      <div class="stat-label">Mejor racha</div>
+    </div>
+  </div>
+
+  <!-- Historial por ejercicio -->
+  <div class="progress-section">
+    <div class="progress-section-header">
+      <h3 class="sub-title">📊 Historial de Cargas</h3>
+    </div>
+    <div id="exerciseHistory" class="exercise-history"></div>
+  </div>
+
+  <!-- Gráficos sparkline -->
+  <div class="progress-section">
+    <h3 class="sub-title">📈 Gráficos de Progreso</h3>
+    <div id="progressCharts" class="charts-grid"></div>
+  </div>
+
+  <!-- Calendario -->
+  <div class="progress-section">
+    <h3 class="sub-title">📅 Días Entrenados (últimas 5 semanas)</h3>
+    <div id="calendarHeatmap" class="calendar-heatmap"></div>
+  </div>
+
+  <!-- Badges -->
+  <div class="progress-section">
+    <h3 class="sub-title">🏆 Badges y Logros</h3>
+    <div id="badgesGrid" class="badges-grid"></div>
+  </div>
+
+  <!-- Exportar -->
+  <div class="progress-section">
+    <h3 class="sub-title">💾 Exportar Datos</h3>
+    <p style="color:var(--text2);font-size:14px;margin-bottom:12px;">Descargá tu progreso en JSON para respaldo o análisis.</p>
+    <button class="btn-secondary" onclick="exportProgress()">📥 Exportar Progreso</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     🤖  IA COACH
+     ═══════════════════════════════════════════ -->
+<section id="coach" class="section">
+  <div class="section-header">
+    <h2 class="section-title">🤖 IA Coach</h2>
+    <p class="section-sub">Tu entrenador personal disponible 24/7 — Preguntá lo que quieras.</p>
+  </div>
+
+  <div class="coach-container">
+    <!-- Avatar -->
+    <div class="coach-avatar">
+      <div class="coach-pixel-art">
+        <svg viewBox="0 0 80 96" xmlns="http://www.w3.org/2000/svg">
+          <!-- Robot head -->
+          <rect x="15" y="4" width="50" height="42" rx="8" fill="#A78BFA"/>
+          <rect x="20" y="4" width="40" height="10" rx="4" fill="#7C3AED"/>
+          <!-- Antena -->
+          <rect x="37" y="0" width="6" height="8" rx="3" fill="#7C3AED"/>
+          <circle cx="40" cy="1" r="4" fill="#FFD700"/>
+          <!-- Ojos/pantalla -->
+          <rect x="22" y="18" width="14" height="12" rx="3" fill="#0D1B2A"/>
+          <rect x="44" y="18" width="14" height="12" rx="3" fill="#0D1B2A"/>
+          <rect x="24" y="20" width="6" height="6" rx="1" fill="#4ADE80"/>
+          <rect x="46" y="20" width="6" height="6" rx="1" fill="#4ADE80"/>
+          <!-- Boca LED -->
+          <rect x="26" y="36" width="28" height="5" rx="2" fill="#0D1B2A"/>
+          <rect x="28" y="37" width="5" height="3" rx="1" fill="#4ADE80"/>
+          <rect x="35" y="37" width="5" height="3" rx="1" fill="#4ADE80"/>
+          <rect x="42" y="37" width="5" height="3" rx="1" fill="#4ADE80"/>
+          <!-- Cuerpo -->
+          <rect x="10" y="44" width="60" height="44" rx="10" fill="#7C3AED"/>
+          <rect x="18" y="52" width="44" height="28" rx="6" fill="#6D28D9"/>
+          <!-- Pantalla pecho -->
+          <rect x="22" y="56" width="36" height="20" rx="4" fill="#0D1B2A"/>
+          <text x="32" y="70" font-size="12" fill="#4ADE80">100%</text>
+          <!-- Brazos -->
+          <rect x="0"  y="46" width="12" height="32" rx="6" fill="#A78BFA"/>
+          <rect x="68" y="46" width="12" height="32" rx="6" fill="#A78BFA"/>
+        </svg>
+      </div>
+      <div class="coach-name">BeastBot</div>
+      <div class="coach-status">🟢 En línea</div>
+      <div class="coach-bio">Entrenador IA especializado en fitness híbrido y fútbol amateur.</div>
+    </div>
+
+    <!-- Chat -->
+    <div class="chat-container">
+      <!-- Quick actions -->
+      <div class="quick-actions">
+        <button class="quick-btn" onclick="sendQuickMsg('Qué rutina hago hoy?')">📋 Rutina del día</button>
+        <button class="quick-btn" onclick="sendQuickMsg('Jugué fútbol hoy, cómo ajusto la semana?')">⚽ Jugué fútbol</button>
+        <button class="quick-btn" onclick="sendQuickMsg('Estoy cansado, qué hago hoy?')">😴 Estoy cansado</button>
+        <button class="quick-btn" onclick="sendQuickMsg('Qué como hoy para el déficit?')">🥗 Dieta del día</button>
+        <button class="quick-btn" onclick="sendQuickMsg('Dame motivación real, no me da ganas')">⚡ Motivación</button>
+        <button class="quick-btn" onclick="sendQuickMsg('Cómo ejecuto bien la sentadilla?')">❓ Técnica</button>
+      </div>
+
+      <!-- Mensajes -->
+      <div class="chat-messages" id="chatMessages">
+        <div class="msg bot-msg">
+          <div class="msg-avatar">🤖</div>
+          <div class="msg-bubble">
+            ¡Ey! Soy <strong>BeastBot</strong>, tu coach personal de daBeast. 💪<br><br>
+            Puedo ayudarte con rutinas, técnica, dieta, motivación o ajustar tu semana si jugaste fútbol. ¿Por dónde empezamos?
+          </div>
+        </div>
+      </div>
+
+      <!-- Input -->
+      <div class="chat-input-area">
+        <input type="text" id="chatInput" class="chat-input"
+               placeholder="Preguntá algo... ej: 'Qué como antes de entrenar?'" />
+        <button class="chat-send" onclick="sendMessage()" title="Enviar">➤</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     ⚽  CARDIO / FÚTBOL
+     ═══════════════════════════════════════════ -->
+<section id="cardio" class="section">
+  <div class="section-header">
+    <h2 class="section-title">⚽ Cardio / Fútbol</h2>
+    <p class="section-sub">Planes específicos para mejorar tu aire y rendimiento en el campo</p>
+  </div>
+
+  <div class="cardio-modes">
+    <div class="cardio-card" data-mode="base">
+      <div class="cardio-icon">🚶</div>
+      <h3>Modo Base</h3>
+      <p>Caminata + intervalos suaves. Construí la base aeróbica desde cero.</p>
+      <button class="btn-primary" onclick="showCardioMode('base')">Ver Plan</button>
+    </div>
+    <div class="cardio-card" data-mode="partido">
+      <div class="cardio-icon">⚽</div>
+      <h3>5 vs 5 HIIT</h3>
+      <p>Sprints y cambios de dirección específicos para el partido.</p>
+      <button class="btn-primary" onclick="showCardioMode('partido')">Ver Plan</button>
+    </div>
+    <div class="cardio-card" data-mode="recuperacion">
+      <div class="cardio-icon">🧘</div>
+      <h3>Recuperación</h3>
+      <p>Bicicleta suave + movilidad. Para el día después del partido.</p>
+      <button class="btn-primary" onclick="showCardioMode('recuperacion')">Ver Plan</button>
+    </div>
+    <div class="cardio-card" data-mode="respiracion">
+      <div class="cardio-icon">🫁</div>
+      <h3>Tabique Desviado</h3>
+      <p>Ejercicios de tolerancia respiratoria y control del CO₂.</p>
+      <button class="btn-primary" onclick="showCardioMode('respiracion')">Ver Plan</button>
+    </div>
+  </div>
+
+  <div id="cardioDetail" class="cardio-detail hidden"></div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     🔧  HERRAMIENTAS
+     ═══════════════════════════════════════════ -->
+<section id="tools" class="section">
+  <div class="section-header">
+    <h2 class="section-title">🔧 Herramientas</h2>
+    <p class="section-sub">Calculadoras y utilidades para optimizar tu rendimiento</p>
+  </div>
+
+  <div class="tools-grid">
+
+    <!-- CALCULADORA TDEE -->
+    <div class="tool-card">
+      <h3>🔥 Calculadora de Calorías (TDEE)</h3>
+      <div class="tool-form">
+        <div class="form-row">
+          <label>Peso (kg)</label>
+          <input type="number" id="calWeight" placeholder="75" class="tool-input" min="30" max="300"/>
+        </div>
+        <div class="form-row">
+          <label>Altura (cm)</label>
+          <input type="number" id="calHeight" placeholder="175" class="tool-input" min="100" max="250"/>
+        </div>
+        <div class="form-row">
+          <label>Edad</label>
+          <input type="number" id="calAge" placeholder="25" class="tool-input" min="10" max="100"/>
+        </div>
+        <div class="form-row">
+          <label>Género</label>
+          <select id="calGender" class="tool-input">
+            <option value="male">Masculino</option>
+            <option value="female">Femenino</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Nivel de actividad</label>
+          <select id="calActivity" class="tool-input">
+            <option value="1.2">Sedentario (oficina, sin gym)</option>
+            <option value="1.375">Ligero (1–3 días/sem)</option>
+            <option value="1.55" selected>Moderado (3–5 días/sem)</option>
+            <option value="1.725">Activo (6–7 días/sem)</option>
+            <option value="1.9">Muy activo (doble turno)</option>
+          </select>
+        </div>
+        <button class="btn-primary" onclick="calcCalories()">🧮 Calcular</button>
+      </div>
+      <div id="caloriesResult" class="tool-result hidden"></div>
+    </div>
+
+    <!-- IMC -->
+    <div class="tool-card">
+      <h3>📏 Calculadora de IMC</h3>
+      <div class="tool-form">
+        <div class="form-row">
+          <label>Peso (kg)</label>
+          <input type="number" id="imcWeight" placeholder="75" class="tool-input" min="30" max="300"/>
+        </div>
+        <div class="form-row">
+          <label>Altura (cm)</label>
+          <input type="number" id="imcHeight" placeholder="175" class="tool-input" min="100" max="250"/>
+        </div>
+        <button class="btn-primary" onclick="calcIMC()">🧮 Calcular IMC</button>
+      </div>
+      <div id="imcResult" class="tool-result hidden"></div>
+    </div>
+
+    <!-- TEMPORIZADOR -->
+    <div class="tool-card timer-card">
+      <h3>⏱️ Temporizador de Descanso</h3>
+      <div class="timer-display" id="globalTimerDisplay">00:00</div>
+      <div class="timer-presets">
+        <button class="timer-preset" onclick="startGlobalTimer(30)">30s</button>
+        <button class="timer-preset" onclick="startGlobalTimer(60)">60s</button>
+        <button class="timer-preset" onclick="startGlobalTimer(90)">90s</button>
+        <button class="timer-preset" onclick="startGlobalTimer(120)">2 min</button>
+        <button class="timer-preset" onclick="startGlobalTimer(180)">3 min</button>
+      </div>
+      <div class="timer-custom">
+        <input type="number" id="customTimerInput" placeholder="Segundos personalizados" class="tool-input" min="1" max="7200"/>
+        <button class="btn-secondary" onclick="startCustomTimer()">▶ Iniciar</button>
+      </div>
+      <div class="timer-controls">
+        <button class="btn-secondary" onclick="pauseGlobalTimer()">⏸ Pausa</button>
+        <button class="btn-danger"    onclick="resetGlobalTimer()">⏹ Reset</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     OVERLAYS, MODALES, TOASTS
+     ══════════════════════════════ -->
+
+<!-- Toast -->
+<div id="toast" class="toast hidden"></div>
+
+<!-- Timer overlay (descanso entre series) -->
+<div id="timerOverlay" class="timer-overlay hidden">
+  <div class="timer-overlay-content">
+    <p class="timer-overlay-label" id="timerExLabel">⏱️ Descanso</p>
+    <div class="timer-ring-wrap">
+      <svg viewBox="0 0 100 100" class="timer-ring-svg">
+        <circle cx="50" cy="50" r="45" fill="none" stroke-width="7" class="ring-bg"/>
+        <circle cx="50" cy="50" r="45" fill="none" stroke-width="7" class="ring-fill" id="timerRing"
+                stroke-dasharray="283" stroke-dashoffset="283"/>
+      </svg>
+      <div class="timer-big" id="timerBig">60</div>
+    </div>
+    <div class="timer-overlay-controls">
+      <button class="btn-secondary" id="timerPauseBtn" onclick="pauseExerciseTimer()">⏸ Pausar</button>
+      <button class="btn-danger" onclick="closeExerciseTimer()">✕ Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal recetas -->
+<div id="recipeModal" class="modal hidden" role="dialog" aria-modal="true">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
