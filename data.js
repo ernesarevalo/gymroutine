@@ -32,574 +32,476 @@ const QUOTES = [
 
 // EJERCICIOS POR DÍA
 const EXERCISES = {
+
+  // ─────────────────────────────────────────────
+  // DÍA 1: UPPER FUERZA + HOMBROS + CORE
+  // ─────────────────────────────────────────────
   day1: [
     {
-      id: "press_banca",
-      name: "Press de Banca",
-      sets: 4, reps: "8-10", rest: 90,
-      muscle: "Pecho",
-      gif: "https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif",
+      id: "press_banca_pausado",
+      name: "Press de Banca Pausado",
+      sets: 6, reps: "5", rest: 180,
+      muscle: "Pecho / Tríceps / Deltoides anterior",
+      defaultWeight: 80,
+      technique: {
+        postura: "Espalda con leve arco natural, pies firmes en el suelo. Escápulas retraídas y deprimidas contra el banco durante todo el movimiento.",
+        agarre: "Agarre prono, manos un poco más anchas que los hombros. Muñecas neutras, pulgares rodeando la barra.",
+        respiracion: "Maniobra Valsalva: inspirá profundo antes de bajar. Exhalá con fuerza al empujar. No sueltes el aire en la pausa.",
+        errores: "No rebotar la barra en el pecho. No levantar los glúteos. No perder la tensión en la pausa. La pausa es de 1-2 seg completos, sin apoyo.",
+        seguridad: "Usá collarines siempre. Con más de 80 kg tené spotter o usa rack con seguros bien ajustados.",
+        tecnica: "Bajá controlado 2-3 seg hasta el pecho medio-bajo. Pausá 1-2 seg sin rebotar. Empujá explosivo hacia arriba. Codos a 45-60° del cuerpo."
+      }
+    },
+    {
+      id: "remo_caballo",
+      name: "Remo Caballo (Barbell Row)",
+      sets: 4, reps: "10", rest: 90,
+      muscle: "Espalda media / Romboides / Bíceps",
       defaultWeight: 60,
       technique: {
-        postura: "Espalda con leve arco natural, pies firmes en el suelo, escápulas retraídas y deprimidas contra el banco.",
-        agarre: "Agarre prono un poco más ancho que los hombros. Muñecas neutras, no dobladas.",
-        respiracion: "Inspirá antes de bajar la barra. Exhalá al empujar hacia arriba.",
-        errores: "No rebotar la barra en el pecho. No levantar los glúteos del banco. No desenganchar los pies.",
-        seguridad: "Usá collarines. Con peso máximo, tené un spotter. Bajá controlado.",
-        tecnica: "Bajá la barra al pecho medio-bajo, codos a 45-75°. Empujá de forma explosiva hacia arriba y levemente hacia atrás."
+        postura: "Inclinado ~45°, rodillas levemente flexionadas, espalda completamente recta. Core activado todo el tiempo.",
+        agarre: "Agarre prono, manos a ancho de hombros o algo más. Codos pegados al cuerpo al tirar.",
+        respiracion: "Exhalá al tirar la barra hacia el ombligo. Inspirá al bajar controlado.",
+        errores: "No redondear la lumbar. No usar impulso del torso para subir. No bajar la barra rápido — el excéntrico importa.",
+        seguridad: "Con más de 70 kg usá cinturón. Si duele la lumbar, reducí el peso y revisá la postura.",
+        tecnica: "Tirá la barra hacia el ombligo bajo con codos a 45°. Apretá la espalda 1 seg arriba. Bajá 2 seg."
       }
     },
     {
-      id: "press_militar",
-      name: "Press Militar con Barra",
-      sets: 4, reps: "8-10", rest: 90,
-      muscle: "Hombros",
-      gif: "https://media.giphy.com/media/3o7TKTDn976rzVgky4/giphy.gif",
+      id: "press_militar_sentado",
+      name: "Press Militar Sentado",
+      sets: 4, reps: "8", rest: 90,
+      muscle: "Deltoides / Tríceps / Trapecio",
       defaultWeight: 40,
       technique: {
-        postura: "De pie o sentado, columna neutral, core activado. No hiperextender la lumbar.",
-        agarre: "Agarre prono, manos a ancho de hombros o levemente más. Pulgares envolviendo la barra.",
+        postura: "Sentado con respaldo o banco vertical. Columna neutra, core activado. No hiperextender la lumbar para empujar.",
+        agarre: "Agarre prono a ancho de hombros. Pulgares envolviendo la barra.",
         respiracion: "Exhalá al empujar. Inspirá en el descenso controlado.",
-        errores: "No arquear la lumbar para empujar. No usar impulso del cuerpo. No bajar rápido.",
-        seguridad: "Empezá con peso moderado. Si duelen los hombros, probá con mancuernas.",
-        tecnica: "Barra frente al cuerpo a altura del mentón. Empujá hacia arriba en línea recta. Al frente de la cabeza, no detrás."
-      }
-    },
-    {
-      id: "remo_barra",
-      name: "Remo con Barra",
-      sets: 4, reps: "8-10", rest: 90,
-      muscle: "Espalda",
-      gif: "https://media.giphy.com/media/26ufcVAp3AiKu2RKo/giphy.gif",
-      defaultWeight: 50,
-      technique: {
-        postura: "Inclinado hacia adelante ~45°, rodillas levemente flexionadas, espalda recta, core apretado.",
-        agarre: "Agarre prono o supino, manos a ancho de hombros o más.",
-        respiracion: "Exhalá al tirar. Inspirá en el descenso.",
-        errores: "No redondear la espalda. No usar el impulso del torso para subir. No bajar rápido.",
-        seguridad: "Con mucho peso, usá cinturón. Si duele la lumbar, reducí el peso.",
-        tecnica: "Tirá hacia el ombligo bajo, codos pegados al cuerpo. Apretá la espalda en la contracción."
+        errores: "No arquear la lumbar para completar la repetición. No bajar la barra detrás de la cabeza — al frente siempre. No usar impulso.",
+        seguridad: "Si duelen los hombros probá con mancuernas para más libertad de movimiento.",
+        tecnica: "Barra frente al mentón. Empujá en línea recta hacia arriba. Bajar controlado hasta el mentón o clavículas."
       }
     },
     {
       id: "elevaciones_laterales",
       name: "Elevaciones Laterales",
-      sets: 4, reps: "12-15", rest: 60,
-      muscle: "Hombros",
-      gif: "https://media.giphy.com/media/l0HlFZfztamspT3O0/giphy.gif",
-      defaultWeight: 10,
+      sets: 4, reps: "15", rest: 60,
+      muscle: "Deltoides lateral",
+      defaultWeight: 8,
       technique: {
-        postura: "De pie, columna recta, rodillas levemente flexionadas. Torso estable.",
-        agarre: "Mancuernas en pronación (pulgar hacia adelante). Pulgares levemente abajo al subir.",
-        respiracion: "Exhalá al subir. Inspirá al bajar controlado.",
-        errores: "No usar impulso. No elevar por encima de los hombros. No doblar los codos al 90°.",
-        seguridad: "Empezá liviano. Es un ejercicio de aislamiento, no de ego.",
-        tecnica: "Elevar con leve flexión de codo hasta altura de hombros. Controlar el descenso 2-3 segundos."
+        postura: "De pie o sentado. Columna recta, rodillas levemente flexionadas. Torso estable sin balanceo.",
+        agarre: "Mancuernas en pronación con pulgar levemente hacia abajo al elevar (como volcando agua).",
+        respiracion: "Exhalá al subir. Inspirá al bajar controlado 3 seg.",
+        errores: "No usar impulso del cuerpo. No elevar por encima de los hombros. No encoger los trapecios al subir.",
+        seguridad: "Peso ligero y técnica impecable. Este es un ejercicio de aislamiento — el ego acá no aplica.",
+        tecnica: "Elevar con leve flexión de codo hasta altura de hombros. Pausa 1 seg arriba. Bajar 3 seg. Repetir sin inercia."
       }
     },
     {
-      id: "fondos_paralelas",
-      name: "Fondos en Paralelas",
-      sets: 3, reps: "10-12", rest: 90,
-      muscle: "Pecho / Tríceps",
-      gif: "https://media.giphy.com/media/3o7TKq3C3HeOFpWdG0/giphy.gif",
-      defaultWeight: 0,
-      technique: {
-        postura: "Torso levemente inclinado hacia adelante para enfatizar pecho. Codos controlados.",
-        agarre: "Agarre neutro sobre las paralelas. Hombros bajos y estables.",
-        respiracion: "Inspirá al bajar. Exhalá al empujar.",
-        errores: "No dejar caer rápido. No descender más de lo que el hombro permite sin dolor.",
-        seguridad: "Si sentís presión en el hombro, reducí el rango. Podés usar asistencia con banda.",
-        tecnica: "Bajá hasta que los codos formen ~90°, luego empujá al punto inicial controlando el movimiento."
-      }
-    },
-    {
-      id: "curl_bicep",
+      id: "curl_biceps_d1",
       name: "Curl de Bíceps con Mancuernas",
-      sets: 3, reps: "10-12", rest: 60,
-      muscle: "Bíceps",
-      gif: "https://media.giphy.com/media/3o7TKMt1VVNkHV2PaE/giphy.gif",
+      sets: 4, reps: "10-12", rest: 60,
+      muscle: "Bíceps braquial",
       defaultWeight: 14,
       technique: {
-        postura: "De pie, columna recta. Codos pegados al cuerpo durante todo el movimiento.",
-        agarre: "Supino (palma hacia arriba). Alternar o ambos brazos.",
+        postura: "De pie, columna recta. Codos pegados al cuerpo en todo momento.",
+        agarre: "Supino (palma hacia arriba). Podés alternar o hacer los dos a la vez.",
         respiracion: "Exhalá al subir. Inspirá al bajar.",
-        errores: "No balancear el torso. No soltar los codos del cuerpo. No bajar brusco.",
-        seguridad: "Peso manejable. Si duelen los codos, reducí el rango o peso.",
-        tecnica: "Flexionás completamente el codo sin que los hombros se adelanten. Pausá arriba y bajá 2s."
+        errores: "No balancear el torso. No soltar los codos del cuerpo. No bajar brusco — el excéntrico construye músculo.",
+        seguridad: "Peso manejable que permita rango completo. Si duelen los codos reducí rango o peso.",
+        tecnica: "Flexionás completamente el codo sin adelantar los hombros. Pausa arriba 1 seg. Bajá 2-3 seg."
+      }
+    },
+    {
+      id: "press_cerrado_triceps",
+      name: "Press Cerrado para Tríceps",
+      sets: 3, reps: "10", rest: 60,
+      muscle: "Tríceps / Pecho interno",
+      defaultWeight: 50,
+      technique: {
+        postura: "Acostado en banco plano. Espalda apoyada, pies firmes en el suelo.",
+        agarre: "Agarre prono a ancho de hombros (manos más juntas que en press normal). Muñecas neutras.",
+        respiracion: "Inspirá al bajar. Exhalá al empujar.",
+        errores: "No abrir los codos al subir. No bajar la barra al cuello. No arquear la espalda.",
+        seguridad: "Empezá conservador — la diferencia de agarre cambia mucho la carga sobre codo y hombro.",
+        tecnica: "Bajá la barra hacia la parte baja del pecho/abdomen alto. Empujá manteniendo los codos cerca del cuerpo."
+      }
+    },
+    {
+      id: "dead_bug",
+      name: "Dead Bug",
+      sets: 3, reps: "8 por lado", rest: 45,
+      muscle: "Core profundo / Transverso abdominal",
+      defaultWeight: 0,
+      technique: {
+        postura: "Acostado boca arriba. Zona lumbar pegada al suelo todo el tiempo — esta es la clave.",
+        agarre: "Brazos extendidos al techo. Rodillas a 90° en el aire.",
+        respiracion: "Exhalá al extender brazo/pierna opuestos. Inspirá al volver. La respiración es el ejercicio.",
+        errores: "Permitir que la lumbar se despegue del suelo. Moverse rápido. Hacer el movimiento sin control.",
+        seguridad: "Ideal para diástasis: nunca forzar si sentís protrusión abdominal. Empezá con rango pequeño.",
+        tecnica: "Bajás el brazo derecho y pierna izquierda simultáneamente hacia el suelo sin tocar. Volvés. Alternás. Lento y controlado."
+      }
+    },
+    {
+      id: "pallof_press",
+      name: "Pallof Press",
+      sets: 3, reps: "12 por lado", rest: 45,
+      muscle: "Core / Anti-rotación / Oblicuos",
+      defaultWeight: 0,
+      technique: {
+        postura: "De pie perpendicular a la polea o banda. Pies a ancho de hombros. Rodillas levemente flexionadas.",
+        agarre: "Agarrá la polea o banda con ambas manos frente al pecho.",
+        respiracion: "Exhalá al extender los brazos. Inspirá al volver al pecho.",
+        errores: "Rotar el torso al extender — justamente lo que tenés que evitar. No usar peso excesivo.",
+        seguridad: "Perfecto para diástasis: anti-rotación sin presión intraabdominal alta.",
+        tecnica: "Extendés los brazos al frente manteniendo el torso completamente quieto. El trabajo es resistir la rotación. Pausá 2 seg extendido."
       }
     },
   ],
 
+  // ─────────────────────────────────────────────
+  // DÍA 2: LOWER + AIRE + MOVILIDAD
+  // ─────────────────────────────────────────────
   day2: [
     {
-      id: "sentadilla",
-      name: "Sentadilla con Barra",
-      sets: 4, reps: "8-10", rest: 120,
-      muscle: "Cuádriceps / Glúteos",
-      gif: "https://media.giphy.com/media/3oKIPxigNSFMXNZKs8/giphy.gif",
-      defaultWeight: 70,
-      technique: {
-        postura: "Barra sobre trapecios. Pies a ancho de cadera/hombros, puntas levemente afuera. Core apretado.",
-        agarre: "Agarre cómodo en la barra, codos hacia abajo.",
-        respiracion: "Maniobra Valsalva: inspirá hondo antes de bajar, exhalá al subir.",
-        errores: "No dejar que las rodillas colapsen hacia adentro. No elevar los talones. No redondear la lumbar.",
-        seguridad: "Usá rack de seguridad. Con mucho peso, usá cinturón de levantamiento.",
-        tecnica: "Bajá controlado manteniendo el torso erguido. Rodillas en línea con los pies. Sube desde el talón."
-      }
-    },
-    {
-      id: "peso_muerto_rumano",
-      name: "Peso Muerto Rumano",
-      sets: 4, reps: "10", rest: 90,
-      muscle: "Isquiotibiales / Glúteos",
-      gif: "https://media.giphy.com/media/26ufkD9yWVHRkXHmM/giphy.gif",
-      defaultWeight: 60,
-      technique: {
-        postura: "De pie, rodillas levemente flexionadas, espalda recta en todo el movimiento.",
-        agarre: "Agarre prono o mixto, manos a ancho de hombros.",
-        respiracion: "Inspirá al bajar, exhalá al subir.",
-        errores: "No redondear la columna. No bajar la barra más allá de la capacidad de la cadera.",
-        seguridad: "Enfocarse en sentir el estiramiento isquiotibial, no en bajar la barra al máximo.",
-        tecnica: "Empujá las caderas hacia atrás mientras bajás la barra por las piernas. Subí desde los glúteos."
-      }
-    },
-    {
-      id: "prensa",
+      id: "prensa_d2",
       name: "Prensa de Piernas",
-      sets: 4, reps: "12-15", rest: 90,
-      muscle: "Cuádriceps",
-      gif: "https://media.giphy.com/media/3o7TKWBh87t3P9jNd2/giphy.gif",
-      defaultWeight: 100,
+      sets: 5, reps: "8", rest: 120,
+      muscle: "Cuádriceps / Glúteos / Isquiotibiales",
+      defaultWeight: 120,
       technique: {
-        postura: "Espalda apoyada contra el respaldo. Pies a ancho de cadera.",
-        agarre: "Manos en los agarres laterales del asiento.",
-        respiracion: "Exhalá al empujar. Inspirá al volver.",
-        errores: "No desbloquear completamente las rodillas. No elevar la pelvis del asiento.",
-        seguridad: "No bloquear las rodillas. Ajustá bien los seguros de la máquina.",
-        tecnica: "Bajá controlado hasta 90° de rodilla. Empujá desde el talón sin bloquear la articulación."
+        postura: "Espalda y glúteos apoyados contra el respaldo. Pies a ancho de cadera, paralelos o levemente abiertos.",
+        agarre: "Manos en los agarres laterales para estabilidad.",
+        respiracion: "Maniobra Valsalva: inspirá antes de bajar. Exhalá al empujar.",
+        errores: "No desbloquear completamente las rodillas. No elevar la pelvis del asiento al bajar. No poner los pies demasiado altos o bajos.",
+        seguridad: "Ajustá bien los seguros de la máquina antes de cada serie. No bloquear las rodillas al final.",
+        tecnica: "Bajá controlado hasta 90° de flexión de rodilla. Empujá desde los talones. Rango completo, sin medio recorrido."
       }
     },
     {
-      id: "zancadas",
+      id: "peso_muerto_rumano_mancuerna",
+      name: "Peso Muerto Rumano con Mancuernas",
+      sets: 4, reps: "10", rest: 90,
+      muscle: "Isquiotibiales / Glúteos / Lumbar",
+      defaultWeight: 24,
+      technique: {
+        postura: "De pie, rodillas levemente flexionadas. Espalda completamente recta en todo el movimiento — esto es no negociable.",
+        agarre: "Mancuernas frente a los muslos, agarre neutro. Dejás que bajen pegadas a las piernas.",
+        respiracion: "Inspirá al bajar (bisagra de cadera). Exhalá al subir extendiendo caderas.",
+        errores: "Redondear la columna. Doblar demasiado las rodillas (no es una sentadilla). No sentir el estiramiento en isquios.",
+        seguridad: "El límite es tu flexibilidad — no la profundidad. Bajá hasta donde podás mantener la espalda recta.",
+        tecnica: "Empujá las caderas hacia atrás mientras las mancuernas bajan por las piernas. Sentís tensión en isquios. Volvés extendiendo las caderas."
+      }
+    },
+    {
+      id: "zancadas_d2",
       name: "Zancadas con Mancuernas",
-      sets: 3, reps: "12 c/pierna", rest: 60,
-      muscle: "Cuádriceps / Glúteos",
-      gif: "https://media.giphy.com/media/l0HlDHiMxMFQHHgac/giphy.gif",
+      sets: 3, reps: "10 por pierna", rest: 75,
+      muscle: "Cuádriceps / Glúteos / Estabilizadores",
       defaultWeight: 16,
       technique: {
-        postura: "Torso erguido, core activado. Paso largo hacia adelante.",
-        agarre: "Mancuernas a los lados del cuerpo.",
-        respiracion: "Inspirá al bajar. Exhalá al subir.",
-        errores: "No dejar que la rodilla delantera sobrepase el pie. No inclinar el torso.",
-        seguridad: "Hacer el movimiento controlado para no perder el equilibrio.",
-        tecnica: "Baja la rodilla trasera cerca del suelo. Empujá con el talón delantero para volver."
+        postura: "Torso completamente erguido. Core activado. Paso largo hacia adelante.",
+        agarre: "Mancuernas a los costados del cuerpo.",
+        respiracion: "Inspirá al bajar. Exhalá al empujar y volver.",
+        errores: "No dejar que la rodilla delantera pase el pie. No inclinar el torso adelante. No tambalear.",
+        seguridad: "Si perdés equilibrio hacelo cerca de una pared. Con diástasis: core bien activado antes del paso.",
+        tecnica: "Paso largo, bajá la rodilla trasera cerca del suelo sin tocar. Empujá con el talón delantero para volver. Controlado."
       }
     },
     {
-      id: "gemelos",
+      id: "curl_femoral",
+      name: "Curl Femoral en Máquina",
+      sets: 4, reps: "12", rest: 75,
+      muscle: "Isquiotibiales",
+      defaultWeight: 30,
+      technique: {
+        postura: "Acostado boca abajo en la máquina. Rodilla en la articulación de la palanca. Cadera pegada al asiento.",
+        agarre: "Manos en los agarres laterales.",
+        respiracion: "Exhalá al curlar. Inspirá al extender.",
+        errores: "Levantar la cadera para ayudar. No completar el rango. Bajar demasiado rápido.",
+        seguridad: "Ajustá el rodillo a la altura correcta. No uses más peso del que permite el rango completo.",
+        tecnica: "Flexionás la rodilla trayendo el talón al glúteo. Pausa 1 seg. Bajá 2-3 seg controlado."
+      }
+    },
+    {
+      id: "gemelos_d2",
       name: "Elevaciones de Gemelos",
-      sets: 4, reps: "20-25", rest: 45,
-      muscle: "Gemelos",
-      gif: "https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif",
+      sets: 4, reps: "20", rest: 45,
+      muscle: "Gastrocnemio / Sóleo",
       defaultWeight: 0,
       technique: {
-        postura: "De pie con el antepié en un escalón o superficie elevada. Talones libres.",
-        agarre: "Manos apoyadas para equilibrio.",
-        respiracion: "Exhalá al subir, inspirá al bajar.",
-        errores: "No rebotar en el descenso. No hacer el rango parcial.",
-        seguridad: "Rango completo: bajar talones bien abajo, subir en punta de pie completo.",
-        tecnica: "Subí a máxima extensión, mantené 1 segundo, bajá 3 segundos controlado."
-      }
-    },
-    {
-      id: "step_ups",
-      name: "Step Ups con Mancuernas",
-      sets: 3, reps: "12 c/pierna", rest: 60,
-      muscle: "Glúteos / Cuádriceps",
-      gif: "https://media.giphy.com/media/3oKIPxigNSFMXNZKs8/giphy.gif",
-      defaultWeight: 12,
-      technique: {
-        postura: "Cajón o banco a altura de rodilla. Torso erguido.",
-        agarre: "Mancuernas a los lados.",
+        postura: "Antepié en escalón o superficie elevada. Talones libres. Podés usar mancuerna o máquina.",
+        agarre: "Manos en soporte para equilibrio.",
         respiracion: "Exhalá al subir. Inspirá al bajar.",
-        errores: "No impulsar con la pierna trasera. No inclinarse adelante.",
-        seguridad: "Asegurate que el cajón sea estable.",
-        tecnica: "Subí lento empujando desde el talón de la pierna adelantada. Bajá controlado."
+        errores: "No hacer rango parcial. No rebotar en el punto bajo. No inclinarte adelante.",
+        seguridad: "Asegurate de tener equilibrio antes de agregar peso.",
+        tecnica: "Subís a máxima extensión — 1 seg arriba. Bajás 3 seg hasta estiramiento completo del talón. Sin rebote."
       }
     },
   ],
 
+  // ─────────────────────────────────────────────
+  // DÍA 3: FULL BODY + ATLÉTICO + CORE
+  // ─────────────────────────────────────────────
   day3: [
     {
-      id: "peso_muerto",
-      name: "Peso Muerto Convencional",
-      sets: 4, reps: "5-6", rest: 180,
-      muscle: "Full Body",
-      gif: "https://media.giphy.com/media/26ufkD9yWVHRkXHmM/giphy.gif",
+      id: "trap_bar_deadlift",
+      name: "Trap Bar Deadlift / Rack Pull",
+      sets: 5, reps: "5", rest: 180,
+      muscle: "Full Body — Cadena posterior / Cuádriceps / Core",
       defaultWeight: 80,
       technique: {
-        postura: "Pies a ancho de cadera. Barra sobre los empeines. Caderas hacia atrás, espalda recta.",
-        agarre: "Agarre doble prono o mixto, brazos fuera de las rodillas.",
-        respiracion: "Maniobra Valsalva. Exhalá al terminar de subir.",
-        errores: "No redondear la espalda. No dejar que la barra se aleje del cuerpo. No tirar con los brazos.",
-        seguridad: "Empezá liviano para dominar la técnica. Cinturón en pesos altos.",
-        tecnica: "Empujá el suelo hacia abajo con los pies, no tires hacia arriba. La barra sube pegada al cuerpo."
+        postura: "Pies a ancho de cadera dentro de la trap bar. Caderas atrás, espalda recta, pecho hacia arriba. Si es rack pull, barra a la altura de las rodillas.",
+        agarre: "Agarre neutro en las manijas. Brazos rectos, no tirás con ellos.",
+        respiracion: "Maniobra Valsalva: llená el abdomen de aire antes de tirar. Exhalá al terminar la repetición.",
+        errores: "Redondear la espalda. Dejar que la barra se aleje del cuerpo. Tirar con los brazos. Bloquear las rodillas antes que las caderas.",
+        seguridad: "La trap bar es más segura para la lumbar que la barra convencional. Cinturón con pesos altos.",
+        tecnica: "Empujá el suelo hacia abajo (no tirés hacia arriba). Caderas y hombros suben al mismo ritmo. Barra pegada al cuerpo. Lockout completo arriba."
       }
     },
     {
-      id: "dominadas",
-      name: "Dominadas / Pull-ups",
-      sets: 4, reps: "máx (mín 5)", rest: 90,
-      muscle: "Espalda / Bíceps",
-      gif: "https://media.giphy.com/media/26ufcVAp3AiKu2RKo/giphy.gif",
-      defaultWeight: 0,
-      technique: {
-        postura: "Colgado con brazos extendidos. Escápulas deprimidas antes de empezar.",
-        agarre: "Prono (pull-up) o supino (chin-up), a ancho de hombros o más.",
-        respiracion: "Exhalá al subir. Inspirá al bajar.",
-        errores: "No usar impulso del cuerpo. No subir parcial. No soltar rápido.",
-        seguridad: "Si no podés, usá banda elástica de asistencia o máquina asistida.",
-        tecnica: "Tirá los codos hacia las caderas. Mentón sobre la barra. Bajá 3 segundos controlado."
-      }
-    },
-    {
-      id: "clean_press",
-      name: "Clean & Press con Mancuernas",
-      sets: 3, reps: "8", rest: 90,
-      muscle: "Full Body Explosivo",
-      gif: "https://media.giphy.com/media/3o7TKTDn976rzVgky4/giphy.gif",
-      defaultWeight: 20,
-      technique: {
-        postura: "Posición atlética. Rodillas flexionadas, caderas atrás. Mancuernas al frente.",
-        agarre: "Prono neutro.",
-        respiracion: "Exhalá al explotar hacia arriba.",
-        errores: "No usar solo brazos. No perder el equilibrio en la fase de limpia.",
-        seguridad: "Con pesos bajos al aprender. Suelo sin obstáculos.",
-        tecnica: "Tirá explosivo hacia arriba usando las caderas, lleva las mancuernas al pecho y luego empujá sobre la cabeza."
-      }
-    },
-    {
-      id: "burpees",
-      name: "Burpees",
-      sets: 3, reps: "10-15", rest: 60,
-      muscle: "Full Body / Cardio",
-      gif: "https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif",
-      defaultWeight: 0,
-      technique: {
-        postura: "Comenzá de pie. Cuerpo derecho.",
-        agarre: "Manos al suelo al bajar.",
-        respiracion: "Rítmica. No retengas el aire.",
-        errores: "No arquear la lumbar en la posición de plancha. No caer con impacto al aterrizar.",
-        seguridad: "Amortiguá el salto. Si duelen las rodillas, saltá sin impacto.",
-        tecnica: "Baja al suelo, plancha, flexión opcional, salta los pies hacia adelante, salta y aplaude arriba."
-      }
-    },
-    {
-      id: "press_inclinado",
+      id: "press_inclinado_mancuerna_d3",
       name: "Press Inclinado con Mancuernas",
-      sets: 3, reps: "10-12", rest: 90,
-      muscle: "Pecho Superior",
-      gif: "https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif",
+      sets: 4, reps: "10", rest: 90,
+      muscle: "Pecho superior / Deltoides anterior / Tríceps",
+      defaultWeight: 22,
+      technique: {
+        postura: "Banco a 30-45°. Espalda apoyada con leve arco natural. Core activado.",
+        agarre: "Mancuernas en pronación. Codos a 45-60° del cuerpo — no abiertos al 90°.",
+        respiracion: "Inspirá al bajar. Exhalá al empujar.",
+        errores: "Abrir demasiado los codos (lesión de hombro). Arquear la espalda para completar la rep. Bajar las mancuernas muy adentro.",
+        seguridad: "Si duelen los hombros, bajá el ángulo del banco a 20-30°.",
+        tecnica: "Bajá las mancuernas hasta los costados del pecho. Empujá hacia arriba y levemente adentro. Rango completo."
+      }
+    },
+    {
+      id: "jalon_cerrado",
+      name: "Jalón Cerrado (Supino)",
+      sets: 4, reps: "10", rest: 90,
+      muscle: "Dorsal ancho / Bíceps / Romboides",
+      defaultWeight: 50,
+      technique: {
+        postura: "Sentado, rodillas bajo el soporte. Torso levemente inclinado hacia atrás (~15°). Pecho afuera.",
+        agarre: "Agarre supino (palmas hacia vos) en barra cerrada o V-bar.",
+        respiracion: "Exhalá al tirar. Inspirá al subir controlado.",
+        errores: "Inclinarse demasiado hacia atrás (se convierte en remo). No bajar la barra más allá del mentón. No soltar rápido.",
+        seguridad: "Control total en el excéntrico — es donde más músculo se construye.",
+        tecnica: "Tirá la barra hacia el pecho superior. Los codos van hacia las caderas. Apretá el dorsal 1 seg. Subí 2-3 seg."
+      }
+    },
+    {
+      id: "face_pull",
+      name: "Face Pull",
+      sets: 4, reps: "15", rest: 60,
+      muscle: "Deltoides posterior / Manguito rotador / Trapecio medio",
+      defaultWeight: 15,
+      technique: {
+        postura: "De pie frente a polea alta. Agarre en cuerda. Pies firmes, core activado.",
+        agarre: "Agarre en cuerda con pulgares hacia arriba. Tirás separando la cuerda hacia tu cara.",
+        respiracion: "Exhalá al tirar hacia la cara. Inspirá al soltar.",
+        errores: "Usar peso excesivo y perder la forma. No separar la cuerda al final. Tirar con los bíceps en vez de los hombros.",
+        seguridad: "Peso ligero siempre. Es un ejercicio de salud del hombro — no de ego.",
+        tecnica: "Tirás la cuerda hacia tu frente/nariz separando ambos extremos. Codos a la altura de los hombros o más arriba. Pausa 1 seg."
+      }
+    },
+    {
+      id: "curl_martillo",
+      name: "Curl Martillo",
+      sets: 4, reps: "12", rest: 60,
+      muscle: "Braquial / Braquiorradial / Bíceps",
+      defaultWeight: 14,
+      technique: {
+        postura: "De pie, columna recta. Codos pegados al cuerpo.",
+        agarre: "Agarre neutro (palma hacia el cuerpo, tipo martillo). No gires la muñeca.",
+        respiracion: "Exhalá al subir. Inspirá al bajar.",
+        errores: "Rotar la muñeca (eso lo convierte en curl normal). Balancear el cuerpo. Bajar rápido.",
+        seguridad: "Peso manejable. El agarre neutro reduce estrés en el codo.",
+        tecnica: "Flexionás el codo manteniendo el agarre neutro todo el tiempo. Pausa arriba. Bajá 2-3 seg."
+      }
+    },
+    {
+      id: "farmer_walk",
+      name: "Farmer Walk",
+      sets: 3, reps: "25-30 metros", rest: 90,
+      muscle: "Grip / Core / Trapecios / Full Body",
       defaultWeight: 24,
       technique: {
-        postura: "Banco a 30-45°. Espalda apoyada, core activo.",
-        agarre: "Mancuernas en pronación. Codos a 45-60° del cuerpo.",
-        respiracion: "Inspirá al bajar. Exhalá al empujar.",
-        errores: "No abrí demasiado los codos (lesión de hombro). No arquear la espalda.",
-        seguridad: "Si duelen los hombros, reducí el ángulo del banco.",
-        tecnica: "Bajá las mancuernas hasta los costados del pecho. Empujá hacia arriba y levemente adentro."
+        postura: "De pie con mancuernas o kettlebells pesadas a los costados. Hombros atrás y abajo. Pecho afuera.",
+        agarre: "Agarre firme. No dejar que las mancuernas roten.",
+        respiracion: "Respiración constante y controlada. No aguantes el aire en caminatas largas.",
+        errores: "Encoger los hombros. Inclinarse hacia un lado. Pasos muy largos que rompen el equilibrio.",
+        seguridad: "Zona despejada. Si soltás una mancuerna, dejala caer — no la atrapés.",
+        tecnica: "Caminás erguido, pasos medianos, a ritmo constante. El trabajo es mantener la postura y el grip hasta el final."
       }
     },
     {
-      id: "plancha",
-      name: "Plancha Abdominal",
-      sets: 3, reps: "45-60 seg", rest: 45,
-      muscle: "Core",
-      gif: "https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif",
+      id: "bird_dog_d3",
+      name: "Bird Dog",
+      sets: 3, reps: "8 por lado", rest: 45,
+      muscle: "Core / Erector espinal / Glúteos",
       defaultWeight: 0,
       technique: {
-        postura: "Apoyado en codos y punteras. Cuerpo en línea recta de cabeza a talones.",
-        agarre: "Codos bajo los hombros.",
-        respiracion: "Respiración diafragmática continua.",
-        errores: "No levantar las caderas. No dejar que caigan. No mirar adelante (cervical).",
-        seguridad: "Si duñelen los hombros, probá variantes en manos estiradas.",
-        tecnica: "Activá el glúteo, apretá el abdomen, mantené la posición. Podés progresar con variantes dinámicas."
+        postura: "En cuadrupedia: manos bajo hombros, rodillas bajo caderas. Espalda completamente plana — ni arqueada ni redondeada.",
+        agarre: "Manos abiertas sobre el suelo para mejor estabilidad.",
+        respiracion: "Exhalá al extender brazo y pierna. Inspirá al volver.",
+        errores: "Rotar la cadera al extender la pierna. Levantar la pierna más alto que la cadera. Moverse rápido.",
+        seguridad: "Ideal para diástasis y lumbar. Empezá con rango pequeño y aumentá a medida que controlás.",
+        tecnica: "Extendés brazo derecho y pierna izquierda simultáneamente. Mantenés la espalda plana. Pausa 2 seg. Volvés con control. Alternás."
       }
     },
+    {
+      id: "carry_unilateral",
+      name: "Carry Unilateral (Suitcase Carry)",
+      sets: 3, reps: "20 metros por lado", rest: 60,
+      muscle: "Core lateral / Cuadrado lumbar / Grip",
+      defaultWeight: 20,
+      technique: {
+        postura: "De pie con mancuerna en una sola mano. El desafío es mantenerte completamente vertical — sin inclinarte hacia ningún lado.",
+        agarre: "Agarre firme. Hombro del lado cargado ligeramente activado hacia abajo.",
+        respiracion: "Respiración constante. Exhalá cada 2-3 pasos.",
+        errores: "Inclinarse hacia el lado cargado o al lado libre. Encoger el hombro. Pasos irregulares.",
+        seguridad: "Zona despejada. La asimetría del ejercicio es justamente el estímulo.",
+        tecnica: "Caminás erguido resistiendo la inclinación lateral. El oblicuo del lado libre trabaja para mantenerte recto."
+      }
+    },
+  ],
+};
+
+
+// CALENTAMIENTOS POR DÍA
+const WARMUPS = {
+  day1: {
+    title: "🔥 Calentamiento Día 1 — 7 minutos",
+    steps: [
+      { time: "0:00–3:00", name: "Caminata rápida o bici suave", desc: "Activación cardiovascular suave. Subí la temperatura corporal gradualmente." },
+      { time: "3:00–4:00", name: "Respiración diafragmática ×5", desc: "Inhalá por la nariz 4 seg → exhalá por la boca 6 seg. Activa el sistema parasimpático y prepara el core." },
+      { time: "4:00–5:00", name: "Movilidad hombros", desc: "Círculos adelante ×10 → círculos atrás ×10 → abrir brazos ×10. Lubrica la articulación glenohumeral." },
+      { time: "5:00–6:00", name: "Activación escápulas", desc: "Juntar omóplatos ×15 (retracción escapular) → Push-up en pared ×10. Activa los estabilizadores de la espalda." },
+      { time: "6:00–7:00", name: "Aproximación al press", desc: "Barra sola ×15 → peso liviano ×8. Prepara el patrón de movimiento con el peso del día." },
+    ]
+  },
+  day2: {
+    title: "🔥 Calentamiento Día 2 — 7 minutos",
+    steps: [
+      { time: "0:00–3:00", name: "Bici suave", desc: "Ritmo tranquilo. Calentá las piernas sin fatigarlas antes de la sesión principal." },
+      { time: "3:00–4:00", name: "Respiración diafragmática ×5", desc: "Inhalá por la nariz 4 seg → exhalá por la boca 6 seg. Activa el core profundo." },
+      { time: "4:00–5:00", name: "Movilidad cadera", desc: "Círculos de cadera ×10 por lado → balanceo de piernas ×10 por lado. Abre la articulación coxofemoral." },
+      { time: "5:00–6:00", name: "Tobillo y sentadilla", desc: "Rodilla al frente ×10 por lado (movilidad tobillo) → sentadilla asistida con soporte 20 seg. Prepara el patrón." },
+      { time: "6:00–7:00", name: "Puente de glúteo ×12", desc: "Activa los glúteos antes de cargar. Clave para proteger la lumbar en prensa y peso muerto." },
+    ]
+  },
+  day3: {
+    title: "🔥 Calentamiento Día 3 — 7 minutos",
+    steps: [
+      { time: "0:00–3:00", name: "Caminata o remo suave", desc: "Full body suave. Activa sin fatigar. El remo es ideal porque prepara la cadena posterior." },
+      { time: "3:00–4:00", name: "Respiración diafragmática ×5", desc: "Inhalá por la nariz 4 seg → exhalá por la boca 6 seg. Activa el core antes del deadlift." },
+      { time: "4:00–5:00", name: "Bisagra de cadera ×12", desc: "Sin peso. El patrón exacto del deadlift. Empujá caderas atrás con espalda recta. Sentís los isquios." },
+      { time: "5:00–6:00", name: "Bird Dog ×6 por lado", desc: "Activación de core y estabilizadores antes de levantar pesado. Clave para proteger la lumbar." },
+      { time: "6:00–7:00", name: "Series progresivas", desc: "50% del peso del día ×5 → 70% ×3 → 90% ×1. Llegás al peso de trabajo sin agotar el sistema nervioso." },
+    ]
+  }
+};
+
+// MINI BLOQUE DIARIO EN CASA
+const DAILY_BLOCK = {
+  title: "🏠 Mini Bloque Diario — 5 minutos",
+  desc: "Hacelo todos los días si podés. Antes de dormir, al levantarte, o entre tareas. Suma más que cualquier sesión esporádica.",
+  exercises: [
+    { name: "Respiración diafragmática ×5", desc: "Inhalá nariz 4 seg → exhalá boca 6 seg. Activa el core profundo y el sistema nervioso parasimpático.", duration: "~1 min" },
+    { name: "Dead Bug ×6 por lado", desc: "Lumbar pegada al suelo siempre. Movimiento lento y controlado. Ideal para diástasis.", duration: "~1 min" },
+    { name: "Sentadilla asistida hold", desc: "Agarrarte de algo y mantener la posición baja 30 seg. Movilidad de cadera, tobillo y rodilla.", duration: "30 seg" },
+    { name: "Toe Touch", desc: "Intentar tocar los pies con las rodillas extendidas. Mantener 30 seg. Estira cadena posterior.", duration: "30 seg" },
+    { name: "Child Pose", desc: "Arrodillado, brazos extendidos al frente, frente al suelo. Respira profundo. Cierra la sesión.", duration: "30 seg" },
   ]
 };
 
-// RECETAS ARGENTINAS
-const RECIPES = [
-  // DESAYUNO
-  {
-    id: "r1", category: "desayuno", tags: ["barata", "proteina", "rapida"],
-    name: "Avena proteica con banana",
-    emoji: "🥣",
-    cals: 380, protein: 28, carbs: 45, fat: 8,
-    ingredients: ["60g avena arrollada", "1 scoop proteína (opcional)", "1 banana madura", "200ml leche descremada o agua", "canela al gusto"],
-    prep: "Hervir la leche, agregar avena y cocinar 3-4min. Agregar la proteína fuera del fuego, revolver. Rodajas de banana encima y canela."
-  },
-  {
-    id: "r2", category: "desayuno", tags: ["barata", "proteina", "saciante"],
-    name: "Huevos revueltos con tostadas",
-    emoji: "🍳",
-    cals: 420, protein: 30, carbs: 32, fat: 14,
-    ingredients: ["3 huevos", "2 rebanadas pan integral", "1/2 tomate", "sal, pimienta", "1 cdita aceite"],
-    prep: "Batir huevos con sal y pimienta. Cocinar a fuego bajo en sartén con aceite, revolviendo despacio. Servir con tostadas y tomate."
-  },
-  {
-    id: "r3", category: "desayuno", tags: ["barata", "rapida"],
-    name: "Yogur griego con granola y fruta",
-    emoji: "🫙",
-    cals: 310, protein: 20, carbs: 38, fat: 6,
-    ingredients: ["200g yogur griego descremado", "30g granola sin azúcar", "1 fruta de estación", "miel opcional"],
-    prep: "Poner yogur en un vaso, agregar granola, frutas cortadas. Miel opcional al gusto."
-  },
-  {
-    id: "r4", category: "desayuno", tags: ["proteina", "saciante"],
-    name: "Omelette de claras con queso",
-    emoji: "🥚",
-    cals: 290, protein: 35, carbs: 4, fat: 12,
-    ingredients: ["4 claras de huevo", "1 huevo entero", "30g queso untable descremado", "sal, pimienta", "cebollín o perejil"],
-    prep: "Batir claras y huevo. Cocinar en sartén antiadherente. Agregar queso cuando está casi listo, doblar y servir."
-  },
-  {
-    id: "r5", category: "desayuno", tags: ["barata", "rapida"],
-    name: "Infusión + tostadas con palta",
-    emoji: "🥑",
-    cals: 260, protein: 8, carbs: 28, fat: 14,
-    ingredients: ["2 tostadas pan integral", "1/2 palta madura", "sal y limón", "café o té"],
-    prep: "Tostar el pan. Pisar la palta con sal y limón. Untar sobre las tostadas."
-  },
-
-  // ALMUERZO
-  {
-    id: "r6", category: "almuerzo", tags: ["proteina", "saciante", "barata"],
-    name: "Pollo a la plancha con arroz y ensalada",
-    emoji: "🍗",
-    cals: 520, protein: 45, carbs: 48, fat: 10,
-    ingredients: ["200g pechuga de pollo", "80g arroz integral", "lechuga, tomate, zanahoria", "sal, pimienta, ajo en polvo", "1 cdita aceite de oliva"],
-    prep: "Condimentar el pollo y sellar a la plancha 4-5 min por lado. Hervir el arroz. Ensalada con vinagreta de limón."
-  },
-  {
-    id: "r7", category: "almuerzo", tags: ["proteina", "barata"],
-    name: "Lomo de cerdo al horno con batata",
-    emoji: "🥩",
-    cals: 490, protein: 42, carbs: 36, fat: 12,
-    ingredients: ["200g lomo de cerdo", "1 batata mediana", "ajo, romero, sal", "1 cdita aceite"],
-    prep: "Marinar el cerdo con ajo y romero. Hornear a 180° 25 min. Batata en cubos al horno con aceite y sal."
-  },
-  {
-    id: "r8", category: "almuerzo", tags: ["proteina", "barata", "saciante"],
-    name: "Milanesa de pollo con puré de calabaza",
-    emoji: "🍖",
-    cals: 550, protein: 44, carbs: 42, fat: 14,
-    ingredients: ["200g pechuga de pollo aplastada", "pan rallado integral", "1 huevo", "300g calabaza", "sal, ajo"],
-    prep: "Pasar el pollo por huevo y pan rallado. Hornear o fritar con poco aceite. Hervir calabaza y pisarla con sal y poco aceite."
-  },
-  {
-    id: "r9", category: "almuerzo", tags: ["barata", "rapida"],
-    name: "Sopa de lentejas con carne",
-    emoji: "🍲",
-    cals: 480, protein: 38, carbs: 44, fat: 10,
-    ingredients: ["100g lentejas", "100g carne picada magra", "zanahoria, apio, cebolla, tomate", "caldo, sal, pimentón"],
-    prep: "Sofreír carne y verduras. Agregar lentejas, caldo y condimentos. Cocinar 25-30 min hasta tiernas."
-  },
-  {
-    id: "r10", category: "almuerzo", tags: ["proteina", "saciante"],
-    name: "Atún con pasta y tomate",
-    emoji: "🐟",
-    cals: 510, protein: 40, carbs: 52, fat: 8,
-    ingredients: ["80g pasta integral", "1 lata atún al natural", "salsa de tomate casera", "ajo, orégano, albahaca"],
-    prep: "Cocinar pasta al dente. Saltear ajo, agregar tomate y cocinar 5 min. Incorporar atún, mezclar con pasta."
-  },
-
-  // MERIENDA
-  {
-    id: "r11", category: "merienda", tags: ["barata", "rapida", "proteina"],
-    name: "Batido proteico casero",
-    emoji: "🥤",
-    cals: 280, protein: 25, carbs: 28, fat: 5,
-    ingredients: ["200ml leche descremada", "1 banana", "1 scoop proteína o 4 claras cocidas", "1 cdita cacao amargo"],
-    prep: "Licuar todo hasta obtener consistencia cremosa. Servir frío."
-  },
-  {
-    id: "r12", category: "merienda", tags: ["barata", "rapida"],
-    name: "Manzana con mantequilla de maní",
-    emoji: "🍎",
-    cals: 230, protein: 7, carbs: 30, fat: 10,
-    ingredients: ["1 manzana mediana", "2 cdas mantequilla de maní natural", "canela opcional"],
-    prep: "Cortar la manzana en gajos. Mojar en mantequilla de maní. Espolvorear canela."
-  },
-  {
-    id: "r13", category: "merienda", tags: ["barata", "proteina"],
-    name: "Tostadas con queso y pavo",
-    emoji: "🥪",
-    cals: 290, protein: 22, carbs: 26, fat: 9,
-    ingredients: ["2 tostadas pan integral", "60g pechuga de pavo feteada", "queso descremado", "mostaza o tomate"],
-    prep: "Tostar el pan. Armar el sándwich con pavo, queso y condimentos al gusto."
-  },
-  {
-    id: "r14", category: "merienda", tags: ["barata", "rapida"],
-    name: "Mate + puñado de frutos secos",
-    emoji: "🧉",
-    cals: 180, protein: 5, carbs: 8, fat: 15,
-    ingredients: ["mate (sin azúcar)", "30g mix de maní, almendras, nueces"],
-    prep: "Preparar el mate como de costumbre. Acompañar con los frutos secos."
-  },
-  {
-    id: "r15", category: "merienda", tags: ["proteina", "saciante"],
-    name: "Requesón con fruta y miel",
-    emoji: "🍯",
-    cals: 250, protein: 18, carbs: 28, fat: 5,
-    ingredients: ["200g ricota o requesón descremado", "fruta de estación picada", "1 cdita miel", "canela"],
-    prep: "Poner la ricota en un bol. Agregar fruta, miel y canela. Mezclar y servir frío."
-  },
-
-  // CENA
-  {
-    id: "r16", category: "cena", tags: ["proteina", "barata", "saciante"],
-    name: "Pollo al limón con verduras al horno",
-    emoji: "🍋",
-    cals: 410, protein: 42, carbs: 22, fat: 12,
-    ingredients: ["200g muslos de pollo sin piel", "zucchini, morrón, cebolla morada", "jugo de limón, ajo, orégano", "sal, pimienta, aceite"],
-    prep: "Marinar el pollo con limón y ajo 30 min. Hornear a 200° 35 min con las verduras en la misma asadera."
-  },
-  {
-    id: "r17", category: "cena", tags: ["barata", "rapida", "proteina"],
-    name: "Omelette de espinaca y queso",
-    emoji: "🌿",
-    cals: 320, protein: 28, carbs: 8, fat: 18,
-    ingredients: ["3 huevos", "puñado de espinaca fresca", "30g queso muzarela magro", "ajo, sal, aceite"],
-    prep: "Saltear espinaca con ajo. Batir huevos, verter en sartén, agregar espinaca y queso, doblar."
-  },
-  {
-    id: "r18", category: "cena", tags: ["proteina", "saciante"],
-    name: "Salmón a la plancha con ensalada",
-    emoji: "🐠",
-    cals: 440, protein: 38, carbs: 12, fat: 22,
-    ingredients: ["180g filet de salmón", "mix de verdes", "tomate cherry", "vinagreta de limón y oliva", "sal, pimienta, eneldo"],
-    prep: "Cocinar el salmón a la plancha 3-4 min por lado. Servir con ensalada y vinagreta."
-  },
-  {
-    id: "r19", category: "cena", tags: ["barata", "rapida"],
-    name: "Fideos con salsa de tomate y carne picada",
-    emoji: "🍝",
-    cals: 490, protein: 32, carbs: 56, fat: 10,
-    ingredients: ["80g fideos integrales", "100g carne picada magra", "salsa de tomate natural", "ajo, cebolla, orégano"],
-    prep: "Cocinar pasta al dente. Hacer la salsa con carne, ajo, cebolla y tomate. Mezclar."
-  },
-  {
-    id: "r20", category: "cena", tags: ["barata", "saciante", "proteina"],
-    name: "Merluza rebozada ligera con arroz",
-    emoji: "🐟",
-    cals: 420, protein: 36, carbs: 40, fat: 8,
-    ingredients: ["200g filet de merluza", "pan rallado integral", "1 clara de huevo", "limón, perejil", "80g arroz"],
-    prep: "Pasar la merluza por clara y pan rallado. Hornear a 200° 20 min. Servir con arroz hervido y limón."
-  },
-
-  // SNACKS
-  {
-    id: "r21", category: "snack", tags: ["barata", "rapida"],
-    name: "Maní tostado salado",
-    emoji: "🥜",
-    cals: 160, protein: 7, carbs: 5, fat: 13,
-    ingredients: ["30g maní sin cáscara", "sal gruesa opcional"],
-    prep: "Tostar en sartén seca 2-3 min. Salar al gusto. Ideal como snack de emergencia."
-  },
-  {
-    id: "r22", category: "snack", tags: ["barata", "proteina"],
-    name: "Rodajas de pepino con queso crema",
-    emoji: "🥒",
-    cals: 120, protein: 6, carbs: 5, fat: 8,
-    ingredients: ["1 pepino en rodajas", "50g queso crema descremado", "sal, pimienta, eneldo"],
-    prep: "Cortar el pepino. Poner queso crema encima de cada rodaja con sal y eneldo."
-  },
-  {
-    id: "r23", category: "snack", tags: ["barata", "rapida"],
-    name: "Banana congelada",
-    emoji: "🍌",
-    cals: 100, protein: 1, carbs: 25, fat: 0,
-    ingredients: ["1 banana madura pelada"],
-    prep: "Congelar la banana entera durante 2 horas. Comer como helado natural. Podés agregar cacao."
-  },
-  {
-    id: "r24", category: "snack", tags: ["proteina", "saciante"],
-    name: "Huevo duro con sal",
-    emoji: "🥚",
-    cals: 130, protein: 12, carbs: 1, fat: 9,
-    ingredients: ["2 huevos duros", "sal, pimienta o salsa picante"],
-    prep: "Hervir los huevos 10 min. Enfriar en agua fría. Pelar y condimentar al gusto."
-  },
-  {
-    id: "r25", category: "snack", tags: ["barata", "rapida"],
-    name: "Galletitas de arroz con palta",
-    emoji: "🫓",
-    cals: 150, protein: 3, carbs: 20, fat: 8,
-    ingredients: ["4 galletitas de arroz", "1/4 palta", "sal, limón"],
-    prep: "Pisar la palta con sal y limón. Untar sobre las galletitas."
-  },
-];
+// PROGRESIÓN SEMANAL
+const PROGRESSION = {
+  title: "📈 Progresión Semanal",
+  desc: "Si completaste todas las series con buena técnica y te quedó energía al final, avanzá así:",
+  rules: [
+    { icon: "🏋️", label: "Barra", rule: "+2.5 kg la siguiente semana" },
+    { icon: "💪", label: "Mancuernas", rule: "+1 kg por lado cuando la técnica lo permite" },
+    { icon: "🚴", label: "Cardio", rule: "+1 minuto o aumentar la intensidad de los intervalos" },
+    { icon: "⏱️", label: "Core", rule: "+1 repetición por lado o reducir descanso 5 seg" },
+  ],
+  priorities: [
+    "Entrenar los 3 días de la semana — sin excusas.",
+    "Comer en déficit moderado todos los días.",
+    "Caminar más en el día a día.",
+  ],
+  note: "Esas 3 cosas solas mueven montañas. Todo lo demás es detalle."
+};
 
 // MODOS DE CARDIO
 const CARDIO_MODES = {
   base: {
     title: "🚶 Modo Base — Construcción Aeróbica",
-    desc: "Para empezar a mejorar el aire desde cero. Bajo impacto, alta consistencia.",
+    desc: "Para construir la base aeróbica desde cero. Bajo impacto, alta consistencia. Hacelo 3x por semana.",
     duration: "30-40 min",
     frequency: "3x por semana",
     exercises: [
-      { name: "Caminata suave", duration: "5 min", intensity: "Muy baja", tip: "Calentamiento. Ritmo tranquilo." },
-      { name: "Caminata rápida", duration: "10 min", intensity: "Moderada", tip: "Ritmo que te deje hablar pero con esfuerzo." },
-      { name: "Trote suave 30s / Caminata 90s", duration: "4 repeticiones", intensity: "Media", tip: "No te ahogues en el trote. Recuperá bien." },
-      { name: "Caminata rápida continua", duration: "10 min", intensity: "Moderada", tip: "Mantener ritmo estable." },
-      { name: "Enfriamiento suave", duration: "5 min", intensity: "Muy baja", tip: "Bajar la frecuencia cardíaca gradualmente." },
+      { name: "Caminata suave", duration: "5 min", intensity: "Muy baja", tip: "Calentamiento. Ritmo tranquilo, podés hablar sin problemas." },
+      { name: "Caminata rápida", duration: "10 min", intensity: "Moderada", tip: "Ritmo que te exige pero podés sostener. Algo de esfuerzo." },
+      { name: "Trote 30 seg / Caminata 90 seg", duration: "×4 repeticiones", intensity: "Media", tip: "No te ahogues en el trote. Recuperá bien en la caminata." },
+      { name: "Caminata rápida continua", duration: "10 min", intensity: "Moderada", tip: "Mantener ritmo estable sin bajar." },
+      { name: "Enfriamiento suave", duration: "5 min", intensity: "Muy baja", tip: "Bajar la frecuencia cardíaca gradualmente. No pares de golpe." },
     ]
   },
   partido: {
     title: "⚽ Modo 5 vs 5 — HIIT Específico Fútbol",
-    desc: "Imitar la demanda del fútbol 5. Explosiones cortas, recuperación incompleta.",
+    desc: "Imitar la demanda del fútbol 5: explosiones cortas con recuperación incompleta. Hacelo el día anterior a jugar, no el mismo día.",
     duration: "25-30 min",
-    frequency: "2x por semana",
+    frequency: "1-2x por semana",
     exercises: [
-      { name: "Calentamiento dinámico", duration: "5 min", intensity: "Baja", tip: "Círculos de cadera, estocadas, skipping." },
-      { name: "Sprint 15m + vuelta trotando", duration: "8 repeticiones", intensity: "Máxima", tip: "Sprint 100%. Vuelta en 15-20 seg." },
-      { name: "Descanso activo", duration: "2 min", intensity: "Muy baja", tip: "Caminar. No sentarse." },
-      { name: "Cambios de dirección (5-10-5)", duration: "6 repeticiones", intensity: "Alta", tip: "Simular movimiento de partido. Rodillas levemente flexionadas al cambiar." },
-      { name: "Saltos con sentadilla", duration: "3x10", intensity: "Alta", tip: "Aterrizar suave. Amortiguá con las rodillas." },
-      { name: "Trote suave enfriamiento", duration: "5 min", intensity: "Baja", tip: "Bajar ritmo cardíaco. Respiración profunda." },
+      { name: "Calentamiento dinámico", duration: "5 min", intensity: "Baja", tip: "Círculos de cadera, estocadas, skipping, tobillo. Todo fluido." },
+      { name: "Sprint 15m + vuelta trotando", duration: "×8 repeticiones", intensity: "Máxima", tip: "Sprint al 100%. Vuelta trotando en 15-20 seg. Recuperación incompleta." },
+      { name: "Descanso activo", duration: "2 min", intensity: "Muy baja", tip: "Caminá. No te sentés. Mantené el flujo sanguíneo." },
+      { name: "Cambios de dirección 5-10-5", duration: "×6 repeticiones", intensity: "Alta", tip: "Simula movimiento de partido. Rodillas flexionadas al cambiar dirección." },
+      { name: "Saltos con sentadilla", duration: "3×10", intensity: "Alta", tip: "Aterrizá suave amortiguando con las rodillas. Explosivo al saltar." },
+      { name: "Trote suave enfriamiento", duration: "5 min", intensity: "Baja", tip: "Bajá el ritmo cardíaco gradual. Respiración profunda." },
     ]
   },
   recuperacion: {
-    title: "🧘 Modo Recuperación — Activa Post Partido",
-    desc: "Para el día después de un partido o entrenamiento intenso. Regeneración.",
+    title: "🧘 Modo Recuperación — Post Partido",
+    desc: "Para el día después de un partido o sesión muy intensa. Regeneración activa — no descanso pasivo.",
     duration: "25-35 min",
-    frequency: "Día post partido",
+    frequency: "Día después del partido",
     exercises: [
-      { name: "Bicicleta fija suave", duration: "15 min", intensity: "Muy baja", tip: "Resistencia mínima. Cadencia alta. Solo mover las piernas." },
-      { name: "Elongación cuádriceps", duration: "90 seg c/lado", intensity: "Estiramiento", tip: "De pie, talón al glúteo. No forzar la rodilla." },
-      { name: "Elongación isquiotibiales", duration: "90 seg c/lado", intensity: "Estiramiento", tip: "Sentado en el suelo, pierna extendida, inclinación suave." },
-      { name: "Movilidad de cadera (círculos)", duration: "2 min", intensity: "Movilidad", tip: "Acostado, rodilla al pecho y círculos lentos." },
-      { name: "Movilidad de tobillo", duration: "1 min c/pie", intensity: "Movilidad", tip: "Sentado, rotaciones y flexiones de tobillo." },
-      { name: "Respiración diafragmática", duration: "5 min", intensity: "Relajación", tip: "Acostado. Mano en el pecho, otra en el abdomen. Solo debe moverse la del abdomen." },
+      { name: "Bicicleta fija suave", duration: "15 min", intensity: "Muy baja", tip: "Resistencia mínima, cadencia alta. Solo activar la circulación en las piernas." },
+      { name: "Elongación cuádriceps", duration: "90 seg por lado", intensity: "Estiramiento", tip: "De pie, talón al glúteo. No forzar la rodilla. Respirá profundo." },
+      { name: "Elongación isquiotibiales", duration: "90 seg por lado", intensity: "Estiramiento", tip: "Sentado, pierna extendida, inclinación suave hacia adelante." },
+      { name: "90/90 hips", duration: "×8 por lado", intensity: "Movilidad", tip: "Sentado en el suelo con piernas en 90°. Rotá hacia cada lado con control. No fuerces." },
+      { name: "Movilidad de tobillo", duration: "1 min por pie", intensity: "Movilidad", tip: "Sentado, rotaciones y flexiones de tobillo. Los tobillos rígidos acumulan el impacto del partido." },
+      { name: "Respiración diafragmática", duration: "5 min", intensity: "Relajación", tip: "Acostado. Inhalá por la nariz 4 seg → exhalá por la boca 6 seg. Baja el sistema nervioso." },
     ]
   },
   respiracion: {
     title: "🫁 Tabique Desviado — Tolerancia Respiratoria",
-    desc: "Ejercicios específicos para mejorar la tolerancia al esfuerzo con tabique desviado. No curan el problema pero mejoran la funcionalidad.",
+    desc: "Ejercicios para mejorar la tolerancia al CO₂ y la eficiencia respiratoria con tabique desviado. No corrigen el problema estructural pero mejoran la funcionalidad notablemente.",
     duration: "15-20 min",
     frequency: "Todos los días",
     exercises: [
-      { name: "Respiración nasal diafragmática", duration: "5 min", intensity: "Relajación", tip: "Acostado. Inhalá solo por la nariz (lento, 4 seg). Exhalá por la boca (6 seg). Ponete cómodo." },
-      { name: "Box Breathing (cuadrada)", duration: "4 minutos", intensity: "Baja", tip: "Inhalar 4 seg — Retener 4 seg — Exhalar 4 seg — Retener 4 seg. Muy efectivo para el control de CO2." },
-      { name: "Respiración unilateral alternada", duration: "3 min", intensity: "Baja", tip: "Tapá una fosa nasal, inhalá por la otra, cambiá. Mejora el flujo de la fosa más bloqueada." },
-      { name: "Caminata con respiración nasal exclusiva", duration: "8 min", intensity: "Baja", tip: "Caminar a ritmo cómodo respirando SOLO por la nariz. Si necesitás abrir la boca, bajá el ritmo." },
-      { name: "Retención post-exhalación progresiva", duration: "5 repeticiones", intensity: "Media", tip: "Exhalá todo, retenés el máximo posible sin ansiedad. Empezá con 5-10 seg e incrementá." },
+      { name: "Respiración nasal diafragmática", duration: "5 min", intensity: "Relajación", tip: "Acostado. Inhalá solo por la nariz 4 seg → exhalá por la boca 6 seg. Mano en el abdomen — solo ella debe moverse." },
+      { name: "Box Breathing (cuadrada)", duration: "4 min", intensity: "Baja", tip: "Inhalar 4 seg → Retener 4 seg → Exhalar 4 seg → Retener 4 seg. Muy efectiva para el control del CO₂ y el sistema nervioso." },
+      { name: "Respiración unilateral alternada", duration: "3 min", intensity: "Baja", tip: "Tapá una fosa nasal, inhalá por la otra, cambiá al exhalar. Mejora el flujo en la fosa más bloqueada." },
+      { name: "Caminata con respiración nasal exclusiva", duration: "8 min", intensity: "Baja", tip: "Caminá a ritmo cómodo respirando SOLO por la nariz. Si necesitás abrir la boca, bajá el ritmo — no cedas." },
+      { name: "Retención post-exhalación progresiva", duration: "×5 repeticiones", intensity: "Media", tip: "Exhalá todo → aguantá sin respirar el máximo posible sin ansiedad. Empezá con 5-10 seg e incrementá semana a semana." },
+    ]
+  },
+  bici_intervalos: {
+    title: "🚴 Cardio Día 2 — Bicicleta Intervalos",
+    desc: "Parte del Día 2 de entrenamiento. Va al final de la sesión de piernas. 12-15 minutos totales.",
+    duration: "12-15 min",
+    frequency: "Cada Día 2",
+    exercises: [
+      { name: "Bici suave entrada", duration: "2 min", intensity: "Muy baja", tip: "Las piernas ya están cansadas de la sesión. Arrancá muy suave." },
+      { name: "30 seg fuerte / 60 seg suave", duration: "×6 repeticiones", intensity: "Alta / Baja", tip: "El 'fuerte' es 75-80% del máximo. El 'suave' es recuperación activa. No pares." },
+      { name: "Enfriamiento", duration: "2-3 min", intensity: "Muy baja", tip: "Pedaleá suave para bajar el ritmo cardíaco antes de estirar." },
     ]
   }
 };
+
 
 // BADGES
 const BADGES = [
@@ -630,9 +532,14 @@ const AI_RESPONSES = {
     "Fútbol activa todo: cardio, piernas, cambios de dirección. Tratalo como día de entrenamiento intenso. Mañana: descanso o movilidad. Pasado: Upper o Full Body liviano.",
   ],
   dieta: [
-    "Para déficit hoy: desayuno proteico (huevos o avena con proteína), almuerzo con pollo o carne y carbos, merienda liviana, cena sin carbos pesados. Total apuntá a unas 2000-2200 kcal.",
-    "Plan del día: Avena con proteína de mañana, milanesa de pollo con puré de calabaza al mediodía, snack de yogur con fruta, y pollo con verduras a la noche. Fácil y efectivo.",
-    "Hoy priorizá proteína en cada comida. Al menos 30-40g por comida principal. Carbos en desayuno y almuerzo, reducirlos en cena. Mucha verdura para saciar sin calorías extra.",
+    "Para déficit hoy: desayuno proteico (huevos o avena con proteína), almuerzo con pollo/carne + carbos, merienda liviana, cena sin carbos pesados. Apuntá a 2000-2200 kcal.",
+    "Plan del día: Avena con proteína de mañana → milanesa de pollo con puré de calabaza al mediodía → yogur con fruta a la tarde → pollo con verduras a la noche. Fácil y efectivo. 💪",
+    "Priorizá proteína en cada comida: mínimo 30-40g por comida principal. Carbos en desayuno y almuerzo, reducirlos en cena. Mucha verdura para saciar sin calorías extra.",
+    "Para cenar con déficit: proteína magra (pollo, merluza, claras, carne magra) + verduras a la plancha o al horno. Sin arroz ni fideos a la noche — los carbos guardálos para antes de entrenar.",
+    "Para el almuerzo: pollo a la plancha con arroz integral y ensalada es la combo clásica. Fácil, barata, 45g de proteína y te deja lleno. Agregá palta si necesitás más calorías.",
+    "Para desayunar bien: avena con leche + banana + canela son 380 kcal y 28g de proteína si le agregás un scoop. Si no tenés proteína, 3 huevos revueltos con tostadas integrales.",
+    "Antes de entrenar: carbos de absorción media (avena, arroz, banana) + algo de proteína. 60-90 minutos antes. Nada pesado que te caiga mal en el gym.",
+    "Snack inteligente: maní + banana, o yogur griego + fruta, o huevo duro + tostada. Todos baratos, rápidos y te frenan el hambre hasta la próxima comida.",
   ],
   motivacion: [
     "Mirá, la versión de vos que querés ser ya existe. Solo hay que ir a buscarla repetición por repetición. No hay secreto, no hay atajo. Solo trabajo y tiempo. Dale.",

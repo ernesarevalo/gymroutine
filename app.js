@@ -123,7 +123,10 @@ function initNavigation() {
   });
 
   document.getElementById('hamburger')?.addEventListener('click', () => {
-    document.getElementById('navLinks')?.classList.toggle('open');
+    const nav = document.getElementById('navLinks');
+    nav?.classList.toggle('open');
+    // Overlay oscuro detrás del menú
+    toggleNavOverlay(nav?.classList.contains('open'));
   });
 
   // Cerrar menú al click afuera
@@ -166,6 +169,27 @@ function navigateTo(sectionId, animate = true) {
 
 function closeMobileMenu() {
   document.getElementById('navLinks')?.classList.remove('open');
+  toggleNavOverlay(false);
+}
+
+function toggleNavOverlay(show) {
+  let overlay = document.getElementById('navOverlay');
+  if (show) {
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'navOverlay';
+      overlay.style.cssText = `
+        position:fixed; inset:68px 0 0 0; z-index:998;
+        background:rgba(0,0,0,0.55); backdrop-filter:blur(2px);
+        animation: fadeSlideIn .2s ease;
+      `;
+      overlay.addEventListener('click', closeMobileMenu);
+      document.body.appendChild(overlay);
+    }
+    overlay.style.display = 'block';
+  } else {
+    if (overlay) overlay.style.display = 'none';
+  }
 }
 
 // ════════════════════════════════════════════
@@ -190,12 +214,43 @@ function initQuote() {
 //  EJERCICIOS — RENDER
 // ════════════════════════════════════════════
 function renderExercises() {
+  // Render exercise cards
   ['day1','day2','day3'].forEach(day => {
     const container = document.getElementById(`exercises-${day}`);
     if (!container) return;
     container.innerHTML = '';
     (EXERCISES[day] || []).forEach(ex => container.appendChild(buildExerciseCard(ex, day)));
   });
+
+  // Render warmups
+  ['day1','day2','day3'].forEach(day => {
+    const wc = document.getElementById(`warmup-${day}`);
+    if (wc && typeof WARMUPS !== 'undefined' && WARMUPS[day]) {
+      wc.innerHTML = buildWarmupBlock(WARMUPS[day]);
+    }
+  });
+
+  // Render cardio día 2
+  const c2 = document.getElementById('cardio-day2');
+  if (c2 && typeof CARDIO_MODES !== 'undefined') {
+    c2.innerHTML = buildCardioDay2Block();
+  }
+
+  // Render movilidad final día 2
+  const m2 = document.getElementById('mobility-day2');
+  if (m2) { m2.innerHTML = buildMobilityBlock(); }
+
+  // Render mini bloque diario
+  const db = document.getElementById('daily-block-container');
+  if (db && typeof DAILY_BLOCK !== 'undefined') {
+    db.innerHTML = buildDailyBlock();
+  }
+
+  // Render progresión
+  const pr = document.getElementById('progression-container');
+  if (pr && typeof PROGRESSION !== 'undefined') {
+    pr.innerHTML = buildProgressionBlock();
+  }
 
   // Tabs
   document.querySelectorAll('.day-tab').forEach(tab => {
@@ -215,6 +270,131 @@ function renderExercises() {
   // Mostrar día 1 por defecto
   const d1 = document.getElementById('day1');
   if (d1) { d1.style.display = 'block'; d1.classList.add('active'); }
+}
+
+// ─── WARMUP BLOCK ───
+function buildWarmupBlock(warmup) {
+  return `
+    <div class="warmup-block-inner">
+      <div class="block-section-title">🔥 Calentamiento — 7 minutos</div>
+      <div class="warmup-steps">
+        ${warmup.steps.map((s, i) => `
+          <div class="warmup-step">
+            <div class="warmup-num">${i + 1}</div>
+            <div class="warmup-info">
+              <div class="warmup-time">${s.time}</div>
+              <div class="warmup-name">${s.name}</div>
+              <div class="warmup-desc">${s.desc}</div>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+// ─── CARDIO DÍA 2 ───
+function buildCardioDay2Block() {
+  const mode = CARDIO_MODES.bici_intervalos;
+  return `
+    <div class="cardio-day2-inner">
+      <div class="block-section-title">🚴 Cardio — Bicicleta Intervalos (12-15 min)</div>
+      <p class="block-desc">${mode.desc}</p>
+      <div class="cardio-exercises">
+        ${mode.exercises.map((ex, i) => {
+          const cls = ex.intensity.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-').replace(/\//g,'-');
+          return `
+          <div class="cardio-ex-item">
+            <div class="cardio-ex-num">${i + 1}</div>
+            <div class="cardio-ex-info">
+              <div class="cardio-ex-name">${ex.name}</div>
+              <div class="cardio-ex-details">
+                <span>⏱️ ${ex.duration}</span>
+                <span class="intensity-badge intensity-${cls}">${ex.intensity}</span>
+              </div>
+              <div class="cardio-ex-tip">💡 ${ex.tip}</div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+}
+
+// ─── MOVILIDAD FINAL DÍA 2 ───
+function buildMobilityBlock() {
+  const exercises = [
+    { name: 'Toe Touch asistido', sets: '3×20 seg', tip: 'Agarrate de un soporte, bajá con las rodillas extendidas. Sentís la cadena posterior.' },
+    { name: 'Deep Squat hold asistido', sets: '3×20 seg', tip: 'Agarrate de algo, quedate abajo en sentadilla profunda. Abre la cadera y moviliza los tobillos.' },
+    { name: '90/90 Hips', sets: '2×8 por lado', tip: 'Sentado en el suelo, piernas en 90°. Rotá el torso hacia cada lado controlando la cadera.' },
+  ];
+  return `
+    <div class="mobility-inner">
+      <div class="block-section-title">🧘 Movilidad Final</div>
+      <div class="mobility-steps">
+        ${exercises.map((ex, i) => `
+          <div class="warmup-step">
+            <div class="warmup-num">${i + 1}</div>
+            <div class="warmup-info">
+              <div class="warmup-name">${ex.name}</div>
+              <div class="warmup-time">${ex.sets}</div>
+              <div class="warmup-desc">${ex.tip}</div>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+// ─── MINI BLOQUE DIARIO ───
+function buildDailyBlock() {
+  return `
+    <div class="daily-block-inner">
+      <div class="section-header">
+        <h2 class="section-title" style="font-size:14px">🏠 Mini Bloque Diario</h2>
+        <p class="section-sub">${DAILY_BLOCK.desc}</p>
+      </div>
+      <div class="daily-exercises">
+        ${DAILY_BLOCK.exercises.map((ex, i) => `
+          <div class="daily-ex-item">
+            <div class="daily-ex-num">${i + 1}</div>
+            <div class="daily-ex-info">
+              <div class="daily-ex-name">${ex.name}</div>
+              <div class="daily-ex-duration">⏱️ ${ex.duration}</div>
+              <div class="daily-ex-desc">${ex.desc}</div>
+            </div>
+          </div>`).join('')}
+      </div>
+      <div class="daily-tip-box">
+        💡 <strong>Tip:</strong> Hacelo antes de dormir o al levantarte. 5 minutos diarios superan a 1 hora esporádica.
+      </div>
+    </div>`;
+}
+
+// ─── PROGRESIÓN SEMANAL ───
+function buildProgressionBlock() {
+  return `
+    <div class="progression-inner">
+      <div class="section-header">
+        <h2 class="section-title" style="font-size:14px">📈 Progresión Semanal</h2>
+        <p class="section-sub">${PROGRESSION.desc}</p>
+      </div>
+      <div class="progression-rules">
+        ${PROGRESSION.rules.map(r => `
+          <div class="progression-rule">
+            <span class="prog-icon">${r.icon}</span>
+            <div>
+              <div class="prog-label">${r.label}</div>
+              <div class="prog-rule">${r.rule}</div>
+            </div>
+          </div>`).join('')}
+      </div>
+      <div class="priorities-block">
+        <div class="block-section-title">🎯 Tus 3 Prioridades Reales</div>
+        ${PROGRESSION.priorities.map((p, i) => `
+          <div class="priority-item">
+            <span class="priority-num">${i + 1}</span>
+            <span>${p}</span>
+          </div>`).join('')}
+        <div class="priority-note">${PROGRESSION.note}</div>
+      </div>
+    </div>`;
 }
 
 function buildExerciseCard(ex, day) {
@@ -1056,18 +1236,32 @@ function removeTypingIndicator() {
 }
 
 function generateAIResponse(msg) {
+  // Normalizar: minúsculas + quitar acentos para matching robusto
   const lower = msg.toLowerCase();
-  const has = (...kws) => kws.some(k => lower.includes(k));
+  const norm  = lower.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const has   = (...kws) => kws.some(k => {
+    const kn = k.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    return norm.includes(kn) || lower.includes(k);
+  });
 
-  if (has('rutina','entrena','hoy','qué hago','qué toca','qué toca hoy')) {
+  // RUTINAS
+  if (has('rutina','entrena','hoy','que hago','que toca','inicio','empezar','arrancar','ejercicio')) {
     const days = ['Día 1: Upper Fuerza + Hombros','Día 2: Lower + Aire','Día 3: Full Body Atlético'];
     return randomItem(AI_RESPONSES.rutina).replace('{dia}', days[new Date().getDay() % 3]);
   }
-  if (has('cansa','agota','pesado','duro','dormido','sueño','no tengo energía')) return randomItem(AI_RESPONSES.cansancio);
-  if (has('fútbol','futbol','partido','jugué','juego')) return randomItem(AI_RESPONSES.futbol);
-  if (has('como','comida','dieta','nutrición','comer','déficit','calorías','qué como')) return randomItem(AI_RESPONSES.dieta);
-  if (has('motiv','flojo','perezoso','no quiero','ganas','ánimo')) return randomItem(AI_RESPONSES.motivacion);
-  if (has('técnica','cómo','sentadilla','press','peso muerto','forma','postura','agarre','hacer','ejecutar')) return randomItem(AI_RESPONSES.tecnica);
+  // CANSANCIO / DESCANSO
+  if (has('cansa','agota','pesado','duro','dormido','sueño','sueno','descanso','recuper','lesion','dolor','lesión')) return randomItem(AI_RESPONSES.cansancio);
+  // FÚTBOL
+  if (has('futbol','partido','jugue','juego','pelota','arco','cancha')) return randomItem(AI_RESPONSES.futbol);
+  // DIETA / COMIDA — ampliado con cenar, almorzar, desayunar, etc.
+  if (has('como','comer','comida','dieta','nutricion','deficit','calorias','cenar','cena','almorzar','almuerzo','desayunar','desayuno','merienda','proteina','receta','snack','hambre','bajar','grasa')) return randomItem(AI_RESPONSES.dieta);
+  // MOTIVACIÓN
+  if (has('motiv','flojo','perezoso','no quiero','ganas','animo','vago','haragán','cuesta','pereza','aburrido')) return randomItem(AI_RESPONSES.motivacion);
+  // TÉCNICA
+  if (has('tecnica','como','sentadilla','press','peso muerto','forma','postura','agarre','hacer','ejecutar','movimiento','correcta','bien','serie','repeticion','rango')) return randomItem(AI_RESPONSES.tecnica);
+  // PLAN SEMANAL
+  if (has('semana','plan','organizar','cuantos dias','programar','semanas','dias')) return randomItem(AI_RESPONSES.planSemanal);
+
   return randomItem(AI_RESPONSES.default);
 }
 

@@ -35,106 +35,140 @@
 </nav>
 
 <!-- ═══════════════════════════════════════════
-     🏠  HOME / LANDING
+     🏠  HOME / LANDING — Split layout
      ═══════════════════════════════════════════ -->
-<section id="home" class="section">
-  <div class="hero-container">
-    <div class="pixel-grid-bg"></div>
+<section id="home" class="section section-home">
 
-    <div class="hero-content">
-      <div class="hero-badge">⚡ MODO BESTIA ACTIVADO</div>
-      <h1 class="hero-title">
-        <span class="title-da">da</span><span class="title-beast">Beast</span>
-      </h1>
-      <p class="hero-subtitle">Tu transformación híbrida definitiva</p>
-      <p class="hero-quote" id="heroQuote">Cargando motivación...</p>
-      <div class="hero-buttons">
-        <button class="btn-primary" onclick="navigateTo('routines')">🔥 Empezar Rutina</button>
-        <button class="btn-secondary" onclick="navigateTo('coach')">🤖 Hablar con IA</button>
+  <div class="landing-split">
+
+    <!-- ── LADO IZQUIERDO: personaje + título superpuesto ── -->
+    <div class="landing-left">
+      <div class="landing-char-wrap">
+        <div class="landing-char-glow"></div>
+        <svg viewBox="0 0 180 340" xmlns="http://www.w3.org/2000/svg" class="landing-char-svg">
+          <ellipse cx="90" cy="335" rx="52" ry="8" fill="#000" opacity=".25"/>
+          <rect x="54" y="12" width="72" height="16" rx="6" fill="#1C0E08"/>
+          <rect x="50" y="18" width="12" height="28" rx="6" fill="#1C0E08"/>
+          <rect x="118" y="18" width="12" height="28" rx="6" fill="#1C0E08"/>
+          <rect x="56" y="22" width="68" height="58" rx="10" fill="#FBBF9F"/>
+          <rect x="65" y="35" width="16" height="16" rx="5" fill="#1a1a2e"/>
+          <rect x="99" y="35" width="16" height="16" rx="5" fill="#1a1a2e"/>
+          <rect x="68" y="38" width="6" height="6" rx="2" fill="white" opacity=".5"/>
+          <rect x="102" y="38" width="6" height="6" rx="2" fill="white" opacity=".5"/>
+          <rect x="63" y="30" width="20" height="5" rx="2.5" fill="#1C0E08"/>
+          <rect x="97" y="30" width="20" height="5" rx="2.5" fill="#1C0E08"/>
+          <rect x="74" y="60" width="32" height="8" rx="4" fill="#FF6B8A"/>
+          <rect x="78" y="62" width="8" height="4" rx="2" fill="white" opacity=".4"/>
+          <rect x="90" y="62" width="8" height="4" rx="2" fill="white" opacity=".4"/>
+          <rect x="76" y="79" width="28" height="16" rx="5" fill="#FBBF9F"/>
+          <rect x="38" y="93" width="104" height="90" rx="12" fill="#A78BFA"/>
+          <rect x="52" y="93" width="26" height="45" rx="6" fill="#7C3AED"/>
+          <rect x="102" y="93" width="26" height="45" rx="6" fill="#7C3AED"/>
+          <text x="76" y="132" font-size="22" fill="#FFD700">★</text>
+          <rect x="87" y="140" width="6" height="40" rx="3" fill="#6D28D9" opacity=".5"/>
+          <rect x="6" y="95" width="36" height="78" rx="18" fill="#FBBF9F"/>
+          <rect x="138" y="95" width="36" height="78" rx="18" fill="#FBBF9F"/>
+          <rect x="9" y="112" width="28" height="7" rx="3" fill="#F59E0B" opacity=".45"/>
+          <rect x="143" y="112" width="28" height="7" rx="3" fill="#F59E0B" opacity=".45"/>
+          <rect x="8" y="168" width="32" height="24" rx="10" fill="#FBBF9F"/>
+          <rect x="140" y="168" width="32" height="24" rx="10" fill="#FBBF9F"/>
+          <rect x="36" y="181" width="108" height="62" rx="10" fill="#60A5FA"/>
+          <rect x="84" y="181" width="12" height="62" rx="5" fill="#3B82F6"/>
+          <rect x="40" y="238" width="44" height="56" rx="10" fill="#FBBF9F"/>
+          <rect x="96" y="238" width="44" height="56" rx="10" fill="#FBBF9F"/>
+          <ellipse cx="62" cy="245" rx="18" ry="10" fill="#F5B08A"/>
+          <ellipse cx="118" cy="245" rx="18" ry="10" fill="#F5B08A"/>
+          <rect x="30" y="288" width="58" height="18" rx="8" fill="#1E293B"/>
+          <rect x="92" y="288" width="58" height="18" rx="8" fill="#1E293B"/>
+          <rect x="28" y="300" width="62" height="6" rx="3" fill="#0F172A"/>
+          <rect x="90" y="300" width="62" height="6" rx="3" fill="#0F172A"/>
+          <rect x="36" y="292" width="20" height="5" rx="2" fill="white" opacity=".25"/>
+          <rect x="98" y="292" width="20" height="5" rx="2" fill="white" opacity=".25"/>
+        </svg>
+        <span class="lp-star ls1">★</span>
+        <span class="lp-star ls2">✦</span>
+        <span class="lp-star ls3">⚡</span>
+        <span class="lp-star ls4">★</span>
+      </div>
+
+      <div class="landing-title-overlay">
+        <div class="hero-badge">⚡ MODO BESTIA ACTIVADO</div>
+        <h1 class="hero-title">
+          <span class="title-da">da</span><span class="title-beast">Beast</span>
+        </h1>
+        <p class="hero-subtitle">Tu transformación híbrida definitiva</p>
+        <p class="hero-quote" id="heroQuote">Cargando motivación...</p>
       </div>
     </div>
 
-    <div class="hero-character">
-      <div class="pixel-character">
-        <div class="char-aura"></div>
-        <svg viewBox="0 0 120 170" xmlns="http://www.w3.org/2000/svg" class="pixel-svg">
-          <!-- Cabello -->
-          <rect x="36" y="7" width="48" height="10" rx="4" fill="#2C1810"/>
-          <rect x="34" y="12" width="8" height="18" rx="4" fill="#2C1810"/>
-          <rect x="78" y="12" width="8" height="18" rx="4" fill="#2C1810"/>
-          <!-- Cabeza -->
-          <rect x="38" y="14" width="44" height="38" rx="6" fill="#FBBF9F"/>
-          <!-- Ojos -->
-          <rect x="44" y="22" width="10" height="10" rx="3" fill="#1a1a2e"/>
-          <rect x="66" y="22" width="10" height="10" rx="3" fill="#1a1a2e"/>
-          <rect x="46" y="24" width="4" height="4" rx="1" fill="white" opacity=".5"/>
-          <rect x="68" y="24" width="4" height="4" rx="1" fill="white" opacity=".5"/>
-          <!-- Boca -->
-          <rect x="50" y="38" width="20" height="5" rx="2.5" fill="#FF6B8A"/>
-          <!-- Cuello -->
-          <rect x="50" y="51" width="20" height="10" rx="3" fill="#FBBF9F"/>
-          <!-- Cuerpo (tank top) -->
-          <rect x="28" y="59" width="64" height="58" rx="8" fill="#A78BFA"/>
-          <!-- Franjas pecho -->
-          <rect x="36" y="59" width="16" height="30" rx="4" fill="#7C3AED"/>
-          <rect x="68" y="59" width="16" height="30" rx="4" fill="#7C3AED"/>
-          <!-- Detalle estrella -->
-          <text x="52" y="84" font-size="14" fill="#FFD700">★</text>
-          <!-- Brazos -->
-          <rect x="6"  y="60" width="24" height="50" rx="12" fill="#FBBF9F"/>
-          <rect x="90" y="60" width="24" height="50" rx="12" fill="#FBBF9F"/>
-          <!-- Venas/músculo efecto -->
-          <rect x="8"  y="72" width="18" height="4" rx="2" fill="#F59E0B" opacity=".5"/>
-          <rect x="94" y="72" width="18" height="4" rx="2" fill="#F59E0B" opacity=".5"/>
-          <!-- Manos -->
-          <ellipse cx="18" cy="112" rx="10" ry="8" fill="#FBBF9F"/>
-          <ellipse cx="102" cy="112" rx="10" ry="8" fill="#FBBF9F"/>
-          <!-- Shorts -->
-          <rect x="26" y="115" width="68" height="38" rx="6" fill="#60A5FA"/>
-          <rect x="55" y="115" width="10" height="38" rx="3" fill="#3B82F6"/>
-          <!-- Piernas -->
-          <rect x="28" y="149" width="26" height="20" rx="6" fill="#FBBF9F"/>
-          <rect x="66" y="149" width="26" height="20" rx="6" fill="#FBBF9F"/>
-          <!-- Zapatillas -->
-          <rect x="22" y="164" width="36" height="11" rx="5" fill="#1E293B"/>
-          <rect x="62" y="164" width="36" height="11" rx="5" fill="#1E293B"/>
-          <rect x="24" y="165" width="12" height="4" rx="2" fill="white" opacity=".3"/>
-          <rect x="64" y="165" width="12" height="4" rx="2" fill="white" opacity=".3"/>
-        </svg>
-        <div class="char-stars">
-          <span class="star s1">★</span>
-          <span class="star s2">✦</span>
-          <span class="star s3">★</span>
-          <span class="star s4">✦</span>
+    <!-- ── LADO DERECHO: grilla de secciones ── -->
+    <div class="landing-right">
+      <div class="sections-grid">
+
+        <div class="section-tile" onclick="navigateTo('routines')">
+          <div class="tile-icon">🏋️</div>
+          <div class="tile-label">Rutinas</div>
+          <div class="tile-desc">Upper · Lower · Full Body</div>
+        </div>
+
+        <div class="section-tile" onclick="navigateTo('diet')">
+          <div class="tile-icon">🥗</div>
+          <div class="tile-label">Dieta</div>
+          <div class="tile-desc">Recetas · Macros · Déficit</div>
+        </div>
+
+        <div class="section-tile" onclick="navigateTo('progress')">
+          <div class="tile-icon">📈</div>
+          <div class="tile-label">Progreso</div>
+          <div class="tile-desc">Cargas · Racha · Badges</div>
+        </div>
+
+        <div class="section-tile" onclick="navigateTo('coach')">
+          <div class="tile-icon">🤖</div>
+          <div class="tile-label">IA Coach</div>
+          <div class="tile-desc">Rutinas · Técnica · Motivación</div>
+        </div>
+
+        <div class="section-tile" onclick="navigateTo('cardio')">
+          <div class="tile-icon">⚽</div>
+          <div class="tile-label">Cardio / Fútbol</div>
+          <div class="tile-desc">HIIT · Base · Recuperación</div>
+        </div>
+
+        <div class="section-tile" onclick="navigateTo('tools')">
+          <div class="tile-icon">🔧</div>
+          <div class="tile-label">Herramientas</div>
+          <div class="tile-desc">TDEE · IMC · Temporizador</div>
+        </div>
+
+      </div>
+
+      <div class="streak-bar">
+        <div class="streak-item">
+          <span class="streak-icon">🔥</span>
+          <div>
+            <div class="streak-count" id="streakCount">0</div>
+            <div class="streak-label">días de racha</div>
+          </div>
+        </div>
+        <div class="streak-divider"></div>
+        <div class="streak-item">
+          <span class="streak-icon">💪</span>
+          <div>
+            <div class="streak-count" id="totalWorkouts">0</div>
+            <div class="streak-label">entrenos totales</div>
+          </div>
+        </div>
+        <div class="streak-divider"></div>
+        <div class="streak-item">
+          <span class="streak-icon">⭐</span>
+          <div>
+            <div class="streak-count" id="userLevel">Iniciado</div>
+            <div class="streak-label">nivel actual</div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- Barra de racha / stats -->
-  <div class="streak-bar">
-    <div class="streak-item">
-      <span class="streak-icon">🔥</span>
-      <div>
-        <div class="streak-count" id="streakCount">0</div>
-        <div class="streak-label">días de racha</div>
-      </div>
-    </div>
-    <div class="streak-divider"></div>
-    <div class="streak-item">
-      <span class="streak-icon">💪</span>
-      <div>
-        <div class="streak-count" id="totalWorkouts">0</div>
-        <div class="streak-label">entrenos totales</div>
-      </div>
-    </div>
-    <div class="streak-divider"></div>
-    <div class="streak-item">
-      <span class="streak-icon">⭐</span>
-      <div>
-        <div class="streak-count" id="userLevel">Iniciado</div>
-        <div class="streak-label">nivel actual</div>
-      </div>
     </div>
   </div>
 </section>
@@ -148,21 +182,28 @@
     <p class="section-sub">Tus entrenamientos híbridos personalizados — Cargá progresivo.</p>
   </div>
 
+  <!-- Sub-tabs: Rutina / Calentamiento / Progresión / Mini Bloque -->
   <div class="day-tabs">
     <button class="day-tab active" data-day="day1">🏋️ Día 1 — Upper</button>
     <button class="day-tab" data-day="day2">🦵 Día 2 — Lower</button>
     <button class="day-tab" data-day="day3">⚡ Día 3 — Full Body</button>
+    <button class="day-tab day-tab-special" data-day="daily">🏠 Mini Bloque</button>
+    <button class="day-tab day-tab-special" data-day="progression">📈 Progresión</button>
   </div>
 
   <!-- DÍA 1 -->
   <div class="day-content active" id="day1" style="display:block">
     <div class="day-header">
       <div class="day-header-info">
-        <h3>🏋️ Día 1: Upper Fuerza + Hombros</h3>
-        <p>Torso superior, pecho, espalda y hombros. Carga progresiva. Activá el core en todo momento.</p>
+        <h3>🏋️ Día 1: Upper Fuerza + Hombros + Core</h3>
+        <p>Lunes ideal. Pecho, espalda, hombros, brazos y core. Carga progresiva. 6×5 en banca pausado es el plato principal.</p>
       </div>
       <button class="btn-complete-day" onclick="completeDay(1)">✅ Día completado</button>
     </div>
+    <!-- Calentamiento día 1 -->
+    <div id="warmup-day1" class="warmup-block"></div>
+    <!-- Ejercicios -->
+    <div class="exercises-section-title">💪 Rutina Principal</div>
     <div id="exercises-day1" class="exercises-grid"></div>
   </div>
 
@@ -170,24 +211,46 @@
   <div class="day-content" id="day2" style="display:none">
     <div class="day-header">
       <div class="day-header-info">
-        <h3>🦵 Día 2: Lower + Aire</h3>
-        <p>Tren inferior, glúteos e isquios con trabajo aeróbico. Base atlética para el fútbol.</p>
+        <h3>🦵 Día 2: Lower + Aire + Movilidad</h3>
+        <p>Miércoles ideal. Tren inferior completo + cardio intervalos en bici + movilidad final. Sesión larga pero efectiva.</p>
       </div>
       <button class="btn-complete-day" onclick="completeDay(2)">✅ Día completado</button>
     </div>
+    <!-- Calentamiento día 2 -->
+    <div id="warmup-day2" class="warmup-block"></div>
+    <!-- Ejercicios -->
+    <div class="exercises-section-title">💪 Rutina Principal</div>
     <div id="exercises-day2" class="exercises-grid"></div>
+    <!-- Cardio día 2 -->
+    <div id="cardio-day2" class="cardio-day2-block"></div>
+    <!-- Movilidad final -->
+    <div id="mobility-day2" class="mobility-block"></div>
   </div>
 
   <!-- DÍA 3 -->
   <div class="day-content" id="day3" style="display:none">
     <div class="day-header">
       <div class="day-header-info">
-        <h3>⚡ Día 3: Full Body + Atlético</h3>
-        <p>Potencia, explosividad y resistencia. Movimientos compuestos y funcionales.</p>
+        <h3>⚡ Día 3: Full Body + Atlético + Core</h3>
+        <p>Viernes ideal. Trap Bar Deadlift como ejercicio ancla. Potencia, atletismo y core antirotacional.</p>
       </div>
       <button class="btn-complete-day" onclick="completeDay(3)">✅ Día completado</button>
     </div>
+    <!-- Calentamiento día 3 -->
+    <div id="warmup-day3" class="warmup-block"></div>
+    <!-- Ejercicios -->
+    <div class="exercises-section-title">💪 Rutina Principal</div>
     <div id="exercises-day3" class="exercises-grid"></div>
+  </div>
+
+  <!-- MINI BLOQUE DIARIO -->
+  <div class="day-content" id="daily" style="display:none">
+    <div id="daily-block-container"></div>
+  </div>
+
+  <!-- PROGRESIÓN -->
+  <div class="day-content" id="progression" style="display:none">
+    <div id="progression-container"></div>
   </div>
 </section>
 
