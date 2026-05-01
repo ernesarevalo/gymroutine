@@ -1215,21 +1215,26 @@ body::before {
   .hamburger { display: flex; }
 
   .nav-links {
-    display: none;
-    position: fixed;
-    top: 68px; left: 0; right: 0;
-    background: var(--nav-bg);
-    flex-direction: column; gap: 0;
-    border-bottom: 2px solid var(--border);
-    backdrop-filter: blur(22px);
-    -webkit-backdrop-filter: blur(22px);
-    padding: 6px 0 12px;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-    z-index: 999;
-    max-height: calc(100vh - 68px);
-    overflow-y: auto;
+    display: none !important;
+    position: fixed !important;
+    top: 68px !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: #1a0828 !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+    border-bottom: 2px solid var(--border) !important;
+    padding: 8px 0 16px !important;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.7) !important;
+    z-index: 1001 !important;
+    max-height: calc(100vh - 68px) !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
   }
-  .nav-links.open { display: flex; }
+  .nav-links.open {
+    display: flex !important;
+  }
+  /* open handled above */
   .nav-link { border-radius: 0; padding: 14px 22px; border-bottom: 1px solid var(--border); width: 100%; }
   .nav-links li:last-child { padding: 10px 22px; border-top: 2px solid var(--border); }
 
@@ -1810,4 +1815,94 @@ body::before {
 @media (max-width: 600px) {
   .progression-rules { grid-template-columns: 1fr; }
   .warmup-step, .daily-ex-item { flex-direction: row; }
+}
+
+/* ══════════════════════════════════════════════
+   FIXES MOBILE — iOS Safari
+   ══════════════════════════════════════════════ */
+
+/* Botón de sonido: oculto en mobile, visible en desktop */
+@media (max-width: 768px) {
+  .sound-btn { display: none !important; }
+
+  /* Menú: links con área de tap grande y sin superposición */
+  .nav-links .nav-link {
+    display: block !important;
+    padding: 16px 24px !important;
+    font-size: 15px !important;
+    border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+    color: #F0D8FF !important;
+    border-radius: 0 !important;
+    width: 100% !important;
+    min-height: 52px !important;
+    -webkit-tap-highlight-color: rgba(255,107,138,0.2);
+  }
+  .nav-links .nav-link:hover,
+  .nav-links .nav-link.active {
+    background: rgba(255,107,138,0.15) !important;
+    color: #FF6B8A !important;
+    transform: none !important;
+  }
+
+  /* El li del theme toggle */
+  .nav-links li:last-child {
+    padding: 12px 24px !important;
+    border-top: 1px solid rgba(255,255,255,0.1) !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  /* Landing: quote y subtitle ocultos en mobile — el personaje los tapa */
+  .landing-title-overlay .hero-quote    { display: none !important; }
+  .landing-title-overlay .hero-subtitle { display: none !important; }
+
+  /* El título más compacto */
+  .landing-title-overlay {
+    padding: 16px 16px 0 !important;
+  }
+  .landing-title-overlay .hero-badge {
+    font-size: 6px !important;
+    padding: 5px 10px !important;
+    margin-bottom: 8px !important;
+  }
+  .landing-title-overlay .hero-title {
+    font-size: clamp(26px, 9vw, 44px) !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Tiles: descripción oculta en mobile, solo ícono y label */
+  .tile-desc { display: none !important; }
+  .section-tile { padding: 20px 10px 16px !important; }
+  .tile-icon  { font-size: 30px !important; }
+  .tile-label { font-size: 8px !important; }
+
+  /* Streak bar vertical en mobile */
+  .landing-right .streak-bar {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    padding: 12px !important;
+  }
+  .landing-right .streak-item {
+    flex-direction: row !important;
+    gap: 8px !important;
+    flex: 1 !important;
+    min-width: 80px !important;
+    justify-content: center !important;
+  }
+  .landing-right .streak-divider { display: none !important; }
+  .landing-right .streak-count { font-size: 11px !important; }
+  .landing-right .streak-label { font-size: 9px !important; }
+}
+
+/* Overlay del nav — asegurar que funcione en iOS */
+#navOverlay {
+  position: fixed !important;
+  top: 68px !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 1000 !important;
+  background: rgba(0,0,0,0.6) !important;
+  -webkit-tap-highlight-color: transparent;
 }

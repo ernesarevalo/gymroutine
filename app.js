@@ -114,29 +114,42 @@ function playSound(type) {
 //  NAVEGACIÓN SPA
 // ════════════════════════════════════════════
 function initNavigation() {
-  document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const sec = link.dataset.section;
-      if (sec) { navigateTo(sec); closeMobileMenu(); }
-    });
-  });
+  // Usar touchstart en iOS Safari para respuesta inmediata
+  const EVT = ('ontouchstart' in window) ? 'touchstart' : 'click';
 
-  document.getElementById('hamburger')?.addEventListener('click', () => {
-    const nav = document.getElementById('navLinks');
-    nav?.classList.toggle('open');
-    // Overlay oscuro detrás del menú
-    toggleNavOverlay(nav?.classList.contains('open'));
-  });
+  // Nav links — delegación en el UL para capturar todos los taps
+  const navLinks = document.getElementById('navLinks');
+  if (navLinks) {
+    navLinks.addEventListener(EVT, e => {
+      // Buscar el nav-link más cercano al target
+      const link = e.target.closest('.nav-link');
+      if (link) {
+        e.preventDefault();
+        e.stopPropagation();
+        const sec = link.dataset.section;
+        if (sec) {
+          navigateTo(sec);
+          closeMobileMenu();
+        }
+      }
+    }, { passive: false });
+  }
 
-  // Cerrar menú al click afuera
-  document.addEventListener('click', e => {
-    const nav = document.getElementById('navLinks');
-    const ham = document.getElementById('hamburger');
-    if (nav && ham && !nav.contains(e.target) && !ham.contains(e.target)) {
-      nav.classList.remove('open');
-    }
-  });
+  // Hamburger
+  const ham = document.getElementById('hamburger');
+  if (ham) {
+    ham.addEventListener(EVT, e => {
+      e.stopPropagation();
+      const nav = document.getElementById('navLinks');
+      const isOpen = nav && nav.classList.contains('open');
+      if (isOpen) {
+        closeMobileMenu();
+      } else {
+        if (nav) nav.classList.add('open');
+        showNavOverlay();
+      }
+    }, { passive: false });
+  }
 
   // Mostrar sección inicial
   navigateTo('home', false);
@@ -168,28 +181,34 @@ function navigateTo(sectionId, animate = true) {
 }
 
 function closeMobileMenu() {
-  document.getElementById('navLinks')?.classList.remove('open');
-  toggleNavOverlay(false);
+  const nav = document.getElementById('navLinks');
+  if (nav) nav.classList.remove('open');
+  hideNavOverlay();
 }
 
-function toggleNavOverlay(show) {
+function showNavOverlay() {
   let overlay = document.getElementById('navOverlay');
-  if (show) {
-    if (!overlay) {
-      overlay = document.createElement('div');
-      overlay.id = 'navOverlay';
-      overlay.style.cssText = `
-        position:fixed; inset:68px 0 0 0; z-index:998;
-        background:rgba(0,0,0,0.55); backdrop-filter:blur(2px);
-        animation: fadeSlideIn .2s ease;
-      `;
-      overlay.addEventListener('click', closeMobileMenu);
-      document.body.appendChild(overlay);
-    }
-    overlay.style.display = 'block';
-  } else {
-    if (overlay) overlay.style.display = 'none';
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'navOverlay';
+    overlay.style.cssText =
+      'position:fixed;top:68px;left:0;right:0;bottom:0;z-index:998;' +
+      'background:rgba(0,0,0,0.6);';
+    // Tanto click como touchstart para iOS
+    ['click','touchstart'].forEach(evt => {
+      overlay.addEventListener(evt, e => {
+        e.stopPropagation();
+        closeMobileMenu();
+      }, { passive: true });
+    });
+    document.body.appendChild(overlay);
   }
+  overlay.style.display = 'block';
+}
+
+function hideNavOverlay() {
+  const overlay = document.getElementById('navOverlay');
+  if (overlay) overlay.style.display = 'none';
 }
 
 // ════════════════════════════════════════════
