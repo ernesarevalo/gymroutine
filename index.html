@@ -102,48 +102,13 @@
       </div>
     </div>
 
-    <!-- ── LADO DERECHO: grilla de secciones ── -->
+    <!-- ── LADO DERECHO: resumen y stats ── -->
     <div class="landing-right">
-      <div class="sections-grid">
 
-        <div class="section-tile" onclick="navigateTo('routines')">
-          <div class="tile-icon">🏋️</div>
-          <div class="tile-label">Rutinas</div>
-          <div class="tile-desc">Upper · Lower · Full Body</div>
-        </div>
+      <!-- Resumen del día -->
+      <div id="dailySummary" class="daily-summary"></div>
 
-        <div class="section-tile" onclick="navigateTo('diet')">
-          <div class="tile-icon">🥗</div>
-          <div class="tile-label">Dieta</div>
-          <div class="tile-desc">Recetas · Macros · Déficit</div>
-        </div>
-
-        <div class="section-tile" onclick="navigateTo('progress')">
-          <div class="tile-icon">📈</div>
-          <div class="tile-label">Progreso</div>
-          <div class="tile-desc">Cargas · Racha · Badges</div>
-        </div>
-
-        <div class="section-tile" onclick="navigateTo('coach')">
-          <div class="tile-icon">🤖</div>
-          <div class="tile-label">IA Coach</div>
-          <div class="tile-desc">Rutinas · Técnica · Motivación</div>
-        </div>
-
-        <div class="section-tile" onclick="navigateTo('cardio')">
-          <div class="tile-icon">⚽</div>
-          <div class="tile-label">Cardio / Fútbol</div>
-          <div class="tile-desc">HIIT · Base · Recuperación</div>
-        </div>
-
-        <div class="section-tile" onclick="navigateTo('tools')">
-          <div class="tile-icon">🔧</div>
-          <div class="tile-label">Herramientas</div>
-          <div class="tile-desc">TDEE · IMC · Temporizador</div>
-        </div>
-
-      </div>
-
+      <!-- Stats racha -->
       <div class="streak-bar">
         <div class="streak-item">
           <span class="streak-icon">🔥</span>
@@ -168,6 +133,16 @@
             <div class="streak-label">nivel actual</div>
           </div>
         </div>
+      </div>
+
+      <!-- Accesos rápidos -->
+      <div class="quick-nav-grid">
+        <button class="quick-nav-btn" onclick="navigateTo('routines')">🏋️<span>Rutinas</span></button>
+        <button class="quick-nav-btn" onclick="navigateTo('diet')">🥗<span>Dieta</span></button>
+        <button class="quick-nav-btn" onclick="navigateTo('progress')">📈<span>Progreso</span></button>
+        <button class="quick-nav-btn" onclick="navigateTo('coach')">🤖<span>IA Coach</span></button>
+        <button class="quick-nav-btn" onclick="navigateTo('cardio')">⚽<span>Cardio</span></button>
+        <button class="quick-nav-btn" onclick="navigateTo('tools')">🔧<span>Tools</span></button>
       </div>
 
     </div>
@@ -278,6 +253,11 @@
     <span class="tag-filter" data-tag="rapida">⚡ Rápida</span>
     <span class="tag-filter" data-tag="proteina">💪 Alta Proteína</span>
     <span class="tag-filter" data-tag="saciante">🫃 Más Saciante</span>
+  </div>
+
+  <!-- Buscador -->
+  <div class="diet-search-wrap">
+    <input type="text" id="dietSearch" class="diet-search" placeholder="🔍 Buscar receta... ej: pollo, avena, atún" oninput="renderRecipes()" />
   </div>
 
   <div id="recipesGrid" class="recipes-grid"></div>
@@ -591,6 +571,37 @@
     <div id="modalBody"></div>
   </div>
 </div>
+
+<!-- ══ BACK TO TOP ══ -->
+<button id="backToTop" class="back-to-top hidden" onclick="scrollToTop()" title="Volver arriba">↑</button>
+
+<!-- ══ BOTTOM NAV MOBILE ══ -->
+<nav class="bottom-nav" id="bottomNav">
+  <button class="bnav-btn active" data-section="home" onclick="navigateTo('home')">
+    <span class="bnav-icon">🏠</span>
+    <span class="bnav-label">Inicio</span>
+  </button>
+  <button class="bnav-btn" data-section="routines" onclick="navigateTo('routines')">
+    <span class="bnav-icon">💪</span>
+    <span class="bnav-label">Rutinas</span>
+  </button>
+  <button class="bnav-btn" data-section="diet" onclick="navigateTo('diet')">
+    <span class="bnav-icon">🥗</span>
+    <span class="bnav-label">Dieta</span>
+  </button>
+  <button class="bnav-btn" data-section="progress" onclick="navigateTo('progress')">
+    <span class="bnav-icon">📈</span>
+    <span class="bnav-label">Progreso</span>
+  </button>
+  <button class="bnav-btn" data-section="coach" onclick="navigateTo('coach')">
+    <span class="bnav-icon">🤖</span>
+    <span class="bnav-label">Coach</span>
+  </button>
+  <button class="bnav-btn" data-section="tools" onclick="navigateTo('tools')">
+    <span class="bnav-icon">🔧</span>
+    <span class="bnav-label">Tools</span>
+  </button>
+</nav>
 
 <script src="data.js"></script>
 <script src="app.js"></script>

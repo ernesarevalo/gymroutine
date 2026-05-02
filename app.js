@@ -31,6 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initProgressCharts();
   showWelcomeMsg();
   injectConfettiCSS();
+  renderDailySummary();
+  markTodayTab();
+  initBackToTop();
+  syncBottomNav('home');
 
   // Cerrar modal con click fuera
   document.getElementById('recipeModal')?.addEventListener('click', e => {
@@ -176,8 +180,10 @@ function navigateTo(sectionId, animate = true) {
 
   STATE.activeSection = sectionId;
   playSound('nav');
+  syncBottomNav(sectionId);
 
   if (sectionId === 'progress') setTimeout(initProgressCharts, 150);
+  if (sectionId === 'home') renderDailySummary();
 }
 
 function closeMobileMenu() {
@@ -461,6 +467,8 @@ function buildExerciseCard(ex, day) {
           </div>`).join('')}
       </div>
     </div>
+
+    ${buildSetCounter(ex)}
 
     <div class="ex-actions">
       <button class="btn-timer" onclick="startExerciseTimer(${ex.rest},'${ex.name}')">
@@ -751,10 +759,13 @@ function renderRecipes() {
   const grid = document.getElementById('recipesGrid');
   if (!grid) return;
 
+  const query = getDietSearchQuery();
   const filtered = RECIPES.filter(r => {
     const catOk = STATE.diet.category === 'all' || r.category === STATE.diet.category;
     const tagOk = STATE.diet.tags.length === 0 || STATE.diet.tags.every(t => r.tags.includes(t));
-    return catOk && tagOk;
+    const searchOk = !query || [r.name, ...r.ingredients, r.prep].join(' ')
+      .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(query);
+    return catOk && tagOk && searchOk;
   });
 
   if (filtered.length === 0) {
@@ -1282,6 +1293,157 @@ function generateAIResponse(msg) {
   if (has('semana','plan','organizar','cuantos dias','programar','semanas','dias')) return randomItem(AI_RESPONSES.planSemanal);
 
   return randomItem(AI_RESPONSES.default);
+}
+
+
+// ════════════════════════════════════════════
+//  RESUMEN DEL DÍA (HOME)
+// ════════════════════════════════════════════
+function renderDailySummary() {
+  const container = document.getElementById('dailySummary');
+  if (!container) return;
+
+  const dow = new Date().getDay(); // 0=Dom,1=Lun...6=Sab
+  const dayMap = { 1:'day1', 3:'day2', 5:'day3' };
+  const dayNames = { day1:'Día 1 — Upper Fuerza', day2:'Día 2 — Lower + Aire', day3:'Día 3 — Full Body' };
+  const dayIcons = { day1:'🏋️', day2:'🦵', day3:'⚡' };
+  const dayDurations = { day1:'~55 min', day2:'~70 min', day3:'~60 min' };
+
+  const todayKey = dayMap[dow];
+  const store    = getStore('dabeast-completed-days');
+  const list     = Array.isArray(store.list) ? store.list : [];
+  const doneToday = list.includes(todayStr());
+
+  if (todayKey) {
+    const exCount = (EXERCISES[todayKey] || []).length;
+    container.innerHTML = `
+      <div class="daily-summary-card ${doneToday ? 'done' : ''}">
+        <div class="ds-top">
+          <span class="ds-icon">${doneToday ? '✅' : dayIcons[todayKey]}</span>
+          <div class="ds-info">
+            <div class="ds-label">HOY TOCA</div>
+            <div class="ds-name">${dayNames[todayKey]}</div>
+            <div class="ds-meta">${exCount} ejercicios · ${dayDurations[todayKey]}</div>
+          </div>
+        </div>
+        ${doneToday
+          ? '<div class="ds-done-msg">¡Sesión completada hoy! 🔥 Descansá y volvé mañana.</div>'
+          : `<button class="btn-primary ds-btn" onclick="navigateTo('routines')">🏋️ Ir al entrenamiento</button>`
+        }
+      </div>`;
+  } else {
+    // Fin de semana
+    const msgs = {
+      0: { icon:'🧘', text:'Domingo — Día de descanso', sub:'Recuperación activa o movilidad suave.' },
+      6: { icon:'⚽', text:'Sábado — Día libre', sub:'¿Hay partido hoy? Aprovechá para sumar aire.' },
+    };
+    const m = msgs[dow] || { icon:'🧘', text:'Día de descanso', sub:'Recuperate bien.' };
+    container.innerHTML = `
+      <div class="daily-summary-card rest">
+        <div class="ds-top">
+          <span class="ds-icon">${m.icon}</span>
+          <div class="ds-info">
+            <div class="ds-label">HOY</div>
+            <div class="ds-name">${m.text}</div>
+            <div class="ds-meta">${m.sub}</div>
+          </div>
+        </div>
+        <button class="btn-secondary ds-btn" onclick="navigateTo('cardio')">Ver planes de cardio</button>
+      </div>`;
+  }
+}
+
+
+// ════════════════════════════════════════════
+//  CONTADOR DE SERIES
+// ════════════════════════════════════════════
+function buildSetCounter(ex) {
+  return `
+    <div class="set-counter" id="counter-${ex.id}">
+      <div class="sc-label">Series completadas:</div>
+      <div class="sc-dots">
+        ${Array.from({length: ex.sets}, (_,i) => `
+          <button class="sc-dot" id="sc-${ex.id}-${i}"
+                  onclick="toggleSet('${ex.id}',${i},${ex.sets})"
+                  title="Serie ${i+1}"></button>`).join('')}
+      </div>
+      <div class="sc-count"><span id="sc-done-${ex.id}">0</span>/${ex.sets}</div>
+      <button class="sc-reset" onclick="resetSets('${ex.id}',${ex.sets})">↺ Reset</button>
+    </div>`;
+}
+
+function toggleSet(id, idx, total) {
+  const dot = document.getElementById(`sc-${id}-${idx}`);
+  if (!dot) return;
+  dot.classList.toggle('done');
+  const done = document.querySelectorAll(`#counter-${id} .sc-dot.done`).length;
+  const countEl = document.getElementById(`sc-done-${id}`);
+  if (countEl) countEl.textContent = done;
+  if (done === total) {
+    showToast(`🎯 ¡${total} series completadas!`);
+    playSound('complete');
+  }
+}
+
+function resetSets(id, total) {
+  document.querySelectorAll(`#counter-${id} .sc-dot`).forEach(d => d.classList.remove('done'));
+  const countEl = document.getElementById(`sc-done-${id}`);
+  if (countEl) countEl.textContent = '0';
+}
+
+
+// ════════════════════════════════════════════
+//  MARCAR DÍA DE HOY EN TABS
+// ════════════════════════════════════════════
+function markTodayTab() {
+  const dow = new Date().getDay();
+  const dayMap = { 1:'day1', 3:'day2', 5:'day3' };
+  const todayKey = dayMap[dow];
+  if (!todayKey) return;
+  const tab = document.querySelector(`.day-tab[data-day="${todayKey}"]`);
+  if (tab) {
+    tab.classList.add('today-tab');
+    tab.innerHTML = tab.innerHTML.replace('</button>','') + ' <span class="today-badge">HOY</span>';
+  }
+}
+
+
+// ════════════════════════════════════════════
+//  BACK TO TOP
+// ════════════════════════════════════════════
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function initBackToTop() {
+  window.addEventListener('scroll', () => {
+    const btn = document.getElementById('backToTop');
+    if (!btn) return;
+    if (window.scrollY > 300) {
+      btn.classList.remove('hidden');
+    } else {
+      btn.classList.add('hidden');
+    }
+  });
+}
+
+
+// ════════════════════════════════════════════
+//  BOTTOM NAV — SYNC ACTIVE STATE
+// ════════════════════════════════════════════
+function syncBottomNav(sectionId) {
+  document.querySelectorAll('.bnav-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.section === sectionId);
+  });
+}
+
+
+// ════════════════════════════════════════════
+//  DIET SEARCH
+// ════════════════════════════════════════════
+function getDietSearchQuery() {
+  const el = document.getElementById('dietSearch');
+  return el ? el.value.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'') : '';
 }
 
 // ════════════════════════════════════════════
