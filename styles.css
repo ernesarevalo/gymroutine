@@ -220,6 +220,16 @@ body::before {
   display: block;
   animation: fadeSlideIn .38s ease both;
 }
+/* Multi-page: cada página tiene su propio main */
+.page-main {
+  display: block;
+  min-height: calc(100vh - 68px);
+  padding: 44px 20px 100px;
+  max-width: 1180px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
 
 .section-header { text-align: center; margin-bottom: 40px; }
 
@@ -1934,6 +1944,7 @@ body::before {
   font-size: 11px;
   color: var(--text2);
   transition: all var(--transition);
+  text-decoration: none;
 }
 
 .quick-nav-btn span:first-child { font-size: 26px; }
@@ -2233,3 +2244,11 @@ body::before {
   .bnav-label { font-size: 9px; }
   .bnav-icon  { font-size: 20px; }
 }
+
+/* ── MULTI-PAGE: bnav como <a> tag ── */
+a.bnav-btn {
+  text-decoration: none;
+  border: none;
+}
+a.bnav-btn .bnav-label { color: var(--text3); }
+a.bnav-btn.active .bnav-label { color: var(--accent); }

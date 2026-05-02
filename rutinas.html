@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rutinas — daBeast ⚡</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body data-page="rutinas">
+
+<!-- ══ NAVBAR ══ -->
+<nav class="navbar" id="navbar">
+  <a class="nav-brand" href="/">
+    <span class="brand-pixel">⚡</span>
+    <span class="brand-name">daBeast</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/" class="nav-link" data-page="home">🏠 Inicio</a></li>
+    <li><a href="/rutinas" class="nav-link" data-page="rutinas">💪 Rutinas</a></li>
+    <li><a href="/dieta" class="nav-link" data-page="dieta">🥗 Dieta</a></li>
+    <li><a href="/progreso" class="nav-link" data-page="progreso">📈 Progreso</a></li>
+    <li><a href="/coach" class="nav-link" data-page="coach">🤖 IA Coach</a></li>
+    <li><a href="/cardio" class="nav-link" data-page="cardio">⚽ Cardio</a></li>
+    <li><a href="/tools" class="nav-link" data-page="tools">🔧 Tools</a></li>
+    <li><button class="theme-toggle" id="themeToggle" title="Cambiar tema">🌙</button></li>
+  </ul>
+</nav>
+
+<!-- ══ BOTTOM NAV MOBILE ══ -->
+<nav class="bottom-nav" id="bottomNav">
+  <a class="bnav-btn" href="/" data-page="home">
+    <span class="bnav-icon">🏠</span>
+    <span class="bnav-label">Inicio</span>
+  </a>
+  <a class="bnav-btn" href="/rutinas" data-page="rutinas">
+    <span class="bnav-icon">💪</span>
+    <span class="bnav-label">Rutinas</span>
+  </a>
+  <a class="bnav-btn" href="/dieta" data-page="dieta">
+    <span class="bnav-icon">🥗</span>
+    <span class="bnav-label">Dieta</span>
+  </a>
+  <a class="bnav-btn" href="/progreso" data-page="progreso">
+    <span class="bnav-icon">📈</span>
+    <span class="bnav-label">Progreso</span>
+  </a>
+  <a class="bnav-btn" href="/coach" data-page="coach">
+    <span class="bnav-icon">🤖</span>
+    <span class="bnav-label">Coach</span>
+  </a>
+  <a class="bnav-btn" href="/tools" data-page="tools">
+    <span class="bnav-icon">🔧</span>
+    <span class="bnav-label">Tools</span>
+  </a>
+</nav>
+
+
+<main class="page-main" data-page="rutinas">
+  <div class="section-header">
+    <h2 class="section-title">💪 Rutinas</h2>
+    <p class="section-sub">Tus entrenamientos híbridos personalizados — Cargá progresivo.</p>
+  </div>
+
+  <div class="day-tabs">
+    <button class="day-tab active" data-day="day1">🏋️ Día 1 — Upper</button>
+    <button class="day-tab" data-day="day2">🦵 Día 2 — Lower</button>
+    <button class="day-tab" data-day="day3">⚡ Día 3 — Full Body</button>
+    <button class="day-tab day-tab-special" data-day="daily">🏠 Mini Bloque</button>
+    <button class="day-tab day-tab-special" data-day="progression">📈 Progresión</button>
+  </div>
+
+  <div class="day-content active" id="day1" style="display:block">
+    <div class="day-header">
+      <div class="day-header-info">
+        <h3>🏋️ Día 1: Upper Fuerza + Hombros + Core</h3>
+        <p>Lunes ideal. Pecho, espalda, hombros, brazos y core. Carga progresiva. 6×5 en banca pausado es el plato principal.</p>
+      </div>
+      <button class="btn-complete-day" onclick="completeDay(1)">✅ Día completado</button>
+    </div>
+    <div id="warmup-day1" class="warmup-block"></div>
+    <div class="exercises-section-title">💪 Rutina Principal</div>
+    <div id="exercises-day1" class="exercises-grid"></div>
+  </div>
+
+  <div class="day-content" id="day2" style="display:none">
+    <div class="day-header">
+      <div class="day-header-info">
+        <h3>🦵 Día 2: Lower + Aire + Movilidad</h3>
+        <p>Miércoles ideal. Tren inferior completo + cardio intervalos en bici + movilidad final.</p>
+      </div>
+      <button class="btn-complete-day" onclick="completeDay(2)">✅ Día completado</button>
+    </div>
+    <div id="warmup-day2" class="warmup-block"></div>
+    <div class="exercises-section-title">💪 Rutina Principal</div>
+    <div id="exercises-day2" class="exercises-grid"></div>
+    <div id="cardio-day2" class="cardio-day2-block"></div>
+    <div id="mobility-day2" class="mobility-block"></div>
+  </div>
+
+  <div class="day-content" id="day3" style="display:none">
+    <div class="day-header">
+      <div class="day-header-info">
+        <h3>⚡ Día 3: Full Body + Atlético + Core</h3>
+        <p>Viernes ideal. Trap Bar Deadlift como ejercicio ancla. Potencia, atletismo y core antirotacional.</p>
+      </div>
+      <button class="btn-complete-day" onclick="completeDay(3)">✅ Día completado</button>
+    </div>
+    <div id="warmup-day3" class="warmup-block"></div>
+    <div class="exercises-section-title">💪 Rutina Principal</div>
+    <div id="exercises-day3" class="exercises-grid"></div>
+  </div>
+
+  <div class="day-content" id="daily" style="display:none">
+    <div id="daily-block-container"></div>
+  </div>
+
+  <div class="day-content" id="progression" style="display:none">
+    <div id="progression-container"></div>
+  </div>
+</main>
+
+<!-- Toast -->
+<div id="toast" class="toast hidden"></div>
+
+<!-- Timer overlay -->
+<div id="timerOverlay" class="timer-overlay hidden">
+  <div class="timer-overlay-content">
+    <p class="timer-overlay-label" id="timerExLabel">⏱️ Descanso</p>
+    <div class="timer-ring-wrap">
+      <svg viewBox="0 0 100 100" class="timer-ring-svg">
+        <circle cx="50" cy="50" r="45" fill="none" stroke-width="7" class="ring-bg"/>
+        <circle cx="50" cy="50" r="45" fill="none" stroke-width="7" class="ring-fill" id="timerRing"
+                stroke-dasharray="283" stroke-dashoffset="283"/>
+      </svg>
+      <div class="timer-big" id="timerBig">60</div>
+    </div>
+    <div class="timer-overlay-controls">
+      <button class="btn-secondary" id="timerPauseBtn" onclick="pauseExerciseTimer()">⏸ Pausar</button>
+      <button class="btn-danger" onclick="closeExerciseTimer()">✕ Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Back to top -->
+<button id="backToTop" class="back-to-top hidden" onclick="scrollToTop()" title="Volver arriba">↑</button>
+<!-- Sound btn -->
+<button id="soundToggle" class="sound-btn" title="Activar sonidos">🔇</button>
+
+
+<script src="/data.js"></script>
+<script src="/app.js"></script>
+
+</body>
+</html>

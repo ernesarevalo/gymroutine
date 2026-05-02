@@ -1,3 +1,17 @@
+
+// ════════════════════════════════════════════
+//  TRANSICIÓN SUAVE AL CARGAR PÁGINA
+// ════════════════════════════════════════════
+function injectPageCSS() {
+  const style = document.createElement('style');
+  style.textContent = `
+    .page-main, .section-home {
+      animation: fadeSlideIn .35s ease both;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
 // ═══════════════════════════════════════════════════════════
 //   daBeast — APP.JS  v2.0  (completo y funcional)
 // ═══════════════════════════════════════════════════════════
@@ -31,10 +45,22 @@ document.addEventListener('DOMContentLoaded', () => {
   initProgressCharts();
   showWelcomeMsg();
   injectConfettiCSS();
-  renderDailySummary();
-  markTodayTab();
+  injectPageCSS();
   initBackToTop();
-  syncBottomNav('home');
+
+  const path = window.location.pathname.replace(/\/$/, '') || '/';
+  if (path === '/' || path === '') {
+    renderDailySummary();
+    updateStreakBar();
+  }
+  if (path === '/rutinas') {
+    markTodayTab();
+  }
+  if (path === '/progreso') {
+    renderProgress();
+    renderBadges();
+    setTimeout(initProgressCharts, 200);
+  }
 
   // Cerrar modal con click fuera
   document.getElementById('recipeModal')?.addEventListener('click', e => {
@@ -159,31 +185,19 @@ function initNavigation() {
   navigateTo('home', false);
 }
 
-function navigateTo(sectionId, animate = true) {
-  document.querySelectorAll('.section').forEach(s => {
-    s.classList.remove('active');
-    s.style.display = 'none';
-  });
-
-  const target = document.getElementById(sectionId);
-  if (!target) return;
-
-  target.style.display = 'block';
-  requestAnimationFrame(() => {
-    target.classList.add('active');
-    window.scrollTo({ top: 0, behavior: animate ? 'smooth' : 'auto' });
-  });
-
-  document.querySelectorAll('.nav-link').forEach(l => {
-    l.classList.toggle('active', l.dataset.section === sectionId);
-  });
-
-  STATE.activeSection = sectionId;
-  playSound('nav');
-  syncBottomNav(sectionId);
-
-  if (sectionId === 'progress') setTimeout(initProgressCharts, 150);
-  if (sectionId === 'home') renderDailySummary();
+function navigateTo(sectionId) {
+  // Mapa de sección a URL de página
+  const PAGE_MAP = {
+    home:     '/',
+    routines: '/rutinas',
+    diet:     '/dieta',
+    progress: '/progreso',
+    coach:    '/coach',
+    cardio:   '/cardio',
+    tools:    '/tools',
+  };
+  const url = PAGE_MAP[sectionId] || '/';
+  window.location.href = url;
 }
 
 function closeMobileMenu() {
@@ -1401,9 +1415,12 @@ function markTodayTab() {
   const todayKey = dayMap[dow];
   if (!todayKey) return;
   const tab = document.querySelector(`.day-tab[data-day="${todayKey}"]`);
-  if (tab) {
+  if (tab && !tab.querySelector('.today-badge')) {
     tab.classList.add('today-tab');
-    tab.innerHTML = tab.innerHTML.replace('</button>','') + ' <span class="today-badge">HOY</span>';
+    const badge = document.createElement('span');
+    badge.className = 'today-badge';
+    badge.textContent = 'HOY';
+    tab.appendChild(badge);
   }
 }
 
@@ -1431,9 +1448,9 @@ function initBackToTop() {
 // ════════════════════════════════════════════
 //  BOTTOM NAV — SYNC ACTIVE STATE
 // ════════════════════════════════════════════
-function syncBottomNav(sectionId) {
+function syncBottomNav(pageId) {
   document.querySelectorAll('.bnav-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.section === sectionId);
+    btn.classList.toggle('active', btn.dataset.page === pageId);
   });
 }
 

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dieta — daBeast ⚡</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body data-page="dieta">
+
+<!-- ══ NAVBAR ══ -->
+<nav class="navbar" id="navbar">
+  <a class="nav-brand" href="/">
+    <span class="brand-pixel">⚡</span>
+    <span class="brand-name">daBeast</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/" class="nav-link" data-page="home">🏠 Inicio</a></li>
+    <li><a href="/rutinas" class="nav-link" data-page="rutinas">💪 Rutinas</a></li>
+    <li><a href="/dieta" class="nav-link" data-page="dieta">🥗 Dieta</a></li>
+    <li><a href="/progreso" class="nav-link" data-page="progreso">📈 Progreso</a></li>
+    <li><a href="/coach" class="nav-link" data-page="coach">🤖 IA Coach</a></li>
+    <li><a href="/cardio" class="nav-link" data-page="cardio">⚽ Cardio</a></li>
+    <li><a href="/tools" class="nav-link" data-page="tools">🔧 Tools</a></li>
+    <li><button class="theme-toggle" id="themeToggle" title="Cambiar tema">🌙</button></li>
+  </ul>
+</nav>
+
+<!-- ══ BOTTOM NAV MOBILE ══ -->
+<nav class="bottom-nav" id="bottomNav">
+  <a class="bnav-btn" href="/" data-page="home">
+    <span class="bnav-icon">🏠</span>
+    <span class="bnav-label">Inicio</span>
+  </a>
+  <a class="bnav-btn" href="/rutinas" data-page="rutinas">
+    <span class="bnav-icon">💪</span>
+    <span class="bnav-label">Rutinas</span>
+  </a>
+  <a class="bnav-btn" href="/dieta" data-page="dieta">
+    <span class="bnav-icon">🥗</span>
+    <span class="bnav-label">Dieta</span>
+  </a>
+  <a class="bnav-btn" href="/progreso" data-page="progreso">
+    <span class="bnav-icon">📈</span>
+    <span class="bnav-label">Progreso</span>
+  </a>
+  <a class="bnav-btn" href="/coach" data-page="coach">
+    <span class="bnav-icon">🤖</span>
+    <span class="bnav-label">Coach</span>
+  </a>
+  <a class="bnav-btn" href="/tools" data-page="tools">
+    <span class="bnav-icon">🔧</span>
+    <span class="bnav-label">Tools</span>
+  </a>
+</nav>
+
+
+<main class="page-main" data-page="dieta">
+  <div class="section-header">
+    <h2 class="section-title">🥗 Dieta</h2>
+    <p class="section-sub">Déficit inteligente · Alta proteína · Recetas argentinas baratas y ricas</p>
+  </div>
+
+  <div class="diet-filters">
+    <button class="filter-btn active" data-filter="all">🍽️ Todas</button>
+    <button class="filter-btn" data-filter="desayuno">🌅 Desayuno</button>
+    <button class="filter-btn" data-filter="almuerzo">☀️ Almuerzo</button>
+    <button class="filter-btn" data-filter="merienda">🫖 Merienda</button>
+    <button class="filter-btn" data-filter="cena">🌙 Cena</button>
+    <button class="filter-btn" data-filter="snack">🍎 Snacks</button>
+  </div>
+
+  <div class="tag-filters">
+    <span class="tag-filter" data-tag="barata">💰 Barata</span>
+    <span class="tag-filter" data-tag="rapida">⚡ Rápida</span>
+    <span class="tag-filter" data-tag="proteina">💪 Alta Proteína</span>
+    <span class="tag-filter" data-tag="saciante">🫃 Más Saciante</span>
+  </div>
+
+  <div class="diet-search-wrap">
+    <input type="text" id="dietSearch" class="diet-search"
+           placeholder="🔍 Buscar receta... ej: pollo, avena, atún" oninput="renderRecipes()" />
+  </div>
+
+  <div id="recipesGrid" class="recipes-grid"></div>
+
+  <!-- Modal recetas -->
+  <div id="recipeModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+</main>
+
+<!-- Toast -->
+<div id="toast" class="toast hidden"></div>
+
+<!-- Timer overlay -->
+<div id="timerOverlay" class="timer-overlay hidden">
+  <div class="timer-overlay-content">
+    <p class="timer-overlay-label" id="timerExLabel">⏱️ Descanso</p>
+    <div class="timer-ring-wrap">
+      <svg viewBox="0 0 100 100" class="timer-ring-svg">
+        <circle cx="50" cy="50" r="45" fill="none" stroke-width="7" class="ring-bg"/>
+        <circle cx="50" cy="50" r="45" fill="none" stroke-width="7" class="ring-fill" id="timerRing"
+                stroke-dasharray="283" stroke-dashoffset="283"/>
+      </svg>
+      <div class="timer-big" id="timerBig">60</div>
+    </div>
+    <div class="timer-overlay-controls">
+      <button class="btn-secondary" id="timerPauseBtn" onclick="pauseExerciseTimer()">⏸ Pausar</button>
+      <button class="btn-danger" onclick="closeExerciseTimer()">✕ Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Back to top -->
+<button id="backToTop" class="back-to-top hidden" onclick="scrollToTop()" title="Volver arriba">↑</button>
+<!-- Sound btn -->
+<button id="soundToggle" class="sound-btn" title="Activar sonidos">🔇</button>
+
+
+<script src="/data.js"></script>
+<script src="/app.js"></script>
+
+</body>
+</html>
