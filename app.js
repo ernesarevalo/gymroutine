@@ -144,49 +144,61 @@ function playSound(type) {
 //  NAVEGACIÓN SPA
 // ════════════════════════════════════════════
 function initNavigation() {
-  // Usar touchstart en iOS Safari para respuesta inmediata
-  const EVT = ('ontouchstart' in window) ? 'touchstart' : 'click';
+  // En multi-página los links son <a href> reales — no necesitan JS para navegar.
+  // Solo manejamos: marcar activo, hamburger mobile y cerrar menú al click.
 
-  // Nav links — delegación en el UL para capturar todos los taps
-  const navLinks = document.getElementById('navLinks');
-  if (navLinks) {
-    navLinks.addEventListener(EVT, e => {
-      // Buscar el nav-link más cercano al target
-      const link = e.target.closest('.nav-link');
-      if (link) {
-        e.preventDefault();
-        e.stopPropagation();
-        const sec = link.dataset.section;
-        if (sec) {
-          navigateTo(sec);
-          closeMobileMenu();
-        }
-      }
-    }, { passive: false });
-  }
+  const path = window.location.pathname.replace(/\/$/, '') || '/';
+  const PAGE_TO_ID = {
+    '/':         'home',
+    '/rutinas':  'rutinas',
+    '/dieta':    'dieta',
+    '/progreso': 'progreso',
+    '/coach':    'coach',
+    '/cardio':   'cardio',
+    '/tools':    'tools',
+  };
+  const currentPage = PAGE_TO_ID[path] || 'home';
+  STATE.activeSection = currentPage;
 
-  // Hamburger
+  // Marcar link activo en navbar
+  document.querySelectorAll('.nav-link[data-page]').forEach(link => {
+    link.classList.toggle('active', link.dataset.page === currentPage);
+  });
+
+  // Marcar activo en bottom nav
+  document.querySelectorAll('.bnav-btn[data-page]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.page === currentPage);
+  });
+
+  // Hamburger — solo toggle del menú, sin navegar
   const ham = document.getElementById('hamburger');
   if (ham) {
-    ham.addEventListener(EVT, e => {
+    ham.addEventListener('click', e => {
       e.stopPropagation();
       const nav = document.getElementById('navLinks');
-      const isOpen = nav && nav.classList.contains('open');
+      const isOpen = nav?.classList.contains('open');
       if (isOpen) {
         closeMobileMenu();
       } else {
-        if (nav) nav.classList.add('open');
+        nav?.classList.add('open');
         showNavOverlay();
       }
-    }, { passive: false });
+    });
   }
 
-  // Mostrar sección inicial
-  navigateTo('home', false);
+  // Cerrar menú al click fuera
+  document.addEventListener('click', e => {
+    const nav = document.getElementById('navLinks');
+    const ham = document.getElementById('hamburger');
+    if (nav?.classList.contains('open') &&
+        !nav.contains(e.target) && !ham?.contains(e.target)) {
+      closeMobileMenu();
+    }
+  });
 }
 
 function navigateTo(sectionId) {
-  // Mapa de sección a URL de página
+  // Mapa sección → URL. Usado desde botones (daily summary, quick actions, etc.)
   const PAGE_MAP = {
     home:     '/',
     routines: '/rutinas',
@@ -196,7 +208,11 @@ function navigateTo(sectionId) {
     cardio:   '/cardio',
     tools:    '/tools',
   };
-  const url = PAGE_MAP[sectionId] || '/';
+  const url = PAGE_MAP[sectionId];
+  if (!url) return;
+  // Evitar loop: si ya estamos en esa página, no redirigir
+  const current = window.location.pathname.replace(/\/$/, '') || '/';
+  if (current === url || (url === '/' && current === '')) return;
   window.location.href = url;
 }
 
