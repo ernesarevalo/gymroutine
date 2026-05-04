@@ -2252,3 +2252,51 @@ a.bnav-btn {
 }
 a.bnav-btn .bnav-label { color: var(--text3); }
 a.bnav-btn.active .bnav-label { color: var(--accent); }
+
+/* ── DÍA 5 TIP CARD ── */
+.day-tip-card {
+  background: linear-gradient(135deg, rgba(255,107,138,.07), rgba(155,127,212,.07));
+  border: 2px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  margin-top: 20px;
+}
+.day-tip-card h4 {
+  font-family: var(--font-px);
+  font-size: 9px;
+  color: var(--accent);
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+.day-tip-card ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.day-tip-card li {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+  padding-left: 16px;
+  position: relative;
+}
+.day-tip-card li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 900;
+}
+
+/* ── DAY TABS: scroll horizontal en mobile cuando hay muchos ── */
+.day-tabs {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  flex-wrap: nowrap !important;
+  justify-content: flex-start !important;
+  padding-bottom: 4px;
+}
+.day-tabs::-webkit-scrollbar { display: none; }
+.day-tab { flex-shrink: 0; }

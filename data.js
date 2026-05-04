@@ -365,6 +365,183 @@ const EXERCISES = {
       }
     },
   ],
+
+  // ─────────────────────────────────────────────
+  // DÍA 4: RECONEXIÓN CORE + RESISTENCIA DE BASE
+  // ─────────────────────────────────────────────
+  day4: [
+    {
+      id: "stomach_vacuum",
+      name: "Stomach Vacuum (Vacío Abdominal)",
+      sets: 4, reps: "30 seg", rest: 45,
+      muscle: "Transverso abdominal / Core profundo",
+      defaultWeight: 0,
+      technique: {
+        postura: "Sentado en silla o en cuadrupedia. Espalda neutra, relajada. No tensar glúteos ni piernas.",
+        agarre: "Manos en los muslos si estás sentado, o apoyadas en el suelo si estás en cuadrupedia.",
+        respiracion: "Exhalá TODO el aire por la boca primero. Luego, sin inspirar, 'pegás' el ombligo a la columna. No es succión — es activación del transverso.",
+        errores: "Tomar aire mientras hacés el vacío. Tener la espalda arqueada. Apurar la repetición. Activar glúteos o cuádriceps.",
+        seguridad: "Ejercicio clave para diástasis. Si sentís mareo, respirá normal y descansá. Empezá con 15 seg y progresá a 30 seg.",
+        tecnica: "Exhalá todo → ombligo hacia adentro y arriba → mantené 30 seg respirando superficialmente si podés → soltá → respirá normal → repetí."
+      }
+    },
+    {
+      id: "dead_bug_press",
+      name: "Dead Bug con Press de Manos",
+      sets: 3, reps: "10 por lado", rest: 45,
+      muscle: "Transverso abdominal / Core profundo",
+      defaultWeight: 0,
+      technique: {
+        postura: "Acostado boca arriba. Lumbar PEGADA al suelo — esto es innegociable. Rodillas a 90° en el aire. Brazos extendidos al techo.",
+        agarre: "Presioná las palmas contra los muslos (la pierna que NO se mueve) con fuerza. Esa presión activa el transverso.",
+        respiracion: "Exhalá al extender el brazo y pierna opuestos. La respiración activa el core profundo.",
+        errores: "Perder el contacto de la lumbar con el suelo. Moverse rápido. No presionar las manos contra los muslos — es la clave de esta variante.",
+        seguridad: "Perfecto para diástasis. Rango pequeño si la lumbar se despega. La presión de manos aumenta la activación sin aumentar la presión intraabdominal.",
+        tecnica: "Presioná la mano izquierda contra el muslo izquierdo → bajá brazo derecho y pierna derecha juntos → volvés → alternás. Lento y controlado."
+      }
+    },
+    {
+      id: "side_plank_banco",
+      name: "Side Plank en Banco (Plancha Lateral Elevada)",
+      sets: 3, reps: "30 seg por lado", rest: 45,
+      muscle: "Oblicuos / Core lateral / Cuadrado lumbar",
+      defaultWeight: 0,
+      technique: {
+        postura: "Codo apoyado en el borde del banco. Pies en el suelo. El torso más elevado que en el suelo hace el ejercicio más controlable.",
+        agarre: "Antebrazo en el banco, mano libre en la cadera o extendida al techo.",
+        respiracion: "Respiración continua y profunda. No aguantes el aire.",
+        errores: "Dejar caer la cadera. Rotar el torso hacia adelante. Apoyar en la mano en vez del codo.",
+        seguridad: "La versión en banco es más segura para diástasis porque reduce la presión intraabdominal versus la plancha en el suelo.",
+        tecnica: "Cuerpo en línea recta de cabeza a pies. Cadera arriba. Mantené 30 seg. Cambiá de lado. Si falla la forma, bajá a 20 seg."
+      }
+    },
+    {
+      id: "incline_walking",
+      name: "Caminata con Inclinación (Incline Walking)",
+      sets: 1, reps: "30-40 min continuo", rest: 0,
+      muscle: "Cardio / Glúteos / Pantorrillas / Quema grasa",
+      defaultWeight: 0,
+      technique: {
+        postura: "Cinta a 5-10% de inclinación. Velocidad 5-6 km/h. Espalda recta, no agarrarte de los laterales de la cinta.",
+        agarre: "NO te agarres de las manijas — anula la mitad del beneficio del ejercicio.",
+        respiracion: "Respiración nasal si podés. Ritmo cómodo que te permita hablar con algo de esfuerzo.",
+        errores: "Agarrarse de los laterales. Poner la inclinación tan alta que debas doblarte. Ir demasiado rápido — esto es resistencia de base, no cardio intenso.",
+        seguridad: "Bajo impacto articular. Ideal antes del fútbol. Si duelen las rodillas, bajá la inclinación a 3-5%.",
+        tecnica: "Inclinación 5-10% → velocidad 5-6 km/h → 30-40 min constante → sin agarrarte → enfocate en la respiración nasal durante todo el recorrido."
+      }
+    },
+  ],
+
+  // ─────────────────────────────────────────────
+  // DÍA 5: POTENCIA ATLÉTICA + INTERVALOS
+  // ─────────────────────────────────────────────
+  day5: [
+    {
+      id: "copenhague_plank",
+      name: "Copenhagen Plank (versión fácil con rodilla)",
+      sets: 3, reps: "20 seg por lado", rest: 45,
+      muscle: "Aductores / Core lateral / Cadera",
+      defaultWeight: 0,
+      technique: {
+        postura: "De lado. Rodilla superior apoyada en el banco (versión fácil). Cuerpo en línea recta. Codo en el suelo.",
+        agarre: "Antebrazo en el suelo. La pierna de abajo queda libre en el aire.",
+        respiracion: "Respiración continua. No aguantes el aire.",
+        errores: "Dejar caer la cadera. Rotar el torso. Apoyar la rodilla demasiado alta o baja en el banco.",
+        seguridad: "Fundamental para prevenir lesiones de aductores en el fútbol. Empezá siempre con la versión de rodilla antes de progresar al pie.",
+        tecnica: "Rodilla superior en el banco → cuerpo recto → cadera arriba → mantené 20 seg → bajá → repetí del otro lado. Progresá a 30 seg cuando sea fácil."
+      }
+    },
+    {
+      id: "bear_crawl",
+      name: "Caminata de Oso (Bear Crawl)",
+      sets: 3, reps: "10 metros (ida y vuelta)", rest: 60,
+      muscle: "Core / Hombros / Cadena anterior / Coordinación",
+      defaultWeight: 0,
+      technique: {
+        postura: "En cuadrupedia con las rodillas apenas despegadas del suelo (2-3 cm). Espalda plana como una mesa.",
+        agarre: "Manos abiertas en el suelo. Dedos hacia adelante.",
+        respiracion: "Respiración continua. Exhalá al mover cada par de mano/pie opuestos.",
+        errores: "Levantar demasiado las caderas. Dejar que las caderas oscilen de lado a lado. Moverse rápido perdiendo la postura.",
+        seguridad: "Si la zona lumbar se arquea, reducí la velocidad. Es un ejercicio de control, no de velocidad.",
+        tecnica: "Rodillas 2 cm del suelo → avanzás moviendo mano derecha + pie izquierdo juntos → luego mano izquierda + pie derecho → espalda plana todo el tiempo → lento y controlado."
+      }
+    },
+    {
+      id: "kb_swings",
+      name: "Kettlebell Swings (o Mancuerna)",
+      sets: 4, reps: "15", rest: 60,
+      muscle: "Glúteos / Isquiotibiales / Core / Potencia",
+      defaultWeight: 16,
+      technique: {
+        postura: "Pies a ancho de hombros. Kettlebell entre las piernas. Espalda recta, cadera hacia atrás — es una bisagra, no una sentadilla.",
+        agarre: "Agarre firme con ambas manos en el asa de la kettlebell.",
+        respiracion: "Inhalá al bajar (cadera atrás). EXHALÁ FUERTE por la boca al impulsar hacia arriba. Esto es clave para la diástasis.",
+        errores: "Cuclillarse en vez de hacer bisagra de cadera. Usar los brazos para levantar — los brazos son el gancho, la potencia sale de los glúteos. No exhalar al subir.",
+        seguridad: "Zona despejada. Suelo antideslizante. Empezá con peso ligero para dominar la técnica. Si usás mancuerna, agarrala por el extremo.",
+        tecnica: "Cadera atrás → kettlebell pasa entre las piernas → explosión de glúteos → kettlebell sube a altura de hombros → dejás caer con control → repetís sin parar."
+      }
+    },
+    {
+      id: "goblet_squat",
+      name: "Goblet Squat (Sentadilla Goblet)",
+      sets: 4, reps: "12", rest: 60,
+      muscle: "Cuádriceps / Glúteos / Core / Movilidad",
+      defaultWeight: 16,
+      technique: {
+        postura: "Pies a ancho de hombros o algo más abiertos. Puntas levemente hacia afuera. Pesa al pecho como un cáliz.",
+        agarre: "Ambas manos sosteniendo la kettlebell o mancuerna por el extremo, pegada al pecho. Codos hacia abajo.",
+        respiracion: "Maniobra Valsalva al bajar. Exhalá fuerte al subir — importante para el core.",
+        errores: "Dejar que las rodillas colapsen hacia adentro. Talones que se levantan (movilidad de tobillo). Inclinar demasiado el torso al frente.",
+        seguridad: "El peso al pecho obliga a la verticalidad del torso — protege la lumbar y facilita la profundidad. Ideal para diástasis.",
+        tecnica: "Pesa al pecho → bajás manteniendo el torso vertical → rodillas abren sobre los pies → profundidad cómoda → empujás desde el talón → exhalás al subir."
+      }
+    },
+    {
+      id: "step_ups_d5",
+      name: "Step-ups (Subidas al Cajón)",
+      sets: 4, reps: "10 por pierna", rest: 60,
+      muscle: "Glúteos / Cuádriceps / Fuerza de arranque",
+      defaultWeight: 14,
+      technique: {
+        postura: "Cajón o banco a altura de rodilla. Torso erguido. Core activado antes de subir.",
+        agarre: "Mancuernas a los costados o manos libres para empezar.",
+        respiracion: "Exhalá FUERTE por la boca al empujar para subir. Inhalá al bajar controlado.",
+        errores: "Impulsar con la pierna de abajo — toda la fuerza debe venir de la pierna que está arriba. Inclinarse hacia adelante. Bajar rápido.",
+        seguridad: "Asegurate que el cajón sea estable. Si perdés el equilibrio reducí el peso o agarrate de algo.",
+        tecnica: "Pie de trabajo en el cajón → empujás SOLO con esa pierna → subís → la pierna de atrás sube pero no empuja → bajás controlado → repetís todas las reps de un lado antes de cambiar."
+      }
+    },
+    {
+      id: "sprint_intervals_d5",
+      name: "Intervalos de Piques — Cinta o Bici",
+      sets: 1, reps: "8-10 repeticiones (30 seg fuerte / 60 seg suave)", rest: 0,
+      muscle: "Cardio / VO2 máx / Recuperación post-pique",
+      defaultWeight: 0,
+      technique: {
+        postura: "Cinta: corré erguido, no te inclines hacia adelante. Bici: espalda neutra, no te agarres para ayudarte.",
+        agarre: "En cinta: manos libres (no agarres las barras durante el sprint). En bici: agarre firme pero relajado.",
+        respiracion: "Durante el sprint: respiración rápida y profunda. Durante la recuperación: intentá volver a respiración nasal antes del próximo intervalo.",
+        errores: "Ir demasiado suave en los 30 seg de esfuerzo — tienen que ser incómodos. No recuperar bien en los 60 seg — caminá, no pares.",
+        seguridad: "En cinta: subí la velocidad gradualmente los primeros 2-3 intervalos. No saltes a la cinta a velocidad máxima de golpe.",
+        tecnica: "Cinta: 30 seg corriendo rápido (7-10 km/h) → 60 seg caminata lenta (3-4 km/h) → repetís 8-10 veces. Bici: 30 seg resistencia máxima → 60 seg resistencia mínima → 8-10 veces."
+      }
+    },
+    {
+      id: "face_pull_d5",
+      name: "Face Pull (Bonus final — Hombros/Postura)",
+      sets: 3, reps: "15", rest: 45,
+      muscle: "Deltoides posterior / Manguito rotador / Postura",
+      defaultWeight: 12,
+      technique: {
+        postura: "De pie frente a polea alta. Pies firmes, core activado. No arqueés la espalda al tirar.",
+        agarre: "Cuerda en polea alta, pulgares hacia vos. Tirás separando la cuerda hacia tu cara.",
+        respiracion: "Exhalá al tirar hacia la cara. Inspirá al soltar.",
+        errores: "Peso excesivo que rompe la forma. No separar la cuerda al final. Tirar con los bíceps en vez de los hombros posteriores.",
+        seguridad: "Siempre peso ligero. Es un ejercicio de salud del hombro y postura. Mejor técnica que carga.",
+        tecnica: "Tirás la cuerda hacia tu frente separando ambos extremos. Codos a altura de hombros o más arriba. Pausa 1 seg. Soltás controlado. Mejora la postura que hace que hombros y pecho luzcan más."
+      }
+    },
+  ],
 };
 
 
@@ -399,7 +576,26 @@ const WARMUPS = {
       { time: "5:00–6:00", name: "Bird Dog ×6 por lado", desc: "Activación de core y estabilizadores antes de levantar pesado. Clave para proteger la lumbar." },
       { time: "6:00–7:00", name: "Series progresivas", desc: "50% del peso del día ×5 → 70% ×3 → 90% ×1. Llegás al peso de trabajo sin agotar el sistema nervioso." },
     ]
-  }
+  },
+  day4: {
+    title: "🔥 Calentamiento Día 4 — 5 minutos",
+    steps: [
+      { time: "0:00–2:00", name: "Caminata suave en cinta (0% inclinación)", desc: "Activación cardiovascular sin impacto. Preparás el cuerpo para el bloque de core." },
+      { time: "2:00–3:00", name: "Respiración diafragmática ×5", desc: "Inhalá nariz 4 seg → exhalá boca 6 seg. Activa el transverso antes del trabajo de diástasis." },
+      { time: "3:00–4:00", name: "Puente de glúteo ×12", desc: "Activa glúteos y estabiliza la pelvis. Clave antes del trabajo de core en posición supina." },
+      { time: "4:00–5:00", name: "Bird Dog ×5 por lado", desc: "Activa el core profundo de forma coordinada antes del Dead Bug y el Vacuum." },
+    ]
+  },
+  day5: {
+    title: "🔥 Activación Día 5 — 10 minutos",
+    steps: [
+      { time: "0:00–3:00", name: "Bici suave o caminata", desc: "Calentá el sistema cardiovascular antes de los ejercicios explosivos." },
+      { time: "3:00–4:30", name: "Copenhagen Plank ×20 seg por lado", desc: "Activa los aductores antes del trabajo de potencia. Fundamental para prevenir lesiones de ingle en el fútbol." },
+      { time: "4:30–6:00", name: "Bear Crawl controlado × 5 metros", desc: "Activa el patrón de movimiento cruzado, hombros y core. Empezá lento." },
+      { time: "6:00–8:00", name: "Swing ligero ×10 (técnica)", desc: "Con peso muy liviano. Practicá la bisagra de cadera antes de cargar el peso del día." },
+      { time: "8:00–10:00", name: "Goblet Squat con peso liviano ×8", desc: "Calentamiento específico del patrón de sentadilla. Fijate en la verticalidad del torso." },
+    ]
+  },
 };
 
 // MINI BLOQUE DIARIO EN CASA

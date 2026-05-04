@@ -270,7 +270,7 @@ function initQuote() {
 // ════════════════════════════════════════════
 function renderExercises() {
   // Render exercise cards
-  ['day1','day2','day3'].forEach(day => {
+  ['day1','day2','day3','day4','day5'].forEach(day => {
     const container = document.getElementById(`exercises-${day}`);
     if (!container) return;
     container.innerHTML = '';
@@ -278,7 +278,7 @@ function renderExercises() {
   });
 
   // Render warmups
-  ['day1','day2','day3'].forEach(day => {
+  ['day1','day2','day3','day4','day5'].forEach(day => {
     const wc = document.getElementById(`warmup-${day}`);
     if (wc && typeof WARMUPS !== 'undefined' && WARMUPS[day]) {
       wc.innerHTML = buildWarmupBlock(WARMUPS[day]);
@@ -1334,7 +1334,7 @@ function renderDailySummary() {
   if (!container) return;
 
   const dow = new Date().getDay(); // 0=Dom,1=Lun...6=Sab
-  const dayMap = { 1:'day1', 3:'day2', 5:'day3' };
+  const dayMap = { 1:'day1', 2:'day4', 3:'day2', 4:'day5', 5:'day3' };
   const dayNames = { day1:'Día 1 — Upper Fuerza', day2:'Día 2 — Lower + Aire', day3:'Día 3 — Full Body' };
   const dayIcons = { day1:'🏋️', day2:'🦵', day3:'⚡' };
   const dayDurations = { day1:'~55 min', day2:'~70 min', day3:'~60 min' };
@@ -1427,7 +1427,7 @@ function resetSets(id, total) {
 // ════════════════════════════════════════════
 function markTodayTab() {
   const dow = new Date().getDay();
-  const dayMap = { 1:'day1', 3:'day2', 5:'day3' };
+  const dayMap = { 1:'day1', 2:'day4', 3:'day2', 4:'day5', 5:'day3' };
   const todayKey = dayMap[dow];
   if (!todayKey) return;
   const tab = document.querySelector(`.day-tab[data-day="${todayKey}"]`);
